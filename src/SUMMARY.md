@@ -4,8 +4,7 @@
 
 # Overview
 - [What is Declarative UI?](./walkthrough/introduction.md)
-- [Basic Styling (TODO)](./walkthrough/styling.md)
-- [Expression Bindings (TODO)](./walkthrough/expression_bindings.md)
+- [Basic Styling](./walkthrough/styling.md)
 - [All About Lenses (TODO)](./walkthrough/lenses.md)
 
 # The Layout System
