@@ -5,7 +5,7 @@ Everything is arranged in the default way: vertically with no spacing.
 Let's fix that!
 
 Views in Vizia can be styled with CSS.
-if you're familar with HTML at all, you might be confused, because CSS is usually used for styling HTML.
+if you're familiar with HTML at all, you might be confused, because CSS is usually used for styling HTML.
 However, as we discussed in the last section, GUI toolkits all have the commonality of needing to arrange elements in a tree in order to maintain a coherent hierarchy.
 CSS can be used as a general tool to apply properties to elements arranged in a tree!
 
@@ -95,7 +95,7 @@ Space can be applied to an element's children via some special styles on the par
 Finally, there is one last important feature that Vizia's CSS adds over HTML's CSS: the stretch unit.
 In HTML, you can specify sizes and distances in units of pixels, percentage of parent size, and `auto`.
 Vizia adds stretch: the notion that a given space should take up some proportion of the remaining space after all the prior measures have been summed up.
-This solves a whole slew of layout problems which requre one-off designations in HTML, notably related to centering and justifying content.
+This solves a whole slew of layout problems which require one-off designations in HTML, notably related to centering and justifying content.
 As an example, look what happens when we space the labels in the above example evenly, applying "1 stretch unit" around each of them:
 
 ```css
@@ -111,4 +111,4 @@ Some final notes:
 1) Names are converted between CSS selectors (snake_case), CSS attributes (kebab-case), rust methods (snake_case), and rust types (PascalCase) in the expected way.
 2) We'll go in depth into the layout system and how it works later.
 3) Vizia's layout system is inspired by [Subform](https://subformapp.com/). If you're interested in a talk describing the motivation behind its departures from HTML, you can watch [this video](https://www.deconstructconf.com/2017/kevin-lynagh-choosing-features).
-4) You may notice that in the final gif there is twice as much space between each element as between the elements and their parent, since each between-area now has two stretch units applied to it, one from the side of each adjacent child. This is becauexactly the problem that `child-space` and `col-between` solve :)
+4) You may notice that in the final gif there is twice as much space between each element as between the elements and their parent, since each between-area now has two stretch units applied to it, one from the side of each adjacent child. This is exactly the problem that `child-space` and `col-between` solve :)

@@ -1,6 +1,6 @@
 # What is Declarative UI?
 
-The first thing you need to understand if you're reading this book from start to finishis that your intuition for how to write a GUI program may not align with the way Vizia is designed.
+The first thing you need to understand if you're reading this book from start to finish, is that your intuition for how to write a GUI program may not align with the way Vizia is designed.
 This isn't to say that Vizia isn't intuitive to use, it just uses a paradigm which is not the same as the most common GUI frameworks.
 
 Vizia is a _declarative UI framework_.
@@ -77,9 +77,9 @@ impl Model for AppData {
 // Now, let's build the tree.
 
 fn main() {
-	// Boot a new application with a default window (our first view)
+	// Create a new application with a default window (our first view)
 	let app = Application::new(WindowDescription::new(), |cx| {
-		// cx is always Context, Vizia's control panel
+		// cx is always Context where Vizia's retained state lives
 
 		// Build our model with an initial value. This is attached to the current view.
 		AppData { number: 0 }.build(cx);
