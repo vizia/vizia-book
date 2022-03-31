@@ -2,7 +2,7 @@
 
 We've built the counter example, but it looks kind of weird.
 Everything is arranged in the default way: vertically with no spacing.
-Let's fix that!
+Let's talk about how you might go about fixing that!
 
 Views in Vizia can be styled with CSS.
 if you're familiar with HTML at all, you might be confused, because CSS is usually used for styling HTML.
@@ -91,6 +91,7 @@ label {
 Space can be applied to just one side using the `left`, `right`, `top`, and `bottom` styles.
 
 Space can be applied to an element's children via some special styles on the parent: `child-space`, `child-left`, etc. all add space between a parent and its children on the specified side, while `row-between` and `col-between` adds vertical and horizontal space between children, respectively.
+These properties _override_ the child's spacing properties, but only for the child's space properties which are set to `auto`.
 
 Finally, there is one last important feature that Vizia's CSS adds over HTML's CSS: the stretch unit.
 In HTML, you can specify sizes and distances in units of pixels, percentage of parent size, and `auto`.
@@ -111,4 +112,4 @@ Some final notes:
 1) Names are converted between CSS selectors (snake_case), CSS attributes (kebab-case), rust methods (snake_case), and rust types (PascalCase) in the expected way.
 2) We'll go in depth into the layout system and how it works later.
 3) Vizia's layout system is inspired by [Subform](https://subformapp.com/). If you're interested in a talk describing the motivation behind its departures from HTML, you can watch [this video](https://www.deconstructconf.com/2017/kevin-lynagh-choosing-features).
-4) You may notice that in the final gif there is twice as much space between each element as between the elements and their parent, since each between-area now has two stretch units applied to it, one from the side of each adjacent child. This is exactly the problem that `child-space` and `col-between` solve :)
+4) You may notice that in the final gif there is twice as much space between each element as between the elements and their parent, since each between-area now has two stretch units applied to it, one from the side of each adjacent child. This is exactly the problem that `col-between` solves :)

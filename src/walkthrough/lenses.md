@@ -18,7 +18,7 @@ pub struct AppData {
 
 What does it mean to reference a field of a struct like that?
 Here's a hint: this isn't usually valid Rust.
-When we say `AppData::number`, we're referring to a _static variable_ defined by `derive(Lens)`.
+When we say `AppData::number`, we're referring to a _static variable_ defined by `derive(Lens)` with the same name as the field.
 This variable is, surprise, a lens!
 
 Lenses are property getter objects, allowing you to "select" some part of the model and inspect it at will.
@@ -67,7 +67,7 @@ pub trait Lens: 'static + Clone {
 As you can see, every lens has two associated types, a Source and a Target.
 The view function's job is, more or less, to transform a Source reference into a Target reference.
 We'll get into why its signature is more complicated than that in a second!
-For our AppData::number lens, we have `Source = AppData` and `Target = i32`.
+For our `AppData::number` lens, we have `Source = AppData` and `Target = i32`.
 
 The `get(cx)` function, as we saw before, grabs the source reference out of the current context (finds the most recent ancestor in the tree that has an appropriate model built into it).
 Then, it runs `view` to transform a source reference into a target reference, and finally, clones the data out of reference in order to return it.
@@ -124,10 +124,13 @@ It looks like this: `AppData::my_list.map(|my_list| my_list.len())`.
 This creates a lens with `Source = AppData` and `Target = usize`.
 Any binding using this lens will only rebuild its children when it detects the length of the list has changed - not any of its contents!
 
+Note that since map lenses contain a closure, they are not `Copy`.
+You'll have to explicitly clone them whenever you want to pass them around.
+
 ## Bindings Under the Hood
 
 Let's take a short detour to talk about why your choice of lens matters.
-First, when you build a binding, the lens you pass in must have a source type which implements `Model` and a target type that implements `Data`.
+First, when you build a binding, the lens you pass in must have a source type which implements `Model` and a target type that implements a different trait, `Data`.
 We haven't seen `Data` yet, but it is very simple: here is its full definition:
 
 ```rust
