@@ -1,6 +1,6 @@
 # What is Declarative UI?
 
-The first thing you need to understand if you're reading this book from start to finish, is that your intuition for how to write a GUI program may not align with the way Vizia is designed.
+The first thing to understand if you're reading this book from start to finish, is that your intuition for how to write a GUI program may not align with the way Vizia is designed.
 This isn't to say that Vizia isn't intuitive to use, it just uses a paradigm which is not the same as the most common GUI frameworks.
 
 Vizia is a _declarative UI framework_.
@@ -11,7 +11,7 @@ These two parts communicate with each other, and Vizia forces you to make this c
 
 The downward communication is called a _binding_, since the view is bound to reflect the model, and the upward communication is called an _event_, since it represents an instance of something happening that needs to be responded to.
 
-The second thing you need to understand is that all user interface programming is about manipulating trees.
+The second thing to understand is that all user interface programming is about manipulating trees.
 Look at the browser window you're reading this book in.
 Logically, it has a root node (the browser window), with several children (the menu bar, the URL bar, the bookmark bar, and the webpage view).
 Each of these children has children, and so on and so forth.
