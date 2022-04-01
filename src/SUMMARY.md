@@ -6,9 +6,16 @@
 - [Setting up an app](./quickstart/setup.md)
 
 # Layout
-- [Layout](./layout/overview.md)
+- [Overview](./layout/overview.md)
 
 # Styling
-- [Architecture](./architecture.md)
-- [Styling](./styling.md)
+- [Overview](./styling/overview.md)
+- [Stylesheets](./styling/stylesheets.md)
+- [Properties](./styling/properties.md)
+
+# Animation
+- [Transitions](./animation/transitions.md)
+
+# Views and Controls
+- [Button](./views/button.md)
 
