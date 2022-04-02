@@ -22,3 +22,13 @@ Textbox::new(cx, AppData::my_number)
 ```
 
 If you're feeling very fancy, you can also emit events in the `else` case to do error reporting :)
+
+## Multiline
+
+To make a multiline textbox, use the `new_multiline` constructor.
+This function works the same as `new`, but takes an additional argument to indicate whether you want to resulting text to be word-wrapped or not.
+
+```rust
+Textbox::new_multiline(cx, AppData::should_be_wrapped, true);
+Textbox::new_multiline(cx, AppData::should_not_be_wrapped, false);
+```
