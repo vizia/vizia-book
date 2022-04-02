@@ -21,4 +21,5 @@
 - [Stack](./views/stack.md)
 - [Button](./views/button.md)
 - [Checkbox](./views/checkbox.md)
+- [Textbox](./views/textbox.md)
 
