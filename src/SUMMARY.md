@@ -17,5 +17,8 @@
 - [Transitions](./animation/transitions.md)
 
 # Views and Controls
+- [Label](./views/label.md)
+- [Stack](./views/stack.md)
 - [Button](./views/button.md)
+- [Checkbox](./views/checkbox.md)
 
