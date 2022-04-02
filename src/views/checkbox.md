@@ -19,3 +19,22 @@ Checkbox::new(cx, AppData::value)
     .on_toggle(|cx| cx.emit(AppEvent::SetValue(*AppData::value.get(cx)));
 })
 ```
+
+# Radio Buttons
+
+A radio button is just like a checkbox from the point of view of the GUI - you just have to bind it to some exclusive aspect of data so it gets unchecked when you click some other element.
+
+```rust
+VStack::new(cx, |cx| {
+    HStack::new(cx, |cx| {
+        RadioButton::new(cx, AppData::value.map(|v| v == 0))
+            .on_select(|cx| cx.emit(AppEvent::SetValue(0)));
+        Label::new(cx, "Option 1");
+    });
+    HStack::new(cx, |cx| {
+        RadioButton::new(cx, AppData::value.map(|v| v == 1))
+            .on_select(|cx| cx.emit(AppEvent::SetValue(0)));
+        Label::new(cx, "Option 2");
+    });
+});
+```
