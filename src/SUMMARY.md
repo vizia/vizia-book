@@ -1,11 +1,7 @@
 # The Vizia Book
 
 [Foreword](foreword.md)
-
-# Quickstart
-
-- [Installing Rust](./quickstart/install.md)
-- [Setting up an app](./quickstart/setup.md)
+[Prerequisites](prerequisites.md)
 
 # Overview
 - [What is Declarative UI?](./walkthrough/introduction.md)
