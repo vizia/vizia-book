@@ -23,3 +23,5 @@
 - [Checkbox and RadioButton](./views/checkbox.md)
 - [Textbox](./views/textbox.md)
 - [Dropdown](./views/dropdown.md)
+- [List](./views/list.md)
+- [Image](./views/image.md)
