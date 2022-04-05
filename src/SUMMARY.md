@@ -25,3 +25,5 @@
 - [Dropdown](./views/dropdown.md)
 - [List](./views/list.md)
 - [Image](./views/image.md)
+- [Element](./views/element.md)
+- [Slider](./views/slider.md)
