@@ -18,15 +18,3 @@
 
 # Animation
 - [Transitions](./animation/transitions.md)
-
-# Views and Controls
-- [Label](./views/label.md)
-- [Stack](./views/stack.md)
-- [Button](./views/button.md)
-- [Checkbox and RadioButton](./views/checkbox.md)
-- [Textbox](./views/textbox.md)
-- [Dropdown](./views/dropdown.md)
-- [List](./views/list.md)
-- [Image](./views/image.md)
-- [Element](./views/element.md)
-- [Slider](./views/slider.md)
