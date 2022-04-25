@@ -3,9 +3,10 @@
 Welcome to Vizia!
 
 Vizia is a crate for building GUI applications.
-It presently supports Windows, Linux, and MacOS targets, as well as VST plugins.
+It presently supports Windows, Linux, and MacOS desktop targets, as well as audio plugins and Web.
 
-The Vizia project's home is [https://github.com/vizia]().
-The main Vizia repository is [https://github.com/vizia/vizia](), where the actual UI code lives.
+The Vizia project's home is [https://github.com/vizia]() and the main Vizia repository is [https://github.com/vizia/vizia]().
 
-This book hopes to teach you how to use Vizia, whether or not you've done any GUI programming in the past.
+
+
+This book aims to act as a guide and reference for Vizia, and hopes to teach you how to use Vizia, whether or not you've done any GUI programming in the past.
