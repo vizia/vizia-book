@@ -13,3 +13,4 @@ cargo run --example name_of_example
 Where `name_of_example` should be replaced with the example name.
 
 ## Join the Community
+For help with vizia, or to get involved with contributing to the project, come join us on our [Discord server](https://discord.gg/aNkTPsRm2w).

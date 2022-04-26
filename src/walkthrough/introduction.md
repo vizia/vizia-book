@@ -23,7 +23,7 @@ In this world, bindings are attributes of an edge between two nodes, associated 
 
 ![A tree of models, views, and bindings. Some nodes have just a view and some have a model and a view. Some edges between nodes have a binding.](../img/model-view-tree.png)
 
-Events are not shown in this tree because events are transient - they start at some view, travel up the tree until they reach a model which can handle them, and then disappear after being handled.
+Events are not shown in this tree because events are transient - they start at some view, travel up the tree parent to parent until they reach a model or view which can handle them, and then disappear after being handled.
 
 The main thing to understand about the way bindings work is that when the model data that a binding is bound to changes, everything descending from that binding is chopped off the tree and rebuilt with the appropriate data.
 This is why bindings are represented as slicing through the edges they are assigned to in the above diagram.
