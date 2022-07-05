@@ -23,4 +23,4 @@ struct AppData {
 
 Under-the-hood a lens is just a static instance of a zero-sized type, generated for us by the derive macro, which implements the `Lens` trait. The `Lens` trait has a single function, `view()`, which takes a reference to the container and returns a reference to the piece of data. The static instance is given the same name as the field and placed in a module with the same name as the struct, allowing us to use it as `AppData::data`.  
 
-A lens provides fine-grained reactivity to the VIZIA data system. When a binding is created a copy of the lens is stored along with 
+A lens provides fine-grained reactivity to the Vizia data system. When a binding is created a copy of the lens is stored along with 

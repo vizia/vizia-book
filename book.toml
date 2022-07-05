@@ -1,6 +1,6 @@
 [book]
-authors = ["George Atkinson"]
+authors = ["George Atkinson", "Audrey Dutcher"]
 language = "en"
 multilingual = false
 src = "src"
-title = "The Vizia Book"
+title = "vizia-book"

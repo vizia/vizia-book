@@ -1,9 +1,9 @@
 
 # Stylsheets
-As shown in the previous page, Vizia uses CSS stylesheets to apply shared styling to views. However, Vizia currently only supports a small subset of the CSS standard. This section provides an overview and reference of the supported CSS specification.
+As shown in the previous section, Vizia can use CSS stylesheets to apply shared styling to views. However, Vizia currently only supports only a small subset of the CSS standard. This section provides an overview and reference of the supported CSS specification.
 
 ## Selectors
-Styling in CSS works by matching rules to views. A rule is made up of a selector, followed by a list of properties and their desired values.
+Styling in CSS works by matching rules to views. A *style rule* is made up of a selector, followed by a list of properties and their desired values.
 
 The selector determines which views the rule applies to. For example, the following rule applies any `Button` view in the application:
 
@@ -12,6 +12,8 @@ button {
     background-color: red;
 }
 ```
+
+
 ### Element Name
 The `button` keyword here is an element name and is used to select views of a certain type, e.g. all buttons or all checkboxes. The element name of a view is determine by the `element()` method in the view trait, for example:
 
@@ -39,7 +41,7 @@ These class names can then be used in selectors to target these views:
 ```
 > Note that class names in CSS begin with a '.'
 
-There is also a `.toggle_class()` modifier for toggling a class name on a view using a bool or a lens with a bool target:
+There is also a `.toggle_class()` modifier for toggling a class name on a view using a boolean or a lens to some boolean state:
 
 ```rust
 Element::new(cx).toggle_class("foo", AppData::flag);

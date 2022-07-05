@@ -36,7 +36,7 @@ vizia = {git = "https://github.com/vizia/vizia"}
 Edit the `main.rs` file to the following:
 
 ```rust
-use vizia::*;
+use vizia::prelude::*;
 
 fn main() {
     Application::new(|cx|{
@@ -51,15 +51,15 @@ To run the app, call `cargo run`, which will produce a window with a `Hello Worl
 ## A closer look
 Let's take a closer look at each part of the simple example above.
 
-The `use vizia::*;` statement on the first line imports the definitions from the vizia crate for us to use.
+The `use vizia::prelude::*;` statement on the first line imports the required definitions from the Vizia crate for us to use.
 
 One of these definitions is the `Application` type, which is used to create the main window and its contents.
 
 The `Application::new()` method takes a closure which provides `cx`, a mutable reference to a `Context`, where the state of our application is stored.
 
-Inside this closure is a `Label`, which is created by passing the mutable reference to context, as well as a text string to display.
+Inside this closure is a `Label`, which is created by calling `Label::new()` with the mutable reference to context, as well as a text string to display.
 
-Finally, the `run()` method called on the application starts the app's event loop.
+Finally, the `run()` method called on the application starts the event loop of the application.
 
 ## Next steps
 Now that you're familiar with the very basics of building a Vizia application project, let's move on to the next sections to learn about reactive user interfaces and how to build them.

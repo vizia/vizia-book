@@ -1,6 +1,6 @@
 # Layout
 
-VIZIA uses the Morphorm layout engine to determine the size and position of elements based on a set of layout properties.
+Vizia uses the Morphorm layout engine to determine the size and position of elements based on a set of layout properties.
 
 ## Layout Type
 The [layout type]() of an element determines whether its children should be arranged into a vertical stack (column), a horizontal stack (row), or a grid.
@@ -13,6 +13,7 @@ The [position]() type of an element determines whether it should be arranged by 
 
 ## Units
 Both space and size are expressed in `Units`, which can be one of 4 possible variants:
+
 ### Pixels
 Specifies a number of pixels for space or size.
 

@@ -1,6 +1,7 @@
 # Style Properties
 
 ## Background
+`background-color`, `background-image`
 
 ### Background Color
 The `background-color` property can be applied to any view. The color can be specified as `rgb`, `rgba`, a color keyword, or `hex` code.

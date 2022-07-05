@@ -4,10 +4,10 @@ Styling refers to modifying the visual properties of a view, such as its backgro
 
 There are two methods for styling views in Vizia:
 
-1. inline
-2. shared
+1. Inline
+2. Shared
 
-## Inline Styling
+## Inline Styling (View Modifiers)
 Inline styling refers to applying style modifiers directly on views in Rust code. 
 
 The following example shows how the background color of a view can be modified by a call to a function directly on the view.
@@ -18,7 +18,7 @@ Element::new(cx).background_color(Color::red());
 > Inline style properties override any shared styling which targets the same view.
 
 ### Property Bindings
-As well as values, like `Color` or `Units`, style modifiers can also take a lens as input, which sets up a **property binding**. This allows the style properties of a view to update in response to changes in application data without having to rebuild the entire view. 
+As well as values, like `Color` or `Units`, style modifiers can also take a lens as input, which sets up a *property binding*. This allows the style properties of a view to update in response to changes in application data without having to rebuild the entire view. 
 
 For example, if we have an `AppData` model with a `custom_color` field of type `Color`, we can bind this directly to the background color of a view like so:
 
