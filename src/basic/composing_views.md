@@ -71,7 +71,7 @@ fn main() {
                 Label::new(cx, "john.doe@company.com");
             });
         })
-        .background_color(Color::from("#AAAAAA"));
+        .background_color(Color::from("#EEEEEE"));
     })
     .inner_size((400, 100))
     .run();

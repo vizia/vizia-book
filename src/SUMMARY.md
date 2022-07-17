@@ -9,7 +9,7 @@
 - [Data Binding and Lenses](./walkthrough/lenses.md)
 - [Styling and Layout](./walkthrough/styling.md)
 
-# Basic Concepts
+# Guide
 - [Overview](./basic/overview.md)
 - [Application](./basic/application.md)
     - [Window Modifiers](./basic/window_modifiers.md)
@@ -25,10 +25,20 @@
     - [Property Binding](./basic/property_binding.md)
 - [Events](./basic/events.md)
 - [Custom Views](./basic/custom_views.md)
+    - [Custom View Binding](./basic/custom_view_binding.md)
+    - [View Model Data](./basic/view_model_data.md)
+    - [View Event Handling](./basic/view_event_handling.md)
+    - [Custom View Modifiers](./basic/custom_view_modifiers.md)
 - [Conditional Views](./basic/conditional_views.md)
 - [List](./basic/list.md)
+- [Localization](./basic/localization.md)
+- [Environment](./basic/environment.md)
+- [Transitions](./basic/transitions.md)
+- [Cursor Icon](./basic/cursor_icon.md)
+- [Keymap](./basic/keymap.md)
 
-
+<!-- # Reference
+- [Style Properties](./reference/style.rs) -->
 
 <!-- # Advanced Concepts
 - [Custom Views](./advanced/custom_views.md)

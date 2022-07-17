@@ -53,7 +53,7 @@ fn main() {
             .top(Stretch(1.0))
             .bottom(Stretch(1.0));
         })
-        .background_color(Color::from("#AAAAAA"))
+        .background_color(Color::from("#EEEEEE"))
         .height(Auto)
         .child_space(Pixels(10.0))
         .col_between(Pixels(10.0));

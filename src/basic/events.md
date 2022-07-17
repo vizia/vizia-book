@@ -104,6 +104,7 @@ fn main() {
         })
         .child_space(Stretch(1.0));
     })
+    .inner_size((400, 100))
     .run();
 }
 ```

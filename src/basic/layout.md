@@ -24,7 +24,7 @@ fn main() {
                 Label::new(cx, "john.doe@company.com");
             });
         })
-        .background_color(Color::from("#AAAAAA"))
+        .background_color(Color::from("#EEEEEE"))
         .height(Auto);
     })
     .inner_size((400, 100))
@@ -54,7 +54,7 @@ fn main() {
                 Label::new(cx, "john.doe@company.com");
             });
         })
-        .background_color(Color::from("#AAAAAA"))
+        .background_color(Color::from("#EEEEEE"))
         .height(Auto)
         .child_space(Pixels(10.0));
     })
@@ -84,7 +84,7 @@ fn main() {
                 Label::new(cx, "john.doe@company.com");
             });
         })
-        .background_color(Color::from("#AAAAAA"))
+        .background_color(Color::from("#EEEEEE"))
         .height(Auto)
         .child_space(Pixels(10.0))
         .col_between(Pixels(10.0));

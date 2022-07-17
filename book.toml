@@ -4,3 +4,7 @@ language = "en"
 multilingual = false
 src = "src"
 title = "vizia-book"
+
+[output.html]
+theme = "Ayu"
+default-theme = "Ayu"
