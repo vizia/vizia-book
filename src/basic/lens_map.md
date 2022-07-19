@@ -61,6 +61,6 @@ fn main() {
 }
 ```
 
-![](../img/stylesheet.png)
+<img src="../img/stylesheet.png" alt="" width="400"/>
 
 This example appears unchanged from when we applied the stylesheet, however values of the labels are all bound to data in the `Person` model. Change the name and email in the model and re-run the application to see that the values of the labels change accordingly. 

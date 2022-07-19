@@ -16,4 +16,4 @@ fn main() {
 }
 ```
 
-![A window with the title 'My Awesome Application'](../img/window_title.png)
+<img src="../img/window_title.png" alt="A window with the title 'My Awesome Application'" width="400"/>

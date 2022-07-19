@@ -158,4 +158,4 @@ fn main() {
 }
 ```
 
-![](../img/property_binding.png)
+<img src="../img/property_binding.png" alt="" width="400"/>

@@ -16,6 +16,6 @@ fn main() {
 }
 ```
 
-![A window with a label showing 'Hello World' in black text.](../img/label_color.png)
+<img src="../img/label_color.png" alt="" width="400"/>
 
 Modifiers for [style]() and [layout]() properties are available for all views. However, some views have modifiers specific to themselves.

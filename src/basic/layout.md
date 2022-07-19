@@ -32,7 +32,7 @@ fn main() {
 }
 ```
 
-![](../img/height.png)
+<img src="../img/height.png" alt="" width="400"/>
 
 The `child_space` modifier can be used to add padding between a view and its children:
 
@@ -62,7 +62,8 @@ fn main() {
     .run();
 }
 ```
-![](../img/child_space.png)
+
+<img src="../img/child_space.png" alt="" width="400"/>
 
 Similarly, the `col_between` modifier can be used to add space between children arranged in a row:
 
@@ -94,4 +95,4 @@ fn main() {
 }
 ```
 
-![](../img/col_between.png)
+<img src="../img/col_between.png" alt="" width="400"/>

@@ -111,7 +111,7 @@ fn main() {
 
 Running the app and then clicking on the button emits the event, which propagates up to the model and mutates the `name` field, which then updates the label which is bound to this field.
 
-![](../img/update.gif)
+<img src="../img/update.gif" alt="" width="400"/>
 
 
 <!-- Events propagate through the view tree, and how an event propagates is specific to the event type. However, usually a platform event will propagate down the tree to the target view or model, and a user event will propagate up the tree to the target view or model. -->

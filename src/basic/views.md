@@ -13,7 +13,8 @@ fn main() {
     .run();
 }
 ```
-![A window with a label showing 'Hello World' in black text.](../img/label.png)
+
+<img src="../img/label.png" alt="A window with a label showing 'Hello World' in black text." width="400"/>
 
 The first argument to the constructor is a mutable reference to `Context`, shortened to `cx`. This allows the view to build itself into the context.
 

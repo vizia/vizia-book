@@ -19,9 +19,7 @@ fn main() {
     .run();
 }
 ```
-
-![](../img/vstack.png)
-
+<img src="../img/vstack.png" alt="" width="400"/>
 
 While a `HStack` container will arrange its contents into a horizontal row:
 
@@ -49,7 +47,7 @@ fn main() {
 }
 ```
 
-![](../img/hstack.png)
+<img src="../img/hstack.png" alt="" width="400"/>
 
 We can style containers like any other view using style modifiers. For example, we can change the background color of the `hstack`:
 
@@ -78,7 +76,7 @@ fn main() {
 }
 ```
 
-![](../img/background_color.png)
+<img src="../img/background_color.png" alt="" width="400"/>
 
 <!-- The last argument to a container view is a closure with a `cx` argument, allowing for sub-views to be built into the container.
 

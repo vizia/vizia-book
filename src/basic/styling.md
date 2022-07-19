@@ -50,7 +50,7 @@ fn main() {
 }
 ```
 
-![](../img/stylesheet.png)
+<img src="../img/stylesheet.png" alt="" width="400"/>
 
 We set the `size` to be `65px`, the `background-color` to be red, and the border radius to `50%`, resulting in a circle. The `child-space` is set to `1s`, which is equivalent to `Stretch(1.0)` in rust code.
 
