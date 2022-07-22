@@ -2,7 +2,8 @@
 
 When creating an `Application` the properties of the root window can be changed using [window modifiers](https://docs.vizia.dev/vizia/window/trait.WindowModifiers.html). These modifiers are methods called on the application prior to calling `run()`.
 
-For example, to change the title of the root window:
+## Example
+Use the `title()` window modifier to change the title of the root window:
 
 ```rust
 use vizia::prelude::*;

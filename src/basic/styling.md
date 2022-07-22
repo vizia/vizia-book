@@ -1,57 +1,74 @@
 # Styling
 
-Style modifiers can be used to set the properties of a view inline. However, stylesheets can be used to define shared style properties across multiple views.
+Styling refers to modifying the visual properties of a view, such as its background color, border color, etc. A full list of available style properties can be found in the style reference section of this book.
 
-Stylesheets use CSS rules to apply styling to multiple views simultaneously. A CSS string can be defined within a rust file as a constant, or within an external css file. 
+There are two methods for styling views in Vizia:
 
-To add a stylesheet which is already a string in rust code, use `cx.add_theme()` to add the stylesheet to the application. Here we use the `class()` modifier to add a class name to the first label.
+1. Inline
+2. Shared
+
+## Inline Styling (View Modifiers)
+Inline styling refers to applying style modifiers directly on views in Rust code. 
+
+The following example shows how the background color of a view can be modified by a call to a function directly on the view.
+```rust
+Element::new(cx).background_color(Color::red());
+```
+
+> Inline style properties override any shared styling which targets the same view.
+
+### Property Bindings
+As well as values, like `Color` or `Units`, style modifiers can also take a lens as input, which sets up a *property binding*. This allows the style properties of a view to update in response to changes in application data without having to rebuild the entire view. 
+
+For example, if we have an `AppData` model with a `custom_color` field of type `Color`, we can bind this directly to the background color of a view like so:
 
 ```rust
-use vizia::prelude::*;
+Element::new(cx).background_color(AppData::custom_color);
+```
 
+## Shared Styling
+Shared styling uses CSS rules to apply styling to multiple views simultaneously. The CSS string can be defined within a rust file as a constant, or within an external css file. 
+
+To add a stylesheet which is already a string in rust code, use `cx.add_theme()` to add the stylesheet to the application. For example:
+
+```rust
 const STYLE: &str = r#"
-    .profile_icon {
-        height: 65px;
-        width: 65px;
-        child-space: 1s;
-        background-color: #AA4040;
-        border-radius: 50%;
+    element {
+        background-color: red;
     }
-"#;
+"#
 
 fn main() {
-    Application::new(|cx|{
-
+    Application(WindowDescription::new(), |cx|{
+        
         cx.add_theme(STYLE);
-
-        HStack::new(cx, |cx|{
-            
-            Label::new(cx, "J")
-                .font_size(30.0)
-                .class("profile_icon");
-            
-            VStack::new(cx, |cx|{
-    
-                Label::new(cx, "John Doe")
-                    .font_size(20.0);
-                
-                Label::new(cx, "john.doe@company.com");
-            })
-            .top(Stretch(1.0))
-            .bottom(Stretch(1.0));
-        })
-        .background_color(Color::from("#EEEEEE"))
-        .height(Auto)
-        .child_space(Pixels(10.0))
-        .col_between(Pixels(10.0));
+        
+        Element::new(cx);
     })
-    .inner_size((400, 100))
-    .run();
 }
 ```
 
-<img src="../img/stylesheet.png" alt="" width="400"/>
+To add a stylesheet which is defined in a separate `.css` file, use `cx.add_stylesheet()` with the file path. For example:
 
-We set the `size` to be `65px`, the `background-color` to be red, and the border radius to `50%`, resulting in a circle. The `child-space` is set to `1s`, which is equivalent to `Stretch(1.0)` in rust code.
+```css
+/* style.css */
+element {
+    background-color: red;
+}
+```
 
-The `Stretch` unit will cause the space to fill a proportion of the parent free space. In this case, the parent free space is the parent size minus the text size, and the proportion is one, which results in equal spacing around the text and thus centers the text within the label.
+```rust
+/* main.rs */
+fn main() {
+    Application(WindowDescription::new(), |cx|{
+        
+        cx.add_stylesheet("style.css");
+        
+        Element::new(cx);
+    })
+}
+```
+
+> Note: External stylesheets can be hot-reloaded using the F5 key while the application is running.
+
+Vizia does not currently support the entire CSS standard. The next sections of the book outlines the supported CSS selectors and properties. 

@@ -19,7 +19,6 @@ const STYLE: &str = r#"
 #[derive(Lens)]
 pub struct Person {
     pub name: String,
-    pub email: String,
     pub color: Color,
 }
 
@@ -32,7 +31,6 @@ fn main() {
 
         Person {
             name: String::from("John Doe"),
-            email: String::from("john.doe@company.com"),
             color: Color::from("#4040AA"),
         }.build(cx);
 
@@ -43,19 +41,12 @@ fn main() {
                 .background_color(Person::color)
                 .class("profile_icon");
             
-            VStack::new(cx, |cx|{
-    
-                Label::new(cx, Person::name)
-                    .font_size(20.0);
+            Label::new(cx, Person::name)
+                .font_size(20.0);
                 
-                Label::new(cx, Person::email);
-            })
-            .top(Stretch(1.0))
-            .bottom(Stretch(1.0));
         })
-        .background_color(Color::from("#EEEEEE"))
-        .height(Auto)
-        .child_space(Pixels(10.0))
+        .child_space(Stretch(1.0))
+        .child_left(Pixels(10.0))
         .col_between(Pixels(10.0));
     })
     .inner_size((400, 100))

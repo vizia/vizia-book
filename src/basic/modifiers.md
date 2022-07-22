@@ -2,7 +2,7 @@
 
 View modifiers allow for the properties of a view to be modified in a declarative way.
 
-We can set the font color of the `Label` like so:
+For example, we can set the font color of a `Label` with the following style modifier:
 
 ```rust
 use vizia::prelude::*;
@@ -18,4 +18,4 @@ fn main() {
 
 <img src="../img/label_color.png" alt="" width="400"/>
 
-Modifiers for [style]() and [layout]() properties are available for all views. However, some views have modifiers specific to themselves.
+Modifiers for [style](./style_properties.md) and [layout](./layout_properties.md) properties are available for all views. However, some views have unique modifiers specific to themselves.

@@ -20,7 +20,6 @@ const STYLE: &str = r#"
 #[derive(Lens)]
 pub struct Person {
     pub name: String,
-    pub email: String,
 }
 
 impl Model for Person {}
@@ -32,7 +31,6 @@ fn main() {
 
         Person {
             name: String::from("John Doe"),
-            email: String::from("john.doe@company.com"),
         }.build(cx);
 
         HStack::new(cx, |cx|{
@@ -40,20 +38,13 @@ fn main() {
             Label::new(cx, Person::name.map(|name| name.chars().next().unwrap()))
                 .font_size(30.0)
                 .class("profile_icon");
-            
-            VStack::new(cx, |cx|{
-    
-                Label::new(cx, Person::name)
-                    .font_size(20.0);
-                
-                Label::new(cx, Person::email);
-            })
-            .top(Stretch(1.0))
-            .bottom(Stretch(1.0));
+
+            Label::new(cx, Person::name)
+                .font_size(20.0);
+        
         })
-        .background_color(Color::from("#AAAAAA"))
-        .height(Auto)
-        .child_space(Pixels(10.0))
+        .child_space(Stretch(1.0))
+        .child_left(Pixels(10.0))
         .col_between(Pixels(10.0));
     })
     .inner_size((400, 100))
@@ -63,4 +54,4 @@ fn main() {
 
 <img src="../img/stylesheet.png" alt="" width="400"/>
 
-This example appears unchanged from when we applied the stylesheet, however values of the labels are all bound to data in the `Person` model. Change the name and email in the model and re-run the application to see that the values of the labels change accordingly. 
+Change the name in the model and re-run the application to see that the values of the labels change accordingly. 

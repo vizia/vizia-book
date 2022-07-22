@@ -1,6 +1,4 @@
-# List
-
-<!-- Places the person view within a list of people. -->
+# Lists
 
 The `List` view binds to a `Vec` of model data and presents the items in a column.
 
