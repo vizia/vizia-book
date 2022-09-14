@@ -1,6 +1,6 @@
 # Overview
 
-This chapter covers the basic concepts of Vizia, some of which are demonstrated in the [walkthrough](../walkthrough/introduction.md), but in more detail by building a example contacts application.
+This chapter covers the basic concepts of Vizia, some of which are demonstrated in the [walkthrough](../walkthrough/introduction.md), but in more detail.
 
 # Reactive UI
 

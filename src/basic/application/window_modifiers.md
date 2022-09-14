@@ -2,7 +2,7 @@
 
 When creating an `Application` the properties of the root window can be changed using [window modifiers](https://docs.vizia.dev/vizia/window/trait.WindowModifiers.html). These modifiers are methods called on the application prior to calling `run()`.
 
-## Example
+## Example - Title Modifier
 Use the `title()` window modifier to change the title of the root window:
 
 ```rust
@@ -17,4 +17,4 @@ fn main() {
 }
 ```
 
-<img src="../img/window_title.png" alt="A window with the title 'My Awesome Application'" width="400"/>
+<img src="../../img/window_title.png" alt="A window with the title 'My Awesome Application'" width="400"/>

@@ -11,48 +11,49 @@
 
 # Guide
 - [Overview](./basic/overview.md)
-- [Application](./basic/application.md)
-    - [Window Modifiers](./basic/window_modifiers.md)
-- [Declaring Views](./basic/views.md)
-    - [View Modifiers](./basic/modifiers.md)
-    - [Composing Views](./basic/composing_views.md)
-    - [The View Tree](./basic/view_tree.md)
-- [Styling](./basic/styling.md)
-    - [Stylesheets](./basic/stylesheets.md)
-    <!-- - [Style Properties](./basic/style_properties.md) -->
-- [Layout](./basic/layout.md)
-    - [Units](./basic/units.md)
-    - [Size](./basic/size.md)
-    - [Space](./basic/space.md)
-    <!-- - [Layout Properties](./basic/layout_properties.md) -->
-- [Model Data](./basic/models.md)
-    - [Environment](./basic/environment.md)
-- [Binding](./basic/binding.md)
-    - [Lenses](./basic/lenses.md)
-    - [Lens Map](./basic/lens_map.md)
-    - [Property Binding](./basic/property_binding.md)
-    - [Conditional Views](./basic/conditional_views.md)
-- [Events](./basic/events.md)
-    - [Handling Events](./basic/handling_events.md)
-    - [Sending Events](./basic/sending_events.md)
-    - [Window Events](./basic/window_events.md)
-- [Animation](./basic/animation.md)
-    - [Transitions](./basic/transitions.md)
-- [Localization](./basic/localization.md)
-    - [Translating Text](./basic/translation.md)
-    - [Specifying a Locale](./basic/locale.md)
-    - [Localizing Layout](./basic/localizing_layout.md)
-    - [Localizing Views](./basic/localizing_views.md)
-- [Custom Views](./basic/custom_views.md)
-    - [Custom View Binding](./basic/custom_view_binding.md)
-    - [View Model Data](./basic/view_model_data.md)
-    - [View Event Handling](./basic/view_event_handling.md)
-    - [Custom View Modifiers](./basic/custom_view_modifiers.md)
-- [Accessibility](./basic/accessibility.md)
+- [Application](./basic/application/application.md)
+    - [Window Modifiers](./basic/application/window_modifiers.md)
+- [Views](./basic/views/views.md)
+    - [View Modifiers](./basic/views/modifiers.md)
+    - [Composing Views](./basic/views/composing_views.md)
+- [Styling](./basic/styling/styling.md)
+    - [Inline Styling](./basic/styling/inline.md)
+    - [Shared Styling](./basic/styling/shared.md)
+        - [Stylesheets](./basic/styling/stylesheets.md)
+    <!-- - [Style Properties](./basic/styling/style_properties.md) -->
+        <!-- -[Background](./basic/styling/properties/background.md) -->
+- [Layout](./basic/layout/layout.md)
+    - [Size](./basic/layout/size.md)
+    - [Space](./basic/layout/space.md)
+    <!-- - [Grid](./basic/layout/grid.md) -->
+    <!-- - [Units](./basic/layout/units.md) -->
+    <!-- - [Stacks Reference](./basic/layout/stacks.md) -->
+    <!-- - [Layout Properties](./basic/layout/layout_properties.md) -->
+- [Model Data](./basic/models/models.md)
+    - [The `Data` trait](./basic/models/data.md)
+    <!-- - [Environment](./basic/models/environment.md) -->
+- [Binding](./basic/binding/binding.md)
+    - [Lenses](./basic/binding/lenses.md)
+        - [Lens Map](./basic/binding/lens_map.md)
+    - [Property Binding](./basic/binding/property_binding.md)
+    - [Conditional Views](./basic/binding/conditional_views.md)
+- [Events](./basic/events/events.md)
+<!-- - [Animation](./basic/animation/animation.md) -->
+<!-- - [Transitions](./basic/animation/transitions.md) -->
+<!-- - [Localization](./basic/localization/localization.md) -->
+    <!-- - [Translating Text](./basic/localization/translation.md) -->
+    <!-- - [Localizing Layout](./basic/localization/localizing_layout.md) -->
+    <!-- - [Localizing Views](./basic/localization/localizing_views.md) -->
+<!-- - [Custom Views](./basic/custom_views/custom_views.md)
+    - [Custom View Binding](./basic/custom_views/custom_view_binding.md)
+    - [View Model Data](./basic/custom_views/view_model_data.md)
+    - [View Event Handling](./basic/custom_views/view_event_handling.md)
+    - [Custom View Modifiers](./basic/custom_views/custom_view_modifiers.md)
+- [Accessibility](./basic/accessibility.md) -->
 
-# Views
+<!-- # Views
 
-- [List](./basic/list.md)
+- [List](./basic/list.md) -->
 
 
 <!-- # Reference

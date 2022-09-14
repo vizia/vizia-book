@@ -1,8 +1,8 @@
 # Size
 
-The size of a view is controlled by the `width` and `height` properties, and can be specified as pixels, percentage, stretch, or auto.
+The size of a view is controlled by the `width` and `height` properties, and can be specified using `Units`, which can be pixels, a percentage, a stretch factor, or auto.
 
-We can specify the `width` and `height` of a view using the respective layout modifiers which use the `Units` type:
+The `width` and `height` of a view can be specified using the respective layout modifiers which use the `Units` type:
 
 ```rust
 use vizia::prelude::*;
@@ -17,7 +17,7 @@ Application::new(|cx|{
 .run();
 ```
 
-We can set the width and height simultaneously with the `size` layout modifier:
+The width and height can be set simultaneously with the `size` layout modifier:
 
 ```rust
 use vizia::prelude::*;

@@ -23,8 +23,8 @@ This variable is, surprise, a lens!
 
 Lenses are property getter objects, allowing you to "select" some part of the model and inspect it at will.
 These objects are passed to bindings to let them store the fact that you would like to bind to something specific, instead of having to rebuild the descendants of a binding every time any aspect of the model changes.
-Lenses are also very cheap, since they don't store any data of their own, just how to access some data.
-This means you can pass lenses around freely without worrying about lifetimes, ownership, or cloning.
+<!-- Lenses are also very cheap, since they don't store any data of their own, just how to access some data.
+This means you can pass lenses around freely without worrying about lifetimes, ownership, or cloning. -->
 
 Now, let's look at the other strange part of the example:
 

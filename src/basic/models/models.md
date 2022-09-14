@@ -43,6 +43,6 @@ Internally, Vizia enforces a separation between views and models by storing them
 
 The model-view tree for the above code can be depicted with the following diagram:
 
-![Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, and with a child HStack view with two child Label views.](../img/basic_tree_model.svg)
+![Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, and with a child HStack view with two child Label views.](../../img/basic_tree_model.svg)
 
 If the `AppData` had been built within the contents of the `HStack`, then the model would be associated with the `HStack` rather than the `Window`.

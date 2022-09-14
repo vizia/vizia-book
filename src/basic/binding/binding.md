@@ -26,9 +26,9 @@ Note the `Lens` derive, which allows us to bind to pieces, in this case a field,
 When the `name` changes, the text of the label updates to show the new value.
 
 ## The `Binding` View
-There is a special container view in Vizia called the `Binding` view. This view binds to some data and will rebuild its contents if the data changes.
+There is a special container view in Vizia called the `Binding` view. This view binds to some data and will remove and then rebuild its contents if the data changes.
 
-The following code produces the same result as passing the lens directly to the label, however, the binding view will rebuild the label when the name changes, which is unnecessary. 
+The following code produces the same result as passing the lens directly to the label, however, the binding view will rebuild the label when the name changes, which is unnecessary. The binding view is useful for [constructing views conditionally](conditional_views.md).
 
 ```rust
 pub struct Person {

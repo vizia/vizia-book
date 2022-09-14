@@ -1,8 +1,8 @@
 # Style properties
 
+Below is a list of the currently supported style properties:
 
-
-| Property         | Description                               | Animatable? |
+<!-- | Property         | Description                               | Animatable? |
 |------------------|-------------------------------------------|-------------|
 | display | determines whether an entity will be rendered and acted on by the layout system    | Yes         |
 | visibility     | determines whether an entity will be rendered.        | Yes         |
@@ -15,4 +15,4 @@
 | border-width     | Sets the width of the view border.        | Yes         |
 | border-width     | Sets the width of the view border.        | Yes         |
 | border-width     | Sets the width of the view border.        | Yes         |
-|                  |                                           |             |
+|                  |                                           |             | -->

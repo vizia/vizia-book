@@ -3,7 +3,7 @@
 The first thing to understand if you're reading this book from start to finish, is that your intuition for how to write a GUI program may not align with the way Vizia is designed.
 This isn't to say that Vizia isn't intuitive to use, it just uses a paradigm which is not the same as the most common GUI frameworks.
 
-Vizia is a _declarative UI framework_.
+Vizia is a _reactive UI framework_.
 This means that there is a _very_ strict separation between models - that is, the data that you would like to manipulate as a user of your app - and views - that is, the presentation of that data, the way the interface looks and acts.
 These two parts communicate with each other, and Vizia forces you to make this communication explicit.
 
@@ -43,7 +43,7 @@ Here's what the tree will look like:
 Let's write it!
 
 ```rust
-use vizia::*; // it's common practice to wildcard-import from vizia
+use vizia::prelude::*; // import the parts of vizia we need
 
 // First, our model:
 
@@ -63,14 +63,11 @@ pub enum AppEvent {
 
 impl Model for AppData {
 	fn event(&mut self, _: &mut Context, event: &mut Event) {
-		// there are hundreds of events. Is this event the kind we can handle?
-		if let Some(message) = event.message.downcast::<AppEvent>() {
-			// which event did we get?
-			match message {
-				AppEvent::Increment => self.number += 1,
-				AppEvent::Decrement => self.number -= 1,
-			}
-		}
+		// there are hundreds of events, so try to convert to the type we want to handle.
+		event.map(|app_event, _| match app_event {
+			AppEvent::Increment => self.number += 1,
+			AppEvent::Decrement => self.number -= 1,
+		});
 	}
 }
 
@@ -78,7 +75,7 @@ impl Model for AppData {
 
 fn main() {
 	// Create a new application with a default window (our first view)
-	let app = Application::new(WindowDescription::new(), |cx| {
+	let app = Application::new(|cx| {
 		// cx is always Context where Vizia's retained state lives
 
 		// Build our model with an initial value. This is attached to the current view.

@@ -13,7 +13,7 @@ fn main() {
 ```
 Calling `run()` on the `Application` causes the program to enter the event loop and for the main window to display.
 
-<img src="../img/application.png" alt="A window with a label showing 'Hello World' in black text." width="800"/>
+<img src="../../img/application.png" alt="An empty vizia application window" width="800"/>
 
 
 
