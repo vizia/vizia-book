@@ -1,5 +1,5 @@
 # Lenses
-Vizia uses lenses to specify a binding to a piece of model data:
+Vizia uses lenses to allow specifying a binding to a piece of model data:
 
 ```rust
 #[derive(Lens)]
@@ -16,7 +16,7 @@ Then, a static instance of each type is created with the same name as the field,
 
 For example, for the above model, a lens to the `name` field is created as `Person::name`.
 
-Each generated type implements the `Lens` trait, which looks something like:
+Each generated type implements the `Lens` trait, which looks something like this:
 
 ```rust
 pub trait Lens {

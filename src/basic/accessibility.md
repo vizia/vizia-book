@@ -15,7 +15,3 @@ The `:focus` pseudoclass selector can be used in CSS to apply styling when a vie
 ## Accessible Theming
 
 TODO
-
-## Screen Reader Support
-
-Vizia does not yet support screen readers. However, we are working on it, so check back soon!

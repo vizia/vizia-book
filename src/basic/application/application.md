@@ -1,6 +1,6 @@
 # Application
 
-Creating a new application creates a root `Window` and a `Context`. Views declared within the closure passed to `Application::new()` are added to the context and rendered into the root window.
+Creating a new application creates a root `Window` and a [`Context`](https://docs.vizia.dev/vizia/context/struct.Context.html). Views declared within the closure passed to `Application::new()` are added to the context and rendered into the root window.
 ```rust
 use vizia::prelude::*;
 

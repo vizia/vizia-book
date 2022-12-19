@@ -5,6 +5,8 @@ Events are used to communicate actions to update model or view data.
 Events propagate through the tree from origin to target, typically from the view which emits the event, up through the ancestors of the view, to the main window and through any models on the way.
 
 
+
+
 ## Declaring Events
 
 An event contains a message which can be any type, but is typically an enum:
