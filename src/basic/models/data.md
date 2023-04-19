@@ -12,4 +12,4 @@ pub struct CustomData {
     text: String,
 } 
 ```
-> The `Data` trait also requires that the type implements `Clone`.
+The `Data` trait also requires that the type implements `Clone`. This is because then the binding system has determined the data has changed, it must replace its stored copy of the data with a new one so it can recompare on the next update cycle.

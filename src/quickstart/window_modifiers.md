@@ -1,4 +1,4 @@
-# Modifyng the Window
+# Modifying the Window
 
 When creating an `Application` the properties of the window can be changed using [window modifiers](https://docs.vizia.dev/vizia/window/trait.WindowModifiers.html). These modifiers are methods called on the application prior to calling `run()`.
 
@@ -12,10 +12,10 @@ fn main() {
     Application::new(|cx|{
 
     })
-    .title("My Awesome Application")
+    .title("Counter")
     .inner_size((400, 200))
     .run();
 }
 ```
 
-<img src="../../img/window_title.png" alt="A window with the title 'My Awesome Application'" width="400"/>
+// TODO: Image here

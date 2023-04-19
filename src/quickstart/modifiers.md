@@ -1,22 +1,24 @@
-# Mofiying Views
+# Modifying Views
 
 Modifiers are used to customize the appearance and behaviour of views in a declarative way. Many of the built-in modifiers in Vizia can be applied to any View, which includes built-in views as well as user-defined views.
 
-## Customize a view with a modifier 
+## Customizing the button with a modifier 
 
-Modifiers are functions which are called on a `Handle`, which is returned by the constructor of all views. Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the `background_color()` modifier to set the background color of a label view:
+Modifiers are functions which are called on a `Handle`, which is returned by the constructor of all views. Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the `background_color()` modifier to set the background color of the label view:
 
 ```rust
-Label::new(cx, "Hello World")
-    .background_color(Color::rgb(255, 0, 0));
+Label::new(cx, "Hello Vizia")
+    .background_color(Color::rgb(200, 200, 200));
 ```
 
-<img src="../../img/label_background.png" alt="A window with the title 'My Awesome Application'" width="200"/>
+// TODO: Image here
+
+Note how this overrides the default background color of the button, which is provided by a CSS stylesheet.
 
 Multiple modifiers can be chained together to acheieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.
 
 ```rust
-Label::new(cx, "Hello World")
+Label::new(cx, "Hello Vizia")
     .width(Pixels(200.0))
     .border_width(Pixels(1.0))
     .border_color(Color::black())
@@ -47,18 +49,3 @@ Slider::new(cx, AppData::value)
     .range(0.0..100.0);
 ```
 
-## Modifier bindings
-Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:
-
-```rust
-
-#[derive(Lens)]
-pub struct AppData {
-    color: Color,
-}
-
-...
-
-Label::new(cx, "Hello World")
-    .background_color(AppData::color);
-```

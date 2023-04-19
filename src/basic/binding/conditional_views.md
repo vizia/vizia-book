@@ -1,8 +1,8 @@
 # Conditional Views
 
-Using a `Binding` view a regular `if` statement can be used to conditionally rebuild views. 
+The `Binding` view provides a way to explicitely control which parts of the view tree get rebuilt when some state changes, specifically anything within the content closure of a `Binding` view.
 
-In the following example, a label view is built into the tree when a boolean state is true, else the view is removed from the tree.
+Because of this, a regular `if` statement can be used to conditionally rebuild views. In the following example, a label view is built into the tree when a boolean state is true, else the view is removed from the tree.
 
 ```rust
 use vizia::prelude::*;
