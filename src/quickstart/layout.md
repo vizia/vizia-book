@@ -1,4 +1,4 @@
-# Positioning Views
+# Customizing the Layout
 
 So far we have a horizontal row of buttons and a label, but they're positioned in the top left corner. Let's use layout modifiers to position the views in the center of the window with some space between them.
 
@@ -28,7 +28,7 @@ fn main() {
 // Image here
 
 ## Understanding the layout system 
-The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can acheieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured:
+The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured:
 
 ### Layout Type
 The children of a view will be arranged into a stack. The `layout-type` property determines how children of a view will be arranged. There are two variants:

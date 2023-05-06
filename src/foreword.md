@@ -1,4 +1,4 @@
-# Foreward
+# Foreword
 
 Welcome to the Vizia book!
 

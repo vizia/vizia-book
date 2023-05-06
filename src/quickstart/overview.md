@@ -1,6 +1,6 @@
 # Overview
 
-In this quickstart guide we'll build a very simple counter application consisting of two buttons, one for incrementing the counter and one for decrementing, and a label showing the counter value.
+In this quick start guide we'll build a very simple counter application consisting of two buttons, one for incrementing the counter and one for decrementing, and a label showing the counter value.
 
 
 The final application will look like the following:

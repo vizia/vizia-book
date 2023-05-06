@@ -1,4 +1,4 @@
-# Lenses and binding
+# Lenses and Data Binding
 
 Now that we have some model data we can *bind* the `count` to the `Label` view. 
 

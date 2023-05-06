@@ -11,11 +11,11 @@
 - [Adding views](./quickstart/view.md)
 - [Modifying views](./quickstart/modifiers.md)
 - [Composing views](./quickstart/composing_views.md)
-- [Positioning views](./quickstart/layout.md)
+- [Customizing the layout](./quickstart/layout.md)
 - [Styling the application](./quickstart/styling.md)
 - [Animating styles with transitions](./quickstart/transitions.md)
-- [Model data](./quickstart/model_data.md)
-- [Lenses and binding](./quickstart/binding.md)
+- [Managing state with model data](./quickstart/model_data.md)
+- [Lenses and data binding](./quickstart/binding.md)
 - [Mutating state with events](./quickstart/events.md)
 - [Making the counter reusable](./quickstart/components.md)
 - [Localizing the application](./quickstart/localization.md)
@@ -24,7 +24,7 @@
 
 # Advanced Guide
 - [Overview]()
-- [Custom modifers]()
+- [Custom modifiers]()
 - [Conditional views]()
 - [Modifier binding]()
 - [Custom drawing]()
@@ -35,3 +35,6 @@
 - [Loading images]()
 - [Async]()
 - [The complete code]()
+
+# Docs
+<!-- - [Drag and Drop](./docs/drag_and_drop.md) -->

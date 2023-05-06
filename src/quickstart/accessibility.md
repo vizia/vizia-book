@@ -1,8 +1,8 @@
-# Making the application accessible
+# Making the Application Accessible
 
-Making the application accessibility is about making it so that assisstive technologies, such as a screen reader, can navigate and query the application.
+Making the application accessibility is about making it so that assistive technologies, such as a screen reader, can navigate and query the application.
 
-Our application so far is actually already mostly accessible as the built-in views, such as the buttons, are already set up to be accessible. However, even though the built-in views are accessible, this does not mean the app is autmatically accessible.
+Our application so far is actually already mostly accessible as the built-in views, such as the buttons, are already set up to be accessible. However, even though the built-in views are accessible, this does not mean the app is automatically accessible.
 
 For the case of our counter, when the increment or decrement buttons are pressed, causing the count to change, a screen reader does not know to speak the current count to inform the user of the change. To account for this we can use something called a 'live region'. 
 

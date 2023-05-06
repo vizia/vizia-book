@@ -18,7 +18,7 @@ impl Model for AppData {}
 
 ## Building the model into the tree
 
-To use a model, an instance of the data must be built into the appplication with the `build()` method:
+To use a model, an instance of the data must be built into the application with the `build()` method:
 
 ```rust
 use vizia::prelude::*;

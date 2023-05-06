@@ -30,7 +30,6 @@ fn main() {
 Next, we'll create a `style.css` file in the `src` directory with the following CSS code:
 
 ```css
-
 .row {
     child-space: 1s;
     col-between: 20px;

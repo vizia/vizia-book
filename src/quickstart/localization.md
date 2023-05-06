@@ -46,18 +46,18 @@ dec = Decrementar
 ```rust
 cx.add_translation(
     langid!("en-US"),
-    include_str!("resources/en-US/hello.ftl").to_owned(),
+    include_str!("resources/en-US/counter.ftl").to_owned(),
 );
 
 cx.add_translation(
     langid!("es"),
-    include_str!("resources/es/hello.ftl").to_owned(),
+    include_str!("resources/es/counter.ftl").to_owned(),
 );
 ```
 
 ## Localizing text
 
-To localise the text in our application we use the `Localized` type within the labels of the buttons, passing the translation keys to the constructor:
+To localize the text in our application we use the `Localized` type within the labels of the buttons, passing the translation keys to the constructor:
 
 ```rust
 Button::new(
@@ -73,7 +73,7 @@ Button::new(
 );
 ```
 
-When the application is run these `Localized` objects are replaced with the transalted strings from the fluent files based on the system locale.
+When the application is run these `Localized` objects are replaced with the translated strings from the fluent files based on the system locale.
 
 ## Testing localization
 
@@ -83,3 +83,6 @@ The locale used for selecting translations is stored in a model called the `Envi
 cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 ```
 
+If we run our app now we'll see that the text has been translated into Spanish. Because the buttons are set up to hug their content, the widths of the buttons have automatically updated to accommodate the slightly longer text strings.
+
+Note that if you're following this tutorial on a machine where the system locale is already set to Spanish then you'll see the translations without needing to emit the `SetLocale` event. To see the English versions of the text replace the `"es"` with `"en-US"` when emitting the event. 

@@ -1,4 +1,4 @@
-# Composing views
+# Composing Views
 
 Composition of views is achieved through container views. These views take a closure which allows us to build child views within them. Some container views may also arrange their content in a particular way.
 

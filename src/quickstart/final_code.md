@@ -17,7 +17,7 @@ pub enum AppEvent {
 
 // Mutate application data in response to events
 impl Model for AppData {
-    fn event(cx: &mut Context, event: &mut Event) {
+    fn event(&mut self, cx: &mut EventContext, event: &mut Event) {
         event.map(|app_event, meta| match app_event {
             AppEvent::Decrement => self.count -= 1,
             AppEvent::Increment => self.count += 1,
@@ -65,12 +65,12 @@ fn main() {
 
         cx.add_translation(
             langid!("en-US"),
-            include_str!("resources/en-US/hello.ftl").to_owned(),
+            include_str!("resources/en-US/counter.ftl").to_owned(),
         );
 
         cx.add_translation(
             langid!("es"),
-            include_str!("resources/es/hello.ftl").to_owned(),
+            include_str!("resources/es/counter.ftl").to_owned(),
         );
 
         // Build model data into the application

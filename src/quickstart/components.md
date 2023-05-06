@@ -1,8 +1,9 @@
 # Making the Counter Reusable
 
-At the moment our counter is not very reusable. Ideally we'd like to...
+In this section we're going to turn our counter into a component by declaring a custom view. This will make our counter reusable so we can easily create multiple instances or export the counter as a component in a library.
 
-We can turn our counter into a component by declaring a custom view. First we declare a struct which will contain any view-specific state:
+## Step 1: Creating a custom view struct
+First we declare a struct which will contain any view-specific state:
 
 ```rust
 pub struct Counter {}
@@ -10,6 +11,7 @@ pub struct Counter {}
 
 Although we could store the `count` value within the view, we've chosen instead to make this view 'stateless', and instead we'll provide it with a lens to bind to some external state (typically from a model).
 
+## Step 2: Implementing the view trait
 Next, we'll implement the `View` trait for the custom counter view:
 
 ```rust
@@ -18,6 +20,7 @@ impl View for Counter {}
 
 The `View` trait has methods for responding to events and for custom drawing, but for now we'll leave this implementation empty.
 
+## Step 3: Building the sub-components of the view
 Then we'll implement a constructor for the counter view. To use our view in a vizia application, the constructor must build the view into the context, which returns a `Handle` we can use to apply modifiers on our view.
 
 ```rust
@@ -80,7 +83,7 @@ impl Counter {
     }
 }
 ```
-
+## Step 4: Using the custom view
 Finally, we can use our custom view in the application:
 
 ```rust
@@ -103,3 +106,27 @@ fn main() {
 ```
 
 We pass it the `AppData::lens`, but the custom view can accept any lens to an `i32` value.
+
+When we run our app now it will seem like nothing has changed. However, now that our counter is a component, we could easily add multiple counters all bound to the same data (or different data):
+
+
+```rust
+use vizia::prelude::*;
+
+fn main() {
+    Application::new(|cx|{
+
+        cx.add_stylesheet("style.css").expect("Failed to load stylesheet");
+
+        AppData { count: 0 }.build(cx);
+
+        Counter::new(cx, AppData::lens);
+        Counter::new(cx, AppData::lens);
+        Counter::new(cx, AppData::lens);
+    })
+    .title("Counter")
+    .inner_size((400, 100))
+    .run();
+}
+
+```
