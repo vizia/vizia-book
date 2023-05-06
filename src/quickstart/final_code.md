@@ -41,13 +41,15 @@ impl Counter {
                     cx,
                     |ex| ex.emit(AppEvent::Decrement),
                     |cx| Label::new(cx, Localized::new("dec")),
-                );
+                )
+                .class("dec");
 
                 Button::new(
                     cx,
                     |ex| ex.emit(AppEvent::Increment),
                     |cx| Label::new(cx, Localized::new("inc")),
-                );
+                )
+                .class("inc");
                 
                 Label::new(cx, AppData::count)
                     .class("count")
@@ -61,7 +63,7 @@ impl Counter {
 fn main() {
     Application::new(|cx|{
         // Add CSS stylesheet
-        cx.add_stylesheet("style.css").expect("Failed to load stylesheet");
+        cx.add_stylesheet("src/style.css").expect("Failed to load stylesheet");
 
         cx.add_translation(
             langid!("en-US"),
@@ -72,6 +74,10 @@ fn main() {
             langid!("es"),
             include_str!("resources/es/counter.ftl").to_owned(),
         );
+
+        // Uncomment to test with spanish locale
+        // If system locale is already Spanish, replace "es" with "en-US".
+        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 
         // Build model data into the application
         AppData { count: 0 }.build(cx);
@@ -86,6 +92,39 @@ fn main() {
 ```
 
 ```css
+.row {
+    child-space: 1s;
+    col-between: 20px;
+}
 
+button.dec {
+    background-color: rgb(150, 40, 40);
+}
 
+button.inc {
+    background-color: rgb(40, 150, 40);
+}
+
+label.count {
+    child-space: 1s;
+    border-width: 1px;
+    border-color: #808080;
+    border-radius: 4px;
+    width: 50px;
+    height: 32px;
+}
+```
+
+## Fluent
+
+*resources/en-US/counter.ftl*
+```
+inc = Increment
+dec = Decrement
+```
+
+*resources/es/counter.ftl*
+```
+inc = Incrementar
+dec = Decrementar
 ```

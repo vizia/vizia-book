@@ -25,6 +25,10 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, "Incremen
     .class("dec");
 ```
 
+The flow of events from the buttons, up through the visual tree, to `AppData` model can be described with the following diagram, where the red arrows indicate the direction of event propagation:
+
+<img src="../img/event_propagation.svg" alt="Diagram of event propagation" width="400"/>
+
 ## Handling events
 Events are handled by views and models with the `event()` method of the `View` or `Model` traits. Let's fill in the `Model` implementation by implementing the `event` method:
 

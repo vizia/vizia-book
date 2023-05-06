@@ -49,6 +49,10 @@ fn main() {
 }
 ```
 
+This sets up a binding which updates the value of the label whenever the `count` changes. We can depict this with the following diagram, where the orange arrow shows the direct link between the data and the label:
+
+<img src="../img/binding.svg" alt="Diagram of event propagation" width="400"/>
+
 ## Modifier bindings
 Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:
 

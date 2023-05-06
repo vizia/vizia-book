@@ -85,4 +85,4 @@ cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 
 If we run our app now we'll see that the text has been translated into Spanish. Because the buttons are set up to hug their content, the widths of the buttons have automatically updated to accommodate the slightly longer text strings.
 
-Note that if you're following this tutorial on a machine where the system locale is already set to Spanish then you'll see the translations without needing to emit the `SetLocale` event. To see the English versions of the text replace the `"es"` with `"en-US"` when emitting the event. 
+Note that if you're following this tutorial on a machine where the system locale is already set to Spanish then you'll see the Spanish translations without needing to emit the `SetLocale` event. To see the English versions of the text replace the `"es"` with `"en-US"` when emitting the event.

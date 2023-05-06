@@ -13,9 +13,9 @@ fn main() {
 
     })
     .title("Counter")
-    .inner_size((400, 200))
+    .inner_size((400, 150))
     .run();
 }
 ```
 
-// TODO: Image here
+<img src="../img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size" width="400"/>

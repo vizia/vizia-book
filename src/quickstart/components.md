@@ -71,9 +71,9 @@ impl Counter {
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
                 Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"))
-                    .class("inc");
-                Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"))
                     .class("dec");
+                Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"))
+                    .class("inc");
                 Label::new(cx, lens)
                     .class("count");
             })
@@ -87,19 +87,17 @@ impl Counter {
 Finally, we can use our custom view in the application:
 
 ```rust
-use vizia::prelude::*;
-
 fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet("style.css").expect("Failed to load stylesheet");
+        cx.add_stylesheet("src/style.css").expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
         Counter::new(cx, AppData::lens);
     })
     .title("Counter")
-    .inner_size((400, 100))
+    .inner_size((400, 150))
     .run();
 }
 
@@ -111,22 +109,22 @@ When we run our app now it will seem like nothing has changed. However, now that
 
 
 ```rust
-use vizia::prelude::*;
-
 fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet("style.css").expect("Failed to load stylesheet");
+        cx.add_stylesheet("src/style.css").expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
-        Counter::new(cx, AppData::lens);
-        Counter::new(cx, AppData::lens);
-        Counter::new(cx, AppData::lens);
+        Counter::new(cx, AppData::count);
+        Counter::new(cx, AppData::count);
+        Counter::new(cx, AppData::count);
     })
     .title("Counter")
-    .inner_size((400, 100))
+    .inner_size((400, 150))
     .run();
 }
 
 ```
+
+<img src="../img/component.png" alt="Vizia app with three counter components" width="400"/>

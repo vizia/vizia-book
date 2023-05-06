@@ -11,7 +11,7 @@ Label::new(cx, "Hello Vizia")
     .background_color(Color::rgb(200, 200, 200));
 ```
 
-// TODO: Image here
+<img src="../img/view_modifier.png" alt="" width="400"/>
 
 Note how this overrides the default background color of the button, which is provided by a CSS stylesheet.
 
@@ -25,7 +25,7 @@ Label::new(cx, "Hello Vizia")
     .background_color(Color::rgb(200, 200, 200));
 ```
 
-// TODO: Image here
+<img src="../img/view_modifiers.png" alt="" width="400"/>
 
 ## View specific modifiers
 Some views have modifiers which are specific to that view type. For example, the `Slider` view has a modifier for setting the slider `range`:
