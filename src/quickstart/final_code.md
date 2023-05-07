@@ -1,5 +1,6 @@
 # The Final Code
 
+## Rust
 ```rust
 use vizia::prelude::*;
 
@@ -90,7 +91,7 @@ fn main() {
     .run();
 }
 ```
-
+## CSS
 ```css
 .row {
     child-space: 1s;
@@ -98,11 +99,11 @@ fn main() {
 }
 
 button.dec {
-    background-color: rgb(150, 40, 40);
+    background-color: rgb(200, 50, 50);
 }
 
 button.inc {
-    background-color: rgb(40, 150, 40);
+    background-color: rgb(50, 200, 50);
 }
 
 label.count {
@@ -110,21 +111,19 @@ label.count {
     border-width: 1px;
     border-color: #808080;
     border-radius: 4px;
-    width: 50px;
-    height: 32px;
 }
 ```
 
 ## Fluent
 
 *resources/en-US/counter.ftl*
-```
+```ftl
 inc = Increment
 dec = Decrement
 ```
 
 *resources/es/counter.ftl*
-```
+```ftl
 inc = Incrementar
 dec = Decrementar
 ```

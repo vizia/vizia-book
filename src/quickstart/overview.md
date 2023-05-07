@@ -2,10 +2,9 @@
 
 In this quick start guide we'll build a very simple counter application consisting of two buttons, one for incrementing the counter and one for decrementing, and a label showing the counter value.
 
+This guide will introduce the reader to the basics of vizia, including setting up an application, composing and modifying views, layout, styling, reactivity, localization and accessibility. The final application will look like the following:
 
-The final application will look like the following:
-
-// Image here
+<img src="../img/styling.png" alt="Image showing a finished counter vizia application." width="400"/>
 
 ## Reactive UI
 

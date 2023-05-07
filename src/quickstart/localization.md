@@ -11,7 +11,7 @@ Fluent files provide a key-value store for translated text strings which vizia u
 
 Let's add two fluent (.ftl) files to our application. We'll call them the same name, `counter.ftl`, but place them within separate directories, `en-Us` and `es`, within a `resources` directory.
 
-<!-- Your project folder structure should now look like this:
+Your project folder structure should now look like this:
 
 ```bash
 .
@@ -19,14 +19,14 @@ Let's add two fluent (.ftl) files to our application. We'll call them the same n
 ├── .git
 ├── .gitignore
 └── src
-    └── resources
-        └── en-US
-            └── counter.ftl
-        └── es
-            └── counter.ftl
-    └── main.rs
+    ├── resources
+    │   ├── en-US
+    │   │   └── counter.ftl
+    │   └── es
+    │       └── counter.ftl
+    ├── main.rs
     └── style.css
-``` -->
+```
 
 
 *resources/en-US/counter.ftl*
