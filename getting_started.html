@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - vizia-book</title>
-        <base href="/tuix-book/">
+        <title>Getting Started - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -82,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item affix "><a href="getting_started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Quickstart</li><li class="chapter-item "><a href="quickstart/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item "><a href="quickstart/setup.html"><strong aria-hidden="true">2.</strong> Creating a new project</a></li><li class="chapter-item "><a href="quickstart/application.html"><strong aria-hidden="true">3.</strong> Creating an application</a></li><li class="chapter-item "><a href="quickstart/window_modifiers.html"><strong aria-hidden="true">4.</strong> Modifying the window</a></li><li class="chapter-item "><a href="quickstart/view.html"><strong aria-hidden="true">5.</strong> Adding views</a></li><li class="chapter-item "><a href="quickstart/modifiers.html"><strong aria-hidden="true">6.</strong> Modifying views</a></li><li class="chapter-item "><a href="quickstart/composing_views.html"><strong aria-hidden="true">7.</strong> Composing views</a></li><li class="chapter-item "><a href="quickstart/layout.html"><strong aria-hidden="true">8.</strong> Customizing the layout</a></li><li class="chapter-item "><a href="quickstart/styling.html"><strong aria-hidden="true">9.</strong> Styling the application</a></li><li class="chapter-item "><a href="quickstart/transitions.html"><strong aria-hidden="true">10.</strong> Animating styles with transitions</a></li><li class="chapter-item "><a href="quickstart/model_data.html"><strong aria-hidden="true">11.</strong> Managing state with model data</a></li><li class="chapter-item "><a href="quickstart/binding.html"><strong aria-hidden="true">12.</strong> Lenses and data binding</a></li><li class="chapter-item "><a href="quickstart/events.html"><strong aria-hidden="true">13.</strong> Mutating state with events</a></li><li class="chapter-item "><a href="quickstart/components.html"><strong aria-hidden="true">14.</strong> Making the counter reusable</a></li><li class="chapter-item "><a href="quickstart/localization.html"><strong aria-hidden="true">15.</strong> Localizing the application</a></li><li class="chapter-item "><a href="quickstart/accessibility.html"><strong aria-hidden="true">16.</strong> Making the application accessible</a></li><li class="chapter-item "><a href="quickstart/final_code.html"><strong aria-hidden="true">17.</strong> The final code</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item affix "><a href="getting_started.html" class="active">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Quickstart</li><li class="chapter-item "><a href="quickstart/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item "><a href="quickstart/setup.html"><strong aria-hidden="true">2.</strong> Creating a new project</a></li><li class="chapter-item "><a href="quickstart/application.html"><strong aria-hidden="true">3.</strong> Creating an application</a></li><li class="chapter-item "><a href="quickstart/window_modifiers.html"><strong aria-hidden="true">4.</strong> Modifying the window</a></li><li class="chapter-item "><a href="quickstart/view.html"><strong aria-hidden="true">5.</strong> Adding views</a></li><li class="chapter-item "><a href="quickstart/modifiers.html"><strong aria-hidden="true">6.</strong> Modifying views</a></li><li class="chapter-item "><a href="quickstart/composing_views.html"><strong aria-hidden="true">7.</strong> Composing views</a></li><li class="chapter-item "><a href="quickstart/layout.html"><strong aria-hidden="true">8.</strong> Customizing the layout</a></li><li class="chapter-item "><a href="quickstart/styling.html"><strong aria-hidden="true">9.</strong> Styling the application</a></li><li class="chapter-item "><a href="quickstart/transitions.html"><strong aria-hidden="true">10.</strong> Animating styles with transitions</a></li><li class="chapter-item "><a href="quickstart/model_data.html"><strong aria-hidden="true">11.</strong> Managing state with model data</a></li><li class="chapter-item "><a href="quickstart/binding.html"><strong aria-hidden="true">12.</strong> Lenses and data binding</a></li><li class="chapter-item "><a href="quickstart/events.html"><strong aria-hidden="true">13.</strong> Mutating state with events</a></li><li class="chapter-item "><a href="quickstart/components.html"><strong aria-hidden="true">14.</strong> Making the counter reusable</a></li><li class="chapter-item "><a href="quickstart/localization.html"><strong aria-hidden="true">15.</strong> Localizing the application</a></li><li class="chapter-item "><a href="quickstart/accessibility.html"><strong aria-hidden="true">16.</strong> Making the application accessible</a></li><li class="chapter-item "><a href="quickstart/final_code.html"><strong aria-hidden="true">17.</strong> The final code</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -143,14 +142,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
+<h2 id="installing-rust"><a class="header" href="#installing-rust">Installing Rust</a></h2>
+<p>The Vizia framework is built using the Rust programming language. Currently, to use Vizia, you will need to install the Rust compiler by following the instructions over at <a href="">https://www.rust-lang.org/learn/get-started</a>.</p>
+<h2 id="running-the-examples"><a class="header" href="#running-the-examples">Running the Examples</a></h2>
+<p>The <a href="https://github.com/vizia/vizia">Vizia repository</a> on github contains a number of example applications. To run these examples, first clone the repository to a local directory, then with your terminal of choice, navigate to this directory and run the following command:</p>
+<pre><code>cargo run --example name_of_example
+</code></pre>
+<p>Where <code>name_of_example</code> should be replaced with the example name.</p>
+<h2 id="join-the-community"><a class="header" href="#join-the-community">Join the Community</a></h2>
+<p>For help with vizia, or to get involved with contributing to the project, come join us on our <a href="https://discord.gg/aNkTPsRm2w">Discord server</a>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="foreword.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
+                            <a rel="next" href="quickstart/overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -158,7 +171,13 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="foreword.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
+                    <a rel="next" href="quickstart/overview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
