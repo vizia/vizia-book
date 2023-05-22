@@ -3,7 +3,7 @@
 [Foreword](foreword.md)
 [Getting Started](getting_started.md)
 
-# Basic Guide
+# Quickstart
 - [Overview](./quickstart/overview.md)
 - [Creating a new project](./quickstart/setup.md)
 - [Creating an application](./quickstart/application.md)
@@ -22,7 +22,19 @@
 - [Making the application accessible](./quickstart/accessibility.md)
 - [The final code](./quickstart/final_code.md)
 
-# Advanced Guide
+<!-- - [Styling]()
+    - [Style modifiers]()
+    - [Adding a stylesheet]()
+    - [Styling components]()
+    - [Background]()
+
+# Views
+- [Label](./views/label.md)
+- [Button](./views/button.md)
+- [Checkbox](./views/checkbox.md) -->
+
+
+<!-- # Quickstart Guide - Advanced
 - [Overview]()
 - [Custom modifiers]()
 - [Conditional views]()
@@ -34,7 +46,7 @@
 - [Lens combinators]()
 - [Loading images]()
 - [Async]()
-- [The complete code]()
+- [The complete code]() -->
 
-# Docs
+<!-- # Docs -->
 <!-- - [Drag and Drop](./docs/drag_and_drop.md) -->

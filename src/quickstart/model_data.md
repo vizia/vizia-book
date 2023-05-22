@@ -47,6 +47,6 @@ This builds the model data into the tree, in this case at the root `Window`. Int
 
 Therefore, the model-view tree for the above code can be depicted with the following diagram:
 
-![Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, and with a child HStack view with two child Label views.](../img/model_view_tree.svg)
+![Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, as well as a child HStack view with two child Button views and a Label view.](../img/model_view_tree.svg)
 
 If the `AppData` had been built within the contents of the `HStack`, then the model would be associated with the `HStack` rather than the `Window`.

@@ -18,5 +18,3 @@ In Vizia, this pattern can be broken down into four concepts:
  2. **Views** - The visual elements which present the application state as a graphical user interface.
  3. **Binding** - The link between model data and views which causes them to update when the data changes.
  4. **Events** - Messages which views send to models to trigger changes to the data.
-
- // Diagram here

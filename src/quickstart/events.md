@@ -48,4 +48,4 @@ The closure provides the message type and an `EventMeta`, which can be used to q
 
 If we run the application now we can see that the buttons cause the state to mutate, which then causes the label to update.
 
-// TODO: gif here
+<!-- // TODO: gif here -->

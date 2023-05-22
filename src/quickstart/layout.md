@@ -27,7 +27,6 @@ fn main() {
 
 <img src="../img/layout.png" alt="A vizia app showing two buttons and a label" width="400"/>
 
-
 ## Understanding the layout system 
 The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured:
 

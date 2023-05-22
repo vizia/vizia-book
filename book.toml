@@ -7,3 +7,11 @@ title = "vizia-book"
 
 [output.html.playground]
 runnable = false
+
+[output.html.fold]
+enable = true
+level = 0
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
