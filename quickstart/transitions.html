@@ -164,7 +164,7 @@ const STYLE: &amp;str = r#&quot;
 fn main () {
     Application::new(|cx|{
 
-        cx.add_theme(STYLE);
+        cx.add_stylesheet(STYLE);
 
         Element::new(cx)
             .class(&quot;my_view&quot;)
@@ -173,7 +173,7 @@ fn main () {
     .run();
 }
 </code></pre>
-<p>Here we have used <code>cx.add_theme()</code> to include a CSS string into to application, instead of <code>cx.add_stylesheet()</code> which includes a CSS file loaded at runtime.</p>
+<p>Note here that we have not used the <code>include_style!()</code> macro within the call to <code>cx.add_stylesheet</code> as the stylesheet is defined as a constant within the Rust code.</p>
 <p>// GIF here</p>
 <p>Note that the transition only occurs when the cursor hovers the element and not when the cursor leaves the element (unless the transition did not complete when the cursor left). This is because the transition has been specified on the <code>:hover</code> state of the element, and so the background color will transition when going <em>to</em> this state.</p>
 <p>To transition back again, we need to specify a transition on the non-hover state as well:</p>

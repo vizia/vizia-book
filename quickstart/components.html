@@ -170,10 +170,20 @@
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                    .class(&quot;inc&quot;);
-                Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                    .class(&quot;dec&quot;);
+                Button::new(
+                    cx, 
+                    |ex| ex.emit(AppEvent::Decrement), 
+                    |cx| Label::new(cx, &quot;Decrement&quot;)
+                )
+                .class(&quot;dec&quot;);
+                
+                Button::new(
+                    cx, 
+                    |ex| ex.emit(AppEvent::Increment), 
+                    |cx| Label::new(cx, &quot;Increment&quot;)
+                )
+                .class(&quot;inc&quot;);
+                
                 Label::new(cx, AppData::count)
                     .class(&quot;count&quot;);
             })
@@ -192,10 +202,20 @@
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                    .class(&quot;dec&quot;);
-                Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                    .class(&quot;inc&quot;);
+                Button::new(
+                    cx, 
+                    |ex| ex.emit(AppEvent::Decrement), 
+                    |cx| Label::new(cx, &quot;Decrement&quot;)
+                )
+                .class(&quot;dec&quot;);
+                
+                Button::new(
+                    cx, 
+                    |ex| ex.emit(AppEvent::Increment), 
+                    |cx| Label::new(cx, &quot;Increment&quot;)
+                )
+                .class(&quot;inc&quot;);
+                
                 Label::new(cx, lens)
                     .class(&quot;count&quot;);
             })
@@ -209,7 +229,7 @@
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(&quot;src/style.css&quot;).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
 
         AppData { count: 0 }.build(cx);
 
@@ -225,7 +245,7 @@
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(&quot;src/style.css&quot;).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
 
         AppData { count: 0 }.build(cx);
 

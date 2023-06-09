@@ -206,7 +206,7 @@ impl Counter {
 fn main() {
     Application::new(|cx|{
         // Add CSS stylesheet
-        cx.add_stylesheet(&quot;src/style.css&quot;).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
 
         cx.add_translation(
             langid!(&quot;en-US&quot;),
@@ -251,6 +251,8 @@ label.count {
     border-width: 1px;
     border-color: #808080;
     border-radius: 4px;
+    width: 50px;
+    height: 32px;
 }
 </code></pre>
 <h2 id="fluent"><a class="header" href="#fluent">Fluent</a></h2>
