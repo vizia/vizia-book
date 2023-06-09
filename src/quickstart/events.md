@@ -20,9 +20,9 @@ Events are usually emitted in response to some action on a view. This is where t
 
 ```rust
 Button::new(cx, |ex| ex.emit(AppEvent::Decrement), |cx| Label::new(cx, "Decrement"))
-    .class("inc");
-Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, "Increment"))
     .class("dec");
+Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, "Increment"))
+    .class("inc");
 ```
 
 The flow of events from the buttons, up through the visual tree, to `AppData` model can be described with the following diagram, where the red arrows indicate the direction of event propagation:

@@ -64,7 +64,7 @@ impl Counter {
 fn main() {
     Application::new(|cx|{
         // Add CSS stylesheet
-        cx.add_stylesheet("src/style.css").expect("Failed to load stylesheet");
+        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
 
         cx.add_translation(
             langid!("en-US"),
@@ -111,6 +111,8 @@ label.count {
     border-width: 1px;
     border-color: #808080;
     border-radius: 4px;
+    width: 50px;
+    height: 32px;
 }
 ```
 

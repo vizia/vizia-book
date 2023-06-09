@@ -27,7 +27,7 @@ const STYLE: &str = r#"
 fn main () {
     Application::new(|cx|{
 
-        cx.add_theme(STYLE);
+        cx.add_stylesheet(STYLE);
 
         Element::new(cx)
             .class("my_view")
@@ -38,7 +38,7 @@ fn main () {
 
 ```
 
-Here we have used `cx.add_theme()` to include a CSS string into to application, instead of `cx.add_stylesheet()` which includes a CSS file loaded at runtime.
+Note here that we have not used the `include_style!()` macro within the call to `cx.add_stylesheet` as the stylesheet is defined as a constant within the Rust code.
 
 // GIF here
 

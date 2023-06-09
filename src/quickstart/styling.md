@@ -55,7 +55,7 @@ label.count {
 
 
 ## Adding the stylesheet to the app
-Finally, we'll add the CSS file to the vizia application using the `.add_stylesheet()` function on the context. This should be done just after creating the application:
+Finally, we'll add the CSS file to the vizia application using the `.add_stylesheet()` function on the context. Here we're using the `include_style!()` macro, which will dynamically load the stylesheet at runtime in debug mode, but include the stylesheet into the binary in release mode. This should be done just after creating the application:
 
 ```rust
 use vizia::prelude::*;
@@ -64,7 +64,7 @@ fn main() {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
-        cx.add_stylesheet("style.css").expect("Failed to load stylesheet");
+        cx.add_stylesheet(include_style!("style.css")).expect("Failed to load stylesheet");
         
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"))
