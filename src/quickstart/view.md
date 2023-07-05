@@ -1,6 +1,6 @@
 # Adding Views
 
-Views are the building bocks of a vizia GUI and are used to visually present [model data](./models.md) and to act as controls which, when interacted with, send events to mutate model data.
+Views are the building bocks of a vizia GUI and are used to visually present [model data](./model_data.md) and to act as controls which, when interacted with, send events to mutate model data.
 
 We'll learn more about models and events in the following sections.
 

@@ -64,7 +64,7 @@ fn main() {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
-        cx.add_stylesheet(include_style!("style.css")).expect("Failed to load stylesheet");
+        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
         
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"))
