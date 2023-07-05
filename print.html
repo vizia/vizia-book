@@ -223,7 +223,7 @@ fn main() {
     .run();
 }</code></pre>
 <img src="quickstart/../img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size" width="400"/><div style="break-before: page; page-break-before: always;"></div><h1 id="adding-views"><a class="header" href="#adding-views">Adding Views</a></h1>
-<p>Views are the building bocks of a vizia GUI and are used to visually present <a href="quickstart/./models.html">model data</a> and to act as controls which, when interacted with, send events to mutate model data.</p>
+<p>Views are the building bocks of a vizia GUI and are used to visually present <a href="quickstart/./model_data.html">model data</a> and to act as controls which, when interacted with, send events to mutate model data.</p>
 <p>We'll learn more about models and events in the following sections.</p>
 <h2 id="adding-a-label"><a class="header" href="#adding-a-label">Adding a label</a></h2>
 <p>We can declare a <code>Label</code> view with the following code:</p>
@@ -412,7 +412,7 @@ fn main() {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
-        cx.add_stylesheet(include_style!(&quot;style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
         
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
