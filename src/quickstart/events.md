@@ -34,7 +34,7 @@ Events are handled by views and models with the `event()` method of the `View` o
 
 ```rust
 impl Model for AppData {
-    fn event(cx: &mut Context, event: &mut Event) {
+      fn event(&mut self, cx: &mut EventContext, event: &mut Event) {
         event.map(|app_event, meta| match app_event {
             AppEvent::Decrement => self.count -= 1,
             AppEvent::Increment => self.count += 1,

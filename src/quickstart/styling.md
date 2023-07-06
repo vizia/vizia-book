@@ -10,12 +10,12 @@ use vizia::prelude::*;
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"))
-                .class("inc");
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"))
                 .class("dec");
+            Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"))
+                .class("inc");
             Label::new(cx, "0")
                 .class("count");
         });
@@ -65,7 +65,7 @@ fn main() {
 
         // Add the stylesheet to the app
         cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
-        
+
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"))
                 .class("dec");
@@ -85,4 +85,3 @@ fn main() {
 If we run the app now with `cargo run` we get the following:
 
 <img src="../img/styling.png" alt="A vizia app showing two buttons and a label" width="400"/>
-
