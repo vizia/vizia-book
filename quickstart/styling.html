@@ -150,12 +150,12 @@
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;inc&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
                 .class(&quot;dec&quot;);
+            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
+                .class(&quot;inc&quot;);
             Label::new(cx, &quot;0&quot;)
                 .class(&quot;count&quot;);
         });
@@ -197,7 +197,7 @@ fn main() {
 
         // Add the stylesheet to the app
         cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
-        
+
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
                 .class(&quot;dec&quot;);

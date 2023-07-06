@@ -162,7 +162,7 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <h2 id="handling-events"><a class="header" href="#handling-events">Handling events</a></h2>
 <p>Events are handled by views and models with the <code>event()</code> method of the <code>View</code> or <code>Model</code> traits. Let's fill in the <code>Model</code> implementation by implementing the <code>event</code> method:</p>
 <pre><code class="language-rust">impl Model for AppData {
-    fn event(cx: &amp;mut Context, event: &amp;mut Event) {
+      fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
         event.map(|app_event, meta| match app_event {
             AppEvent::Decrement =&gt; self.count -= 1,
             AppEvent::Increment =&gt; self.count += 1,
@@ -173,6 +173,7 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <p>The closure provides the message type and an <code>EventMeta</code>, which can be used to query the origin and target views of the event, or to consume the event to prevent it propagating further.</p>
 <p>If we run the application now we can see that the buttons cause the state to mutate, which then causes the label to update.</p>
 <!-- // TODO: gif here -->
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

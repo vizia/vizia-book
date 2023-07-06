@@ -366,12 +366,12 @@ fn main() {
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;inc&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
                 .class(&quot;dec&quot;);
+            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
+                .class(&quot;inc&quot;);
             Label::new(cx, &quot;0&quot;)
                 .class(&quot;count&quot;);
         });
@@ -413,7 +413,7 @@ fn main() {
 
         // Add the stylesheet to the app
         cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
-        
+
         HStack::new(cx, |cx|{
             Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
                 .class(&quot;dec&quot;);
@@ -582,7 +582,7 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <h2 id="handling-events"><a class="header" href="#handling-events">Handling events</a></h2>
 <p>Events are handled by views and models with the <code>event()</code> method of the <code>View</code> or <code>Model</code> traits. Let's fill in the <code>Model</code> implementation by implementing the <code>event</code> method:</p>
 <pre><code class="language-rust">impl Model for AppData {
-    fn event(cx: &amp;mut Context, event: &amp;mut Event) {
+      fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
         event.map(|app_event, meta| match app_event {
             AppEvent::Decrement =&gt; self.count -= 1,
             AppEvent::Increment =&gt; self.count += 1,
@@ -592,7 +592,8 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <p>Calling <code>map()</code> on an event attempts to cast the event message to the specified type and calls the provided closure if it succeeds.</p>
 <p>The closure provides the message type and an <code>EventMeta</code>, which can be used to query the origin and target views of the event, or to consume the event to prevent it propagating further.</p>
 <p>If we run the application now we can see that the buttons cause the state to mutate, which then causes the label to update.</p>
-<!-- // TODO: gif here --><div style="break-before: page; page-break-before: always;"></div><h1 id="making-the-counter-reusable"><a class="header" href="#making-the-counter-reusable">Making the Counter Reusable</a></h1>
+<!-- // TODO: gif here -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="making-the-counter-reusable"><a class="header" href="#making-the-counter-reusable">Making the Counter Reusable</a></h1>
 <p>In this section we're going to turn our counter into a component by declaring a custom view. This will make our counter reusable so we can easily create multiple instances or export the counter as a component in a library.</p>
 <h2 id="step-1-creating-a-custom-view-struct"><a class="header" href="#step-1-creating-a-custom-view-struct">Step 1: Creating a custom view struct</a></h2>
 <p>First we declare a struct which will contain any view-specific state:</p>
