@@ -184,13 +184,13 @@ cx.add_translation(
 <p>To localize the text in our application we use the <code>Localized</code> type within the labels of the buttons, passing the translation keys to the constructor:</p>
 <pre><code class="language-rust">Button::new(
     cx,
-    |ex| ex.emit(AppEvent::Decrement),
+    |ex| ex.emit(CounterEvent::Decrement),
     |cx| Label::new(cx, Localized::new(&quot;dec&quot;)),
 );
 
 Button::new(
     cx,
-    |ex| ex.emit(AppEvent::Increment),
+    |ex| ex.emit(CounterEvent::Increment),
     |cx| Label::new(cx, Localized::new(&quot;inc&quot;)),
 );</code></pre>
 <p>When the application is run these <code>Localized</code> objects are replaced with the translated strings from the fluent files based on the system locale.</p>

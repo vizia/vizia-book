@@ -598,13 +598,13 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <h2 id="step-1-creating-a-custom-view-struct"><a class="header" href="#step-1-creating-a-custom-view-struct">Step 1: Creating a custom view struct</a></h2>
 <p>First we declare a struct which will contain any view-specific state:</p>
 <pre><code class="language-rust">pub struct Counter {}</code></pre>
-<p>Although we could store the <code>count</code> value within the view, we've chosen instead to make this view 'stateless', and instead we'll provide it with a lens to bind to some external state (typically from a model).</p>
+<p>Although we could store the <code>count</code> value within the view, we've chosen instead to make this view 'stateless', and instead we'll provide it with a lens to bind to some external state (typically from a model), and some callbacks for emitting events when the buttons are pressed.</p>
 <h2 id="step-2-implementing-the-view-trait"><a class="header" href="#step-2-implementing-the-view-trait">Step 2: Implementing the view trait</a></h2>
 <p>Next, we'll implement the <code>View</code> trait for the custom counter view:</p>
 <pre><code class="language-rust">impl View for Counter {}</code></pre>
 <p>The <code>View</code> trait has methods for responding to events and for custom drawing, but for now we'll leave this implementation empty.</p>
 <h2 id="step-3-building-the-sub-components-of-the-view"><a class="header" href="#step-3-building-the-sub-components-of-the-view">Step 3: Building the sub-components of the view</a></h2>
-<p>Then we'll implement a constructor for the counter view. To use our view in a vizia application, the constructor must build the view into the context, which returns a <code>Handle</code> we can use to apply modifiers on our view.</p>
+<p>Next we'll implement a constructor for the counter view. To use our view in a vizia application, the constructor must build the view into the context, which returns a <code>Handle</code> we can use to apply modifiers on our view.</p>
 <pre><code class="language-rust">impl Counter {
     pub fn new(cx: &amp;mut Context) -&gt; Handle&lt;Self&gt; {
         Self {
@@ -643,7 +643,8 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
         })
     }
 }</code></pre>
-<p>The label is currently using the <code>AppData::count</code> lens, however, this will only work if that specific lens is in scope. To make this component truly reusable we need to pass a lens in via the constructor. To do this we use a generic and constrain the type to implement the <code>Lens</code> trait. This trait has a <code>Target</code> associated type which we can use to specify that the binding is for an <code>i32</code> value:</p>
+<h2 id="step-4-user-configurable-binding"><a class="header" href="#step-4-user-configurable-binding">Step 4: User-configurable binding</a></h2>
+<p>The label within the counter is currently using the <code>AppData::count</code> lens, however, this will only work if that specific lens is in scope. To make this component truly reusable we need to pass a lens in via the constructor. To do this we use a generic and constrain the type to implement the <code>Lens</code> trait. This trait has a <code>Target</code> associated type which we can use to specify that the binding is for an <code>i32</code> value. Then we simply pass the lens directly to the constructor of the label:</p>
 <pre><code class="language-rust">impl Counter {
     pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt; 
     where
@@ -675,7 +676,71 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
         })
     }
 }</code></pre>
-<h2 id="step-4-using-the-custom-view"><a class="header" href="#step-4-using-the-custom-view">Step 4: Using the custom view</a></h2>
+<h2 id="step-5---user-configurable-events"><a class="header" href="#step-5---user-configurable-events">Step 5 - User-configurable events</a></h2>
+<p>The last part required to make the counter truly reusable is to remove the dependency on <code>AppEvent</code>. To do this we'll add a couple of callbacks to the counter to allow the user to emit their own events when the buttons are presses. </p>
+<h3 id="adding-callbacks-to-the-view"><a class="header" href="#adding-callbacks-to-the-view">Adding callbacks to the view</a></h3>
+<p>First, change the <code>Counter</code> struct to look like this:</p>
+<pre><code class="language-rust">pub struct Counter {
+    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
+    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
+}</code></pre>
+<p>These boxed function pointers provide the callbacks that will be called when the increment and decrement buttons are pressed. </p>
+<h3 id="custom-modifiers"><a class="header" href="#custom-modifiers">Custom modifiers</a></h3>
+<p>Next we'll need to add some custom modifiers so the user can configure these callbacks. To do this we can define a trait and implement it on <code>Handle&lt;'_, Counter&gt;</code>:</p>
+<pre><code class="language-rust">pub trait CounterModifiers {
+    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
+    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
+}</code></pre>
+<p>We can use the <code>modify()</code> method on <code>Handle</code> to directly set the callbacks when implementing the modifiers:</p>
+<pre><code class="language-rust">impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
+    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
+        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
+    }
+
+    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
+        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
+    }
+}</code></pre>
+<h3 id="internal-event-handling"><a class="header" href="#internal-event-handling">Internal event handling</a></h3>
+<p>Unfortunately we can't just call these callbacks from the action callback of the buttons. Instead we'll need to emit some internal events which the counter can receive, and then the counter can call the callbacks. Define an internal event enum for the counter like so: </p>
+<pre><code class="language-rust">pub enum CounterEvent {
+    Decrement,
+    Increment,
+}</code></pre>
+<p>We can then use this internal event with the buttons:</p>
+<pre><code class="language-rust">Button::new(
+    cx, 
+    |ex| ex.emit(CounterEvent::Decrement), 
+    |cx| Label::new(cx, &quot;Decrement&quot;)
+)
+.class(&quot;dec&quot;);
+
+Button::new(
+    cx, 
+    |ex| ex.emit(CounterEvent::Increment), 
+    |cx| Label::new(cx, &quot;Increment&quot;)
+)
+.class(&quot;inc&quot;);</code></pre>
+<p>Finally, we respond to these events in the <code>event()</code> method of the <code>View</code> trait for the <code>Counter</code>, calling the appropriate callback:</p>
+<pre><code class="language-rust">impl View for Counter {
+    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
+        event.map(|counter_event, meta| match counter_event{
+            CounterEvent::Increment =&gt; {
+                if let Some(callback) = &amp;self.on_increment {
+                    (callback)(cx);
+                }
+            }
+
+            CounterEvent::Decrement =&gt; {
+                if let Some(callback) = &amp;self.on_decrement {
+                    (callback)(cx);
+                }
+            }
+        });
+    }
+}</code></pre>
+<p>To recap, now when the user presses on one of the buttons, the button will emit an internal <code>CounterEvent</code>, which is then handled by the <code>Counter</code> view to call the appropriate callback, which the user can set using the custom modifiers we added using the <code>CounterModifiers</code> trait.</p>
+<h2 id="step-6-using-the-custom-view"><a class="header" href="#step-6-using-the-custom-view">Step 6: Using the custom view</a></h2>
 <p>Finally, we can use our custom view in the application:</p>
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
@@ -684,14 +749,16 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 
         AppData { count: 0 }.build(cx);
 
-        Counter::new(cx, AppData::lens);
+        Counter::new(cx, AppData::lens)
+            .on_increment(|cx| cx.emit(AppEvent::Increment))
+            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
     .title(&quot;Counter&quot;)
     .inner_size((400, 150))
     .run();
 }
 </code></pre>
-<p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value.</p>
+<p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data. </p>
 <p>When we run our app now it will seem like nothing has changed. However, now that our counter is a component, we could easily add multiple counters all bound to the same data (or different data):</p>
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
@@ -700,9 +767,15 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 
         AppData { count: 0 }.build(cx);
 
-        Counter::new(cx, AppData::count);
-        Counter::new(cx, AppData::count);
-        Counter::new(cx, AppData::count);
+        Counter::new(cx, AppData::count)
+            .on_increment(|cx| cx.emit(AppEvent::Increment))
+            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
+        Counter::new(cx, AppData::count)
+            .on_increment(|cx| cx.emit(AppEvent::Increment))
+            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
+        Counter::new(cx, AppData::count)
+            .on_increment(|cx| cx.emit(AppEvent::Increment))
+            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
     .title(&quot;Counter&quot;)
     .inner_size((400, 150))
@@ -751,13 +824,13 @@ cx.add_translation(
 <p>To localize the text in our application we use the <code>Localized</code> type within the labels of the buttons, passing the translation keys to the constructor:</p>
 <pre><code class="language-rust">Button::new(
     cx,
-    |ex| ex.emit(AppEvent::Decrement),
+    |ex| ex.emit(CounterEvent::Decrement),
     |cx| Label::new(cx, Localized::new(&quot;dec&quot;)),
 );
 
 Button::new(
     cx,
-    |ex| ex.emit(AppEvent::Increment),
+    |ex| ex.emit(CounterEvent::Increment),
     |cx| Label::new(cx, Localized::new(&quot;inc&quot;)),
 );</code></pre>
 <p>When the application is run these <code>Localized</code> objects are replaced with the translated strings from the fluent files based on the system locale.</p>
@@ -804,27 +877,31 @@ impl Model for AppData {
 }
 
 // Define a custom view for the counter
-pub struct Counter {}
-
-impl View for Counter {}
+pub struct Counter {
+    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
+    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
+}
 
 impl Counter {
     pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt;
     where
         L: Lens&lt;Target = i32&gt;
     {
-        Self {}.build(cx, |cx|{
+        Self {
+            on_decrement: None,
+            on_increment: None,
+        }.build(cx, |cx|{
             HStack::new(cx, |cx|{
                 Button::new(
                     cx,
-                    |ex| ex.emit(AppEvent::Decrement),
+                    |ex| ex.emit(CounterEvent::Decrement),
                     |cx| Label::new(cx, Localized::new(&quot;dec&quot;)),
                 )
                 .class(&quot;dec&quot;);
 
                 Button::new(
                     cx,
-                    |ex| ex.emit(AppEvent::Increment),
+                    |ex| ex.emit(CounterEvent::Increment),
                     |cx| Label::new(cx, Localized::new(&quot;inc&quot;)),
                 )
                 .class(&quot;inc&quot;);
@@ -835,6 +912,48 @@ impl Counter {
             })
             .class(&quot;row&quot;);
         })
+    }
+}
+
+// Internal events
+pub enum CounterEvent {
+    Decrement,
+    Increment,
+}
+
+// Handle internal events
+impl View for Counter {
+    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
+        event.map(|counter_event, meta| match counter_event{
+            CounterEvent::Increment =&gt; {
+                if let Some(callback) = &amp;self.on_increment {
+                    (callback)(cx);
+                }
+            }
+
+            CounterEvent::Decrement =&gt; {
+                if let Some(callback) = &amp;self.on_decrement {
+                    (callback)(cx);
+                }
+            }
+        });
+    }
+}
+
+// Custom modifiers
+pub trait CounterModifiers {
+    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
+    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
+}
+
+// Implement custom modifiers
+impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
+    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
+        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
+    }
+
+    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
+        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
     }
 }
 
@@ -861,7 +980,9 @@ fn main() {
         AppData { count: 0 }.build(cx);
 
         // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count);
+        Counter::new(cx, AppData::count)
+            .on_increment(|cx| cx.emit(AppEvent::Increment))
+            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
     .title(&quot;Counter&quot;)
     .inner_size((400, 150))
