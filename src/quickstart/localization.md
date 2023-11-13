@@ -62,13 +62,13 @@ To localize the text in our application we use the `Localized` type within the l
 ```rust
 Button::new(
     cx,
-    |ex| ex.emit(AppEvent::Decrement),
+    |ex| ex.emit(CounterEvent::Decrement),
     |cx| Label::new(cx, Localized::new("dec")),
 );
 
 Button::new(
     cx,
-    |ex| ex.emit(AppEvent::Increment),
+    |ex| ex.emit(CounterEvent::Increment),
     |cx| Label::new(cx, Localized::new("inc")),
 );
 ```

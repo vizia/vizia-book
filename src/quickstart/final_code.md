@@ -27,27 +27,31 @@ impl Model for AppData {
 }
 
 // Define a custom view for the counter
-pub struct Counter {}
-
-impl View for Counter {}
+pub struct Counter {
+    on_increment: Option<Box<dyn Fn(&mut EventContext)>>,
+    on_decrement: Option<Box<dyn Fn(&mut EventContext)>>,
+}
 
 impl Counter {
     pub fn new<L>(cx: &mut Context, lens: L) -> Handle<Self>
     where
         L: Lens<Target = i32>
     {
-        Self {}.build(cx, |cx|{
+        Self {
+            on_decrement: None,
+            on_increment: None,
+        }.build(cx, |cx|{
             HStack::new(cx, |cx|{
                 Button::new(
                     cx,
-                    |ex| ex.emit(AppEvent::Decrement),
+                    |ex| ex.emit(CounterEvent::Decrement),
                     |cx| Label::new(cx, Localized::new("dec")),
                 )
                 .class("dec");
 
                 Button::new(
                     cx,
-                    |ex| ex.emit(AppEvent::Increment),
+                    |ex| ex.emit(CounterEvent::Increment),
                     |cx| Label::new(cx, Localized::new("inc")),
                 )
                 .class("inc");
@@ -58,6 +62,48 @@ impl Counter {
             })
             .class("row");
         })
+    }
+}
+
+// Internal events
+pub enum CounterEvent {
+    Decrement,
+    Increment,
+}
+
+// Handle internal events
+impl View for Counter {
+    fn event(&mut self, cx: &mut EventContext, event: &mut Event) {
+        event.map(|counter_event, meta| match counter_event{
+            CounterEvent::Increment => {
+                if let Some(callback) = &self.on_increment {
+                    (callback)(cx);
+                }
+            }
+
+            CounterEvent::Decrement => {
+                if let Some(callback) = &self.on_decrement {
+                    (callback)(cx);
+                }
+            }
+        });
+    }
+}
+
+// Custom modifiers
+pub trait CounterModifiers {
+    fn on_increment<F: Fn(&mut EventContext) + 'static>(self, callback: F) -> Self;
+    fn on_decrement<F: Fn(&mut EventContext) + 'static>(self, callback: F) -> Self;
+}
+
+// Implement custom modifiers
+impl<'a> CounterModifiers for Handle<'a, Counter> {
+    fn on_increment<F: Fn(&mut EventContext) + 'static>(self, callback: F) -> Self {
+        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
+    }
+
+    fn on_decrement<F: Fn(&mut EventContext) + 'static>(self, callback: F) -> Self {
+        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
     }
 }
 
@@ -84,7 +130,9 @@ fn main() {
         AppData { count: 0 }.build(cx);
 
         // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count);
+        Counter::new(cx, AppData::count)
+            .on_increment(|cx| cx.emit(AppEvent::Increment))
+            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
     .title("Counter")
     .inner_size((400, 150))
