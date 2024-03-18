@@ -18,4 +18,6 @@ The `run()` method on the `Application` causes the program to enter the event lo
 
 We can run our application with `cargo run` in the terminal, which should result in the following:
 
-<img src="../img/application.png" alt="An empty vizia application window" width="800"/>
+<p align="center">
+<img src="img/application.png" alt="An empty vizia application window"/>
+</p>

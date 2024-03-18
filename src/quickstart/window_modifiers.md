@@ -18,4 +18,6 @@ fn main() {
 }
 ```
 
-<img src="../img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size" width="400"/>
+<p align="center">
+<img src="img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size"/>
+</p>

@@ -4,7 +4,7 @@ In this quick start guide we'll build a very simple counter application consisti
 
 This guide will introduce the reader to the basics of vizia, including setting up an application, composing and modifying views, layout, styling, reactivity, localization and accessibility. The final application will look like the following:
 
-<img src="../img/styling.png" alt="Image showing a finished counter vizia application." width="400"/>
+<img src="img/styling.png" alt="Image showing a finished counter vizia application."/>
 
 ## Reactive UI
 

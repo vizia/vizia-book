@@ -42,19 +42,13 @@ impl Counter {
             on_increment: None,
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx,
-                    |ex| ex.emit(CounterEvent::Decrement),
-                    |cx| Label::new(cx, Localized::new("dec")),
-                )
-                .class("dec");
+                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
+                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
+                    .class("dec");
 
-                Button::new(
-                    cx,
-                    |ex| ex.emit(CounterEvent::Increment),
-                    |cx| Label::new(cx, Localized::new("inc")),
-                )
-                .class("inc");
+                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
+                    .on_press(|ex| ex.emit(CounterEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, AppData::count)
                     .class("count")
@@ -109,7 +103,7 @@ impl<'a> CounterModifiers for Handle<'a, Counter> {
 
 fn main() {
     Application::new(|cx|{
-        // Add CSS stylesheet
+
         cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
 
         cx.add_translation(
@@ -122,7 +116,7 @@ fn main() {
             include_str!("resources/es/counter.ftl").to_owned(),
         );
 
-        // Uncomment to test with spanish locale
+        // Uncomment to test with spanish locale.
         // If system locale is already Spanish, replace "es" with "en-US".
         // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 
@@ -139,6 +133,7 @@ fn main() {
     .run();
 }
 ```
+
 ## CSS
 ```css
 .row {
@@ -146,12 +141,16 @@ fn main() {
     col-between: 20px;
 }
 
+button {
+    border-width: 0px;
+}
+
 button.dec {
-    background-color: rgb(200, 50, 50);
+    background-color: rgb(170, 50, 50);
 }
 
 button.inc {
-    background-color: rgb(50, 200, 50);
+    background-color: rgb(50, 170, 50);
 }
 
 label.count {

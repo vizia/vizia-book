@@ -1,8 +1,6 @@
 # Localizing the Application
 
-An important part of building a GUI is making sure the application is usable for...
-
-Vizia uses fluent to provide translatable text for an application.
+An important part of building a GUI is making sure the application is usable for different regions around the world. Vizia uses fluent to provide translatable text for an application.
 
 
 ## Creating fluent files
@@ -60,17 +58,9 @@ cx.add_translation(
 To localize the text in our application we use the `Localized` type within the labels of the buttons, passing the translation keys to the constructor:
 
 ```rust
-Button::new(
-    cx,
-    |ex| ex.emit(CounterEvent::Decrement),
-    |cx| Label::new(cx, Localized::new("dec")),
-);
+Button::new(cx, |cx| Label::new(cx, Localized::new("dec")));
 
-Button::new(
-    cx,
-    |ex| ex.emit(CounterEvent::Increment),
-    |cx| Label::new(cx, Localized::new("inc")),
-);
+Button::new(cx, |cx| Label::new(cx, Localized::new("inc")));
 ```
 
 When the application is run these `Localized` objects are replaced with the translated strings from the fluent files based on the system locale.
@@ -84,5 +74,9 @@ cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 ```
 
 If we run our app now we'll see that the text has been translated into Spanish. Because the buttons are set up to hug their content, the widths of the buttons have automatically updated to accommodate the slightly longer text strings.
+
+<p align="center">
+<img src="img/localization.png" alt="A counter application translated into spanish">
+</p>
 
 Note that if you're following this tutorial on a machine where the system locale is already set to Spanish then you'll see the Spanish translations without needing to emit the `SetLocale` event. To see the English versions of the text replace the `"es"` with `"en-US"` when emitting the event.

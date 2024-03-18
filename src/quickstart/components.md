@@ -44,19 +44,13 @@ impl Counter {
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Decrement), 
-                    |cx| Label::new(cx, "Decrement")
-                )
-                .class("dec");
-                
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Increment), 
-                    |cx| Label::new(cx, "Increment")
-                )
-                .class("inc");
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, AppData::count)
                     .class("count");
@@ -81,19 +75,13 @@ impl Counter {
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Decrement), 
-                    |cx| Label::new(cx, "Decrement")
-                )
-                .class("dec");
-                
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Increment), 
-                    |cx| Label::new(cx, "Increment")
-                )
-                .class("inc");
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, lens)
                     .class("count");
@@ -206,7 +194,8 @@ Finally, we can use our custom view in the application:
 fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
@@ -230,7 +219,8 @@ When we run our app now it will seem like nothing has changed. However, now that
 fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
@@ -251,4 +241,6 @@ fn main() {
 
 ```
 
-<img src="../img/component.png" alt="Vizia app with three counter components" width="400"/>
+<p align="center">
+<img src="img/component.png" alt="Vizia app with three counter components"/>
+</p>

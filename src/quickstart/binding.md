@@ -35,13 +35,14 @@ fn main() {
         AppData { count: 0 }.build(cx);
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"))
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
                 .class("dec");
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"))
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
                 .class("inc");
             Label::new(cx, AppData::count) // Bind the label to the count data
                 .class("count");
-        });
+        })
+        .class("row");
     })
     .title("Counter")
     .inner_size((400, 100))
@@ -51,7 +52,9 @@ fn main() {
 
 This sets up a binding which updates the value of the label whenever the `count` changes. We can depict this with the following diagram, where the green arrow shows the direct link between the data and the label:
 
-<img src="../img/binding.svg" alt="Diagram of event propagation" width="400"/>
+<p align="center">
+<img src="img/binding.svg" alt="Diagram of model-view-tree with an arrow from 'AppData' to 'Label' representing data binding"/>
+</p>
 
 ## Modifier bindings
 Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:

@@ -11,10 +11,10 @@ use vizia::prelude::*;
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"));
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"));
+            Button::new(cx, |cx| Label::new(cx, "Decrement"));
+            Button::new(cx, |cx| Label::new(cx, "Increment"));
             Label::new(cx, "0");
         })
         .child_space(Stretch(1.0))
@@ -25,12 +25,12 @@ fn main() {
 }
 ```
 
-<img src="../img/layout.png" alt="A vizia app showing two buttons and a label" width="400"/>
+<img src="img/layout.png" alt="A vizia app showing two buttons and a label"/>
 
-## Understanding the layout system 
-The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured:
+## Understanding the layout system
+The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found [here](../basic/layout/layout.md).
 
-### Layout Type
+<!-- ### Layout Type
 The children of a view will be arranged into a stack. The `layout-type` property determines how children of a view will be arranged. There are two variants:
 - `Row` - The view will arrange its children into a horizontal row.
 - `Column` - The view will arrange its children into a vertical column.
@@ -73,4 +73,4 @@ The `width` and `height` can also be set simultaneously with the `size` property
 
 ### Constraints
 All spacing and size properties can be constrained with corresponding minimum and maximum properties, which are also specified using `Units`. For example, the `width` of a view can be constrained with the `min_width` and `max_width` properties.
-
+ -->

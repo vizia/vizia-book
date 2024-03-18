@@ -16,18 +16,22 @@ pub enum AppEvent {
 ```
 
 ## Emitting events
-Events are usually emitted in response to some action on a view. This is where the first closure on the `Button` comes in. When the button is pressed this callback is called. We can use the provided `EventContext` to emit our events up the tree:
+Events are usually emitted in response to some action on a view. For this we can the `on_press` callback provided by the `Button`. When the button is pressed this callback is called. We can use the provided `EventContext` to emit our events up the tree:
 
 ```rust
-Button::new(cx, |ex| ex.emit(AppEvent::Decrement), |cx| Label::new(cx, "Decrement"))
+Button::new(cx, |cx| Label::new(cx, "Decrement"))
+    .on_press(|ex| ex.emit(AppEvent::Decrement))
     .class("dec");
-Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, "Increment"))
+Button::new(cx, |cx| Label::new(cx, "Increment"))
+    .on_press(|ex| ex.emit(AppEvent::Increment))
     .class("inc");
 ```
 
 The flow of events from the buttons, up through the visual tree, to `AppData` model can be described with the following diagram, where the red arrows indicate the direction of event propagation:
 
-<img src="../img/event_propagation.svg" alt="Diagram of event propagation" width="400"/>
+<p align="center">
+<img src="img/event_propagation.svg" alt="Diagram of event propagation"/>
+</p>
 
 ## Handling events
 Events are handled by views and models with the `event()` method of the `View` or `Model` traits. Let's fill in the `Model` implementation by implementing the `event` method:
@@ -48,4 +52,6 @@ The closure provides the message type and an `EventMeta`, which can be used to q
 
 If we run the application now we can see that the buttons cause the state to mutate, which then causes the label to update.
 
-<!-- // TODO: gif here -->
+<p align="center">
+<img src="img/events.gif" alt=""/>
+</p>

@@ -9,10 +9,10 @@ use vizia::prelude::*;
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Decrement"));
-            Button::new(cx, |_|{}, |cx| Label::new(cx, "Increment"));
+            Button::new(cx, |cx| Label::new(cx, "Decrement"));
+            Button::new(cx, |cx| Label::new(cx, "Increment"));
             Label::new(cx, "0");
         });
     })
@@ -26,11 +26,12 @@ For now we have hard-coded the label to display the number 0, but later we will 
 
 Note that the `Button` view is also a container, and is designed to allow things like a button with both text and a leading or trailing icon.
 
-<img src="../img/composing_views.png" alt="A vizia app showing two buttons and a label" width="400"/>
-
+<p align="center">
+<img src="img/composing_views.png" alt="A vizia app showing two buttons and a label"/>
+</p>
 
 Composing views together forms a tree, where each view has a single parent and zero or more children. For example, for the code above the view tree can be depicted with the following diagram:
 
-<img src="../img/view_tree.svg" alt="Diagram of the vizia application view tree" width="400"/>
-
-<!-- The Window is the *parent* of the HStack, while the HStack is the *parent* of both the buttons and label. Therefore, the Window is an *ancestor* of the buttons and label, and the buttons and label are *descendants* of the window. This terminology is relevant when writing CSS style rules, which we'll cover later in this guide. -->
+<p align="center">
+<img src="img/view_tree.svg" alt="Diagram of the vizia application view tree"/>
+</p>
