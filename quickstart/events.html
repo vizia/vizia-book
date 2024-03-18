@@ -152,13 +152,17 @@
     Decrement,
 }</code></pre>
 <h2 id="emitting-events"><a class="header" href="#emitting-events">Emitting events</a></h2>
-<p>Events are usually emitted in response to some action on a view. This is where the first closure on the <code>Button</code> comes in. When the button is pressed this callback is called. We can use the provided <code>EventContext</code> to emit our events up the tree:</p>
-<pre><code class="language-rust">Button::new(cx, |ex| ex.emit(AppEvent::Decrement), |cx| Label::new(cx, &quot;Decrement&quot;))
-    .class(&quot;dec&quot;);
-Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Increment&quot;))
-    .class(&quot;inc&quot;);</code></pre>
+<p>Events are usually emitted in response to some action on a view. For this we can the <code>on_press</code> callback provided by the <code>Button</code>. When the button is pressed this callback is called. We can use the provided <code>EventContext</code> to emit our events up the tree:</p>
+<pre><code class="language-rust">Button::new(cx, |cx| Label::new(cx, "Decrement"))
+    .on_press(|ex| ex.emit(AppEvent::Decrement))
+    .class("dec");
+Button::new(cx, |cx| Label::new(cx, "Increment"))
+    .on_press(|ex| ex.emit(AppEvent::Increment))
+    .class("inc");</code></pre>
 <p>The flow of events from the buttons, up through the visual tree, to <code>AppData</code> model can be described with the following diagram, where the red arrows indicate the direction of event propagation:</p>
-<img src="../img/event_propagation.svg" alt="Diagram of event propagation" width="400"/>
+<p align="center">
+<img src="img/event_propagation.svg" alt="Diagram of event propagation"/>
+</p>
 <h2 id="handling-events"><a class="header" href="#handling-events">Handling events</a></h2>
 <p>Events are handled by views and models with the <code>event()</code> method of the <code>View</code> or <code>Model</code> traits. Let's fill in the <code>Model</code> implementation by implementing the <code>event</code> method:</p>
 <pre><code class="language-rust">impl Model for AppData {
@@ -172,7 +176,9 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <p>Calling <code>map()</code> on an event attempts to cast the event message to the specified type and calls the provided closure if it succeeds.</p>
 <p>The closure provides the message type and an <code>EventMeta</code>, which can be used to query the origin and target views of the event, or to consume the event to prevent it propagating further.</p>
 <p>If we run the application now we can see that the buttons cause the state to mutate, which then causes the label to update.</p>
-<!-- // TODO: gif here -->
+<p align="center">
+<img src="img/events.gif" alt=""/>
+</p>
 
                     </main>
 

@@ -143,14 +143,14 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="animating-styles-with-transitions"><a class="header" href="#animating-styles-with-transitions">Animating Styles with Transitions</a></h1>
-<p>Many of the style and layout properties in vizia can be animated. The simplest way to animate style properties is through CSS transitions. </p>
+<p>Many of the style and layout properties in vizia can be animated. The simplest way to animate style properties is through CSS transitions.</p>
 <p>Transitions are animations for style rule properties which apply when a view matches that rule. Transitions are specified with the <code>transition</code> CSS property, and you must specify the property to animate and the duration of the animation. Optionally you can also specify any delay on the animation, as well as the timing function used.</p>
 <p>The default styling for some of the built-in views already has some of these transition. For example, if you hover a button you'll see its background color animate to a slightly lighter color.</p>
 <h2 id="declaring-a-transition"><a class="header" href="#declaring-a-transition">Declaring a transition</a></h2>
 <p>For example, we can create a transition for the background color of a view when hovered:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-const STYLE: &amp;str = r#&quot;
+const STYLE: &amp;str = r#"
     .my_view {
         background-color: red;
     }
@@ -159,7 +159,7 @@ const STYLE: &amp;str = r#&quot;
         background-color: blue;
         transition: background-color 100ms;
     }
-&quot;#;
+"#;
 
 fn main () {
     Application::new(|cx|{
@@ -167,7 +167,7 @@ fn main () {
         cx.add_stylesheet(STYLE);
 
         Element::new(cx)
-            .class(&quot;my_view&quot;)
+            .class("my_view")
             .size(Pixels(200.0));
     })
     .run();

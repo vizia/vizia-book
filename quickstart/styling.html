@@ -152,15 +152,16 @@ fn main() {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
-            Label::new(cx, &quot;0&quot;)
-                .class(&quot;count&quot;);
-        });
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
+            Label::new(cx, "0")
+                .class("count");
+        })
+        .class("row");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
@@ -171,12 +172,16 @@ fn main() {
     col-between: 20px;
 }
 
+button {
+    border-width: 0px;
+}
+
 button.dec {
-    background-color: rgb(150, 40, 40);
+    background-color: rgb(170, 50, 50);
 }
 
 button.inc {
-    background-color: rgb(40, 150, 40);
+    background-color: rgb(50, 170, 50);
 }
 
 label.count {
@@ -196,25 +201,27 @@ fn main() {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
-            Label::new(cx, &quot;0&quot;)
-                .class(&quot;count&quot;);
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
+            Label::new(cx, "0")
+                .class("count");
         })
-        .class(&quot;row&quot;);
+        .class("row");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
 <p>If we run the app now with <code>cargo run</code> we get the following:</p>
-<img src="../img/styling.png" alt="A vizia app showing two buttons and a label" width="400"/>
-
+<p align="center">
+<img src="img/styling.png" alt="A vizia app showing two buttons and a label"/>
+</p>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

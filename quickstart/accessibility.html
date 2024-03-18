@@ -145,14 +145,14 @@
                         <h1 id="making-the-application-accessible"><a class="header" href="#making-the-application-accessible">Making the Application Accessible</a></h1>
 <p>Making the application accessibility is about making it so that assistive technologies, such as a screen reader, can navigate and query the application.</p>
 <p>Our application so far is actually already mostly accessible as the built-in views, such as the buttons, are already set up to be accessible. However, even though the built-in views are accessible, this does not mean the app is automatically accessible.</p>
-<p>For the case of our counter, when the increment or decrement buttons are pressed, causing the count to change, a screen reader does not know to speak the current count to inform the user of the change. To account for this we can use something called a 'live region'. </p>
+<p>For the case of our counter, when the increment or decrement buttons are pressed, causing the count to change, a screen reader does not know to speak the current count to inform the user of the change. To account for this we can use something called a 'live region'.</p>
 <p>A live region is a view which has changing content but is not itself interactive. In the counter application a label shows the current counter value. This label is not itself interactive but has content which changes, and so should be marked as a live region. This will cause, for example, a screen reader to announce the value when the count changes.</p>
 <p>A view can be marked as a live region with the <code>live()</code> modifier:</p>
 <pre><code class="language-rust">Label::new(cx, AppData::count)
-    .class(&quot;count&quot;)
+    .class("count")
     .live(Live::Assertive);</code></pre>
 <p>If we were to use our counter application with a screen reader enabled now, the count value would be spoken when either of the buttons are pressed.</p>
-<!-- // Video here -->
+<!-- // Video here? -->
 
                     </main>
 

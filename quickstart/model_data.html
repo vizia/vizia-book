@@ -161,23 +161,26 @@ fn main() {
         AppData { count: 0 }.build(cx); // Build the data into the app
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
-            Label::new(cx, &quot;0&quot;)
-                .class(&quot;count&quot;);
-        });
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
+            Label::new(cx, "0")
+                .class("count");
+        })
+        .class("row");
 
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 200))
     .run();
 }
 </code></pre>
 <p>This builds the model data into the tree, in this case at the root <code>Window</code>. Internally, models and views are stored separately, however, for processes like event propagation, models can be thought of as existing within the tree, with an associated view.</p>
 <p>Therefore, the model-view tree for the above code can be depicted with the following diagram:</p>
-<p><img src="../img/model_view_tree.svg" alt="Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, as well as a child HStack view with two child Button views and a Label view." /></p>
+<p align="center">
+<img src="img/model_view_tree.svg" alt="Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, as well as a child HStack view with two child Button views and a Label view">
+</p>
 <p>If the <code>AppData</code> had been built within the contents of the <code>HStack</code>, then the model would be associated with the <code>HStack</code> rather than the <code>Window</code>.</p>
 
                     </main>

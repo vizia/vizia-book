@@ -170,22 +170,16 @@
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Decrement), 
-                    |cx| Label::new(cx, &quot;Decrement&quot;)
-                )
-                .class(&quot;dec&quot;);
-                
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Increment), 
-                    |cx| Label::new(cx, &quot;Increment&quot;)
-                )
-                .class(&quot;inc&quot;);
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, AppData::count)
-                    .class(&quot;count&quot;);
+                    .class("count");
             })
             .child_space(Stretch(1.0))
             .col_between(Pixels(20.0));
@@ -203,22 +197,16 @@
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Decrement), 
-                    |cx| Label::new(cx, &quot;Decrement&quot;)
-                )
-                .class(&quot;dec&quot;);
-                
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Increment), 
-                    |cx| Label::new(cx, &quot;Increment&quot;)
-                )
-                .class(&quot;inc&quot;);
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, lens)
-                    .class(&quot;count&quot;);
+                    .class("count");
             })
             .child_space(Stretch(1.0))
             .col_between(Pixels(20.0));
@@ -226,14 +214,14 @@
     }
 }</code></pre>
 <h2 id="step-5---user-configurable-events"><a class="header" href="#step-5---user-configurable-events">Step 5 - User-configurable events</a></h2>
-<p>The last part required to make the counter truly reusable is to remove the dependency on <code>AppEvent</code>. To do this we'll add a couple of callbacks to the counter to allow the user to emit their own events when the buttons are presses. </p>
+<p>The last part required to make the counter truly reusable is to remove the dependency on <code>AppEvent</code>. To do this we'll add a couple of callbacks to the counter to allow the user to emit their own events when the buttons are presses.</p>
 <h3 id="adding-callbacks-to-the-view"><a class="header" href="#adding-callbacks-to-the-view">Adding callbacks to the view</a></h3>
 <p>First, change the <code>Counter</code> struct to look like this:</p>
 <pre><code class="language-rust">pub struct Counter {
     on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
     on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
 }</code></pre>
-<p>These boxed function pointers provide the callbacks that will be called when the increment and decrement buttons are pressed. </p>
+<p>These boxed function pointers provide the callbacks that will be called when the increment and decrement buttons are pressed.</p>
 <h3 id="custom-modifiers"><a class="header" href="#custom-modifiers">Custom modifiers</a></h3>
 <p>Next we'll need to add some custom modifiers so the user can configure these callbacks. To do this we can define a trait and implement it on <code>Handle&lt;'_, Counter&gt;</code>:</p>
 <pre><code class="language-rust">pub trait CounterModifiers {
@@ -251,7 +239,7 @@
     }
 }</code></pre>
 <h3 id="internal-event-handling"><a class="header" href="#internal-event-handling">Internal event handling</a></h3>
-<p>Unfortunately we can't just call these callbacks from the action callback of the buttons. Instead we'll need to emit some internal events which the counter can receive, and then the counter can call the callbacks. Define an internal event enum for the counter like so: </p>
+<p>Unfortunately we can't just call these callbacks from the action callback of the buttons. Instead we'll need to emit some internal events which the counter can receive, and then the counter can call the callbacks. Define an internal event enum for the counter like so:</p>
 <pre><code class="language-rust">pub enum CounterEvent {
     Decrement,
     Increment,
@@ -260,16 +248,16 @@
 <pre><code class="language-rust">Button::new(
     cx, 
     |ex| ex.emit(CounterEvent::Decrement), 
-    |cx| Label::new(cx, &quot;Decrement&quot;)
+    |cx| Label::new(cx, "Decrement")
 )
-.class(&quot;dec&quot;);
+.class("dec");
 
 Button::new(
     cx, 
     |ex| ex.emit(CounterEvent::Increment), 
-    |cx| Label::new(cx, &quot;Increment&quot;)
+    |cx| Label::new(cx, "Increment")
 )
-.class(&quot;inc&quot;);</code></pre>
+.class("inc");</code></pre>
 <p>Finally, we respond to these events in the <code>event()</code> method of the <code>View</code> trait for the <code>Counter</code>, calling the appropriate callback:</p>
 <pre><code class="language-rust">impl View for Counter {
     fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
@@ -294,7 +282,8 @@ Button::new(
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
@@ -302,17 +291,18 @@ Button::new(
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }
 </code></pre>
-<p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data. </p>
+<p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data.</p>
 <p>When we run our app now it will seem like nothing has changed. However, now that our counter is a component, we could easily add multiple counters all bound to the same data (or different data):</p>
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
@@ -326,12 +316,14 @@ Button::new(
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }
 </code></pre>
-<img src="../img/component.png" alt="Vizia app with three counter components" width="400"/>
+<p align="center">
+<img src="img/component.png" alt="Vizia app with three counter components"/>
+</p>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

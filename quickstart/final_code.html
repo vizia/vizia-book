@@ -184,25 +184,19 @@ impl Counter {
             on_increment: None,
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx,
-                    |ex| ex.emit(CounterEvent::Decrement),
-                    |cx| Label::new(cx, Localized::new(&quot;dec&quot;)),
-                )
-                .class(&quot;dec&quot;);
+                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
+                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
+                    .class("dec");
 
-                Button::new(
-                    cx,
-                    |ex| ex.emit(CounterEvent::Increment),
-                    |cx| Label::new(cx, Localized::new(&quot;inc&quot;)),
-                )
-                .class(&quot;inc&quot;);
+                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
+                    .on_press(|ex| ex.emit(CounterEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, AppData::count)
-                    .class(&quot;count&quot;)
+                    .class("count")
                     .live(Live::Assertive);
             })
-            .class(&quot;row&quot;);
+            .class("row");
         })
     }
 }
@@ -251,22 +245,22 @@ impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
 
 fn main() {
     Application::new(|cx|{
-        // Add CSS stylesheet
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+
+        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
 
         cx.add_translation(
-            langid!(&quot;en-US&quot;),
-            include_str!(&quot;resources/en-US/counter.ftl&quot;).to_owned(),
+            langid!("en-US"),
+            include_str!("resources/en-US/counter.ftl").to_owned(),
         );
 
         cx.add_translation(
-            langid!(&quot;es&quot;),
-            include_str!(&quot;resources/es/counter.ftl&quot;).to_owned(),
+            langid!("es"),
+            include_str!("resources/es/counter.ftl").to_owned(),
         );
 
-        // Uncomment to test with spanish locale
-        // If system locale is already Spanish, replace &quot;es&quot; with &quot;en-US&quot;.
-        // cx.emit(EnvironmentEvent::SetLocale(langid!(&quot;es&quot;)));
+        // Uncomment to test with spanish locale.
+        // If system locale is already Spanish, replace "es" with "en-US".
+        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 
         // Build model data into the application
         AppData { count: 0 }.build(cx);
@@ -276,7 +270,7 @@ fn main() {
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
@@ -286,12 +280,16 @@ fn main() {
     col-between: 20px;
 }
 
+button {
+    border-width: 0px;
+}
+
 button.dec {
-    background-color: rgb(200, 50, 50);
+    background-color: rgb(170, 50, 50);
 }
 
 button.inc {
-    background-color: rgb(50, 200, 50);
+    background-color: rgb(50, 170, 50);
 }
 
 label.count {

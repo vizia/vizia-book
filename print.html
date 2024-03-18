@@ -162,7 +162,7 @@ It presently supports Windows, Linux, and MacOS desktop targets, as well as audi
 <div style="break-before: page; page-break-before: always;"></div><h1 id="overview"><a class="header" href="#overview">Overview</a></h1>
 <p>In this quick start guide we'll build a very simple counter application consisting of two buttons, one for incrementing the counter and one for decrementing, and a label showing the counter value.</p>
 <p>This guide will introduce the reader to the basics of vizia, including setting up an application, composing and modifying views, layout, styling, reactivity, localization and accessibility. The final application will look like the following:</p>
-<img src="quickstart/../img/styling.png" alt="Image showing a finished counter vizia application." width="400"/>
+<img src="quickstart/img/styling.png" alt="Image showing a finished counter vizia application."/>
 <h2 id="reactive-ui"><a class="header" href="#reactive-ui">Reactive UI</a></h2>
 <p>Vizia is a reactive UI framework. This means that visual elements which represent some state of the application will update when this state changes. Interacting with these visual elements causes the application state to change.</p>
 <p>A reactive UI then is a feedback loop of application state change and visual element updates.</p>
@@ -189,12 +189,12 @@ It presently supports Windows, Linux, and MacOS desktop targets, as well as audi
 <h2 id="adding-vizia-as-a-dependency"><a class="header" href="#adding-vizia-as-a-dependency">Adding Vizia as a dependency</a></h2>
 <p>Open the <code>Cargo.toml</code> file and add the following to the dependencies:</p>
 <pre><code class="language-toml">[package]
-name = &quot;hello_vizia&quot;
-version = &quot;0.1.0&quot;
-edition = &quot;2021&quot;
+name = "hello_vizia"
+version = "0.1.0"
+edition = "2021"
 
 [dependencies]
-vizia = {git = &quot;https://github.com/vizia/vizia&quot;}
+vizia = {git = "https://github.com/vizia/vizia"}
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="creating-an-application"><a class="header" href="#creating-an-application">Creating an Application</a></h1>
 <p>The first step to building a GUI with vizia is to create an application. Creating a new application creates a root window and a <a href="https://docs.vizia.dev/vizia/context/struct.Context.html"><code>context</code></a>. Views declared within the closure passed to <code>Application::new()</code> are added to the context and rendered into the root window.</p>
@@ -209,7 +209,9 @@ fn main() {
 }</code></pre>
 <p>The <code>run()</code> method on the <code>Application</code> causes the program to enter the event loop and for the main window to display.</p>
 <p>We can run our application with <code>cargo run</code> in the terminal, which should result in the following:</p>
-<img src="quickstart/../img/application.png" alt="An empty vizia application window" width="800"/><div style="break-before: page; page-break-before: always;"></div><h1 id="modifying-the-window"><a class="header" href="#modifying-the-window">Modifying the Window</a></h1>
+<p align="center">
+<img src="quickstart/img/application.png" alt="An empty vizia application window"/>
+</p><div style="break-before: page; page-break-before: always;"></div><h1 id="modifying-the-window"><a class="header" href="#modifying-the-window">Modifying the Window</a></h1>
 <p>When creating an <code>Application</code> the properties of the window can be changed using <a href="https://docs.vizia.dev/vizia/window/trait.WindowModifiers.html">window modifiers</a>. These modifiers are methods called on the application prior to calling <code>run()</code>.</p>
 <p>For example, the <code>title()</code> and <code>inner_size()</code> window modifiers can be used to set the title and size of the window respectively.</p>
 <pre><code class="language-rust">use vizia::prelude::*;
@@ -218,11 +220,13 @@ fn main() {
     Application::new(|cx|{
 
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
-<img src="quickstart/../img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size" width="400"/><div style="break-before: page; page-break-before: always;"></div><h1 id="adding-views"><a class="header" href="#adding-views">Adding Views</a></h1>
+<p align="center">
+<img src="quickstart/img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size"/>
+</p><div style="break-before: page; page-break-before: always;"></div><h1 id="adding-views"><a class="header" href="#adding-views">Adding Views</a></h1>
 <p>Views are the building bocks of a vizia GUI and are used to visually present <a href="quickstart/./model_data.html">model data</a> and to act as controls which, when interacted with, send events to mutate model data.</p>
 <p>We'll learn more about models and events in the following sections.</p>
 <h2 id="adding-a-label"><a class="header" href="#adding-a-label">Adding a label</a></h2>
@@ -231,29 +235,31 @@ fn main() {
 
 fn main() {
     Application::new(|cx|{
-        Label::new(cx, &quot;Hello Vizia&quot;);
+        Label::new(cx, "Hello Vizia");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
 <p>The first argument to the <code>new()</code> method of the label is a mutable reference to <code>Context</code>, shortened to <code>cx</code>. This allows the view to build itself into the application. For the second argument we pass it a string to display.</p>
-<img src="quickstart/../img/basic_view.png" alt="A vizia application window with a label view reading 'Hello Vizia'" width="400"/>
+<p align="center">
+<img src="quickstart/img/basic_view.png" alt="A vizia application window with a label view reading 'Hello Vizia'"/>
+</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="modifying-views"><a class="header" href="#modifying-views">Modifying Views</a></h1>
 <p>Modifiers are used to customize the appearance and behavior of views in a declarative way. Many of the built-in modifiers in Vizia can be applied to any View, which includes built-in views as well as user-defined views.</p>
 <h2 id="customizing-the-button-with-a-modifier"><a class="header" href="#customizing-the-button-with-a-modifier">Customizing the button with a modifier</a></h2>
 <p>Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the <code>background_color()</code> modifier to set the background color of the label view:</p>
-<pre><code class="language-rust">Label::new(cx, &quot;Hello Vizia&quot;)
+<pre><code class="language-rust">Label::new(cx, "Hello Vizia")
     .background_color(Color::rgb(200, 200, 200));</code></pre>
-<img src="quickstart/../img/view_modifier.png" alt="" width="400"/>
+<img src="quickstart/img/view_modifier.png" alt=""/>
 <p>Note how this overrides the default background color of the button, which is provided by a CSS stylesheet.</p>
 <p>Multiple modifiers can be chained together to achieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.</p>
-<pre><code class="language-rust">Label::new(cx, &quot;Hello Vizia&quot;)
+<pre><code class="language-rust">Label::new(cx, "Hello Vizia")
     .width(Pixels(200.0))
     .border_width(Pixels(1.0))
     .border_color(Color::black())
     .background_color(Color::rgb(200, 200, 200));</code></pre>
-<img src="quickstart/../img/view_modifiers.png" alt="" width="400"/>
+<img src="quickstart/img/view_modifiers.png" alt=""/>
 <h2 id="view-specific-modifiers"><a class="header" href="#view-specific-modifiers">View specific modifiers</a></h2>
 <p>Some views have modifiers which are specific to that view type. For example, the <code>Slider</code> view has a modifier for setting the slider <code>range</code>:</p>
 <pre><code class="language-rust">Slider::new(cx, AppData::value)
@@ -272,23 +278,26 @@ fn main() {
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;));
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;));
-            Label::new(cx, &quot;0&quot;);
+            Button::new(cx, |cx| Label::new(cx, "Decrement"));
+            Button::new(cx, |cx| Label::new(cx, "Increment"));
+            Label::new(cx, "0");
         });
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
 <p>For now we have hard-coded the label to display the number 0, but later we will hook this up to some model data so that it updates when the data changes. We've also removed the modifiers from the label, as we'll be replacing these with CSS styling later on.</p>
 <p>Note that the <code>Button</code> view is also a container, and is designed to allow things like a button with both text and a leading or trailing icon.</p>
-<img src="quickstart/../img/composing_views.png" alt="A vizia app showing two buttons and a label" width="400"/>
+<p align="center">
+<img src="quickstart/img/composing_views.png" alt="A vizia app showing two buttons and a label"/>
+</p>
 <p>Composing views together forms a tree, where each view has a single parent and zero or more children. For example, for the code above the view tree can be depicted with the following diagram:</p>
-<img src="quickstart/../img/view_tree.svg" alt="Diagram of the vizia application view tree" width="400"/>
-<!-- The Window is the *parent* of the HStack, while the HStack is the *parent* of both the buttons and label. Therefore, the Window is an *ancestor* of the buttons and label, and the buttons and label are *descendants* of the window. This terminology is relevant when writing CSS style rules, which we'll cover later in this guide. --><div style="break-before: page; page-break-before: always;"></div><h1 id="customizing-the-layout"><a class="header" href="#customizing-the-layout">Customizing the Layout</a></h1>
+<p align="center">
+<img src="quickstart/img/view_tree.svg" alt="Diagram of the vizia application view tree"/>
+</p><div style="break-before: page; page-break-before: always;"></div><h1 id="customizing-the-layout"><a class="header" href="#customizing-the-layout">Customizing the Layout</a></h1>
 <p>So far we have a horizontal row of buttons and a label, but they're positioned in the top left corner. Let's use layout modifiers to position the views in the center of the window with some space between them.</p>
 <h2 id="centering-the-views"><a class="header" href="#centering-the-views">Centering the views</a></h2>
 <p>By default the <code>HStack</code> view will stretch to fill its parent, in this case the window. We can center the contents of the <code>HStack</code> by applying stretch space around all of the children, which we can do using the <code>child_space()</code> modifier and setting it to <code>Stretch(1.0)</code>. Then we can add horizontal space between the children using the <code>col_between()</code> modifier:</p>
@@ -296,11 +305,11 @@ fn main() {
 
 fn main() {
     Application::new(|cx|{
-        
+
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;));
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;));
-            Label::new(cx, &quot;0&quot;);
+            Button::new(cx, |cx| Label::new(cx, "Decrement"));
+            Button::new(cx, |cx| Label::new(cx, "Increment"));
+            Label::new(cx, "0");
         })
         .child_space(Stretch(1.0))
         .col_between(Pixels(20.0));
@@ -308,56 +317,53 @@ fn main() {
     .inner_size((400, 100))
     .run();
 }</code></pre>
-<img src="quickstart/../img/layout.png" alt="A vizia app showing two buttons and a label" width="400"/>
+<img src="quickstart/img/layout.png" alt="A vizia app showing two buttons and a label"/>
 <h2 id="understanding-the-layout-system"><a class="header" href="#understanding-the-layout-system">Understanding the layout system</a></h2>
-<p>The layout system used by vizia is called <a href="https://github.com/vizia/morphorm">morphorm</a> and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured:</p>
-<h3 id="layout-type"><a class="header" href="#layout-type">Layout Type</a></h3>
-<p>The children of a view will be arranged into a stack. The <code>layout-type</code> property determines how children of a view will be arranged. There are two variants:</p>
-<ul>
-<li><code>Row</code> - The view will arrange its children into a horizontal row.</li>
-<li><code>Column</code> - The view will arrange its children into a vertical column.</li>
-</ul>
-<h3 id="position-type"><a class="header" href="#position-type">Position Type</a></h3>
-<p>The <code>position-type</code> property determines whether a view should be positioned in-line with its siblings in a stack, or out-of-line and independently of its siblings. There are two variants:</p>
-<ul>
-<li><code>ParentDirected</code> - The view will be positioned relative to its in-line position with its siblings.</li>
-<li><code>SelfDirected</code> - The view will be positioned out-of-line and relative to the top-left corner of its parent.</li>
-</ul>
-<h3 id="space"><a class="header" href="#space">Space</a></h3>
-<p>The position of an individual view within a stack can be adjusted by the spacing applied to each of its four sides:</p>
-<ul>
-<li><code>left</code> - The space that should be applied to the left side of the view. This takes precedent over <code>right</code> spacing.</li>
-<li><code>right</code> - The space that should be applied to the right side of the view.</li>
-<li><code>top</code> - The space that should be applied to the top side of (above) the view. This takes precedent over <code>bottom</code> space.</li>
-<li><code>bottom</code> - The space that should be applied to the bottom side of (below) the view.</li>
-</ul>
-<p>The <code>space</code> property can be used to set the spacing on all four sides of a view simultaneously.</p>
-<p>Spacing is specified with <code>Units</code>, which has four variants:</p>
-<ul>
-<li><code>Pixels(val)</code> - Sets the spacing to a fixed number of pixels.</li>
-<li><code>Percentage(val)</code> - Sets the spacing to a percentage of the view's parent size.</li>
-<li><code>Stretch(factor)</code> - Sets the spacing to a proportion of the free space of the parent within the same axis.</li>
-<li><code>Auto</code> - Sets the spacing to inherit the child spacing of the parent.</li>
-</ul>
-<h3 id="child-space"><a class="header" href="#child-space">Child Space</a></h3>
-<p>The <code>child space</code> property of a view can be used to apply space around its children by overriding the individual <code>Auto</code> spacing of the children and is also specified with <code>Units</code>. Child space can also be applied to individual sides of a view:</p>
-<ul>
-<li><code>child_left</code> - The space that should be applied between the left side of the view and its children with individual <code>Auto</code> <code>left</code> spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.</li>
-<li><code>child_right</code> - The space that should be applied between the right side of the view and its children with individual <code>Auto</code> <code>right</code> spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.</li>
-<li><code>child_top</code> - The space that should be applied between the top side of the view and its children with individual <code>Auto</code> <code>top</code> spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.</li>
-<li><code>child_bottom</code> - The space that should be applied between the bottom side of the view and its children with individual <code>Auto</code> <code>bottom</code> spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.</li>
-</ul>
-<h3 id="size"><a class="header" href="#size">Size</a></h3>
-<p>The size of a view is determined by its <code>width</code> and <code>height</code> properties, which are also specified with <code>Units</code>:</p>
-<ul>
-<li><code>Pixels(val)</code> - Sets the size to a fixed number of pixels.</li>
-<li><code>Percentage(val)</code> - Sets the size to a percentage of the view's parent size.</li>
-<li><code>Stretch(factor)</code> - Sets the size to a proportion of the free space of the parent within the same axis.</li>
-<li><code>Auto</code> - Sets the size to either hug the view's children, or to inherit the content size of the view, for example the size of any text within the view. Self-directed children do not contribute to the size of the view when the view size is set to auto.</li>
-</ul>
-<p>The <code>width</code> and <code>height</code> can also be set simultaneously with the <code>size</code> property.</p>
-<h3 id="constraints"><a class="header" href="#constraints">Constraints</a></h3>
-<p>All spacing and size properties can be constrained with corresponding minimum and maximum properties, which are also specified using <code>Units</code>. For example, the <code>width</code> of a view can be constrained with the <code>min_width</code> and <code>max_width</code> properties.</p>
+<p>The layout system used by vizia is called <a href="https://github.com/vizia/morphorm">morphorm</a> and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found <a href="quickstart/../basic/layout/layout.html">here</a>.</p>
+<!-- ### Layout Type
+The children of a view will be arranged into a stack. The `layout-type` property determines how children of a view will be arranged. There are two variants:
+- `Row` - The view will arrange its children into a horizontal row.
+- `Column` - The view will arrange its children into a vertical column.
+
+### Position Type
+The `position-type` property determines whether a view should be positioned in-line with its siblings in a stack, or out-of-line and independently of its siblings. There are two variants:
+- `ParentDirected` - The view will be positioned relative to its in-line position with its siblings.
+- `SelfDirected` - The view will be positioned out-of-line and relative to the top-left corner of its parent.
+
+### Space
+The position of an individual view within a stack can be adjusted by the spacing applied to each of its four sides:
+- `left` - The space that should be applied to the left side of the view. This takes precedent over `right` spacing.
+- `right` - The space that should be applied to the right side of the view.
+- `top` - The space that should be applied to the top side of (above) the view. This takes precedent over `bottom` space.
+- `bottom` - The space that should be applied to the bottom side of (below) the view.
+
+The `space` property can be used to set the spacing on all four sides of a view simultaneously.
+
+Spacing is specified with `Units`, which has four variants:
+- `Pixels(val)` - Sets the spacing to a fixed number of pixels.
+- `Percentage(val)` - Sets the spacing to a percentage of the view's parent size.
+- `Stretch(factor)` - Sets the spacing to a proportion of the free space of the parent within the same axis.
+- `Auto` - Sets the spacing to inherit the child spacing of the parent.
+
+### Child Space
+The `child space` property of a view can be used to apply space around its children by overriding the individual `Auto` spacing of the children and is also specified with `Units`. Child space can also be applied to individual sides of a view:
+- `child_left` - The space that should be applied between the left side of the view and its children with individual `Auto` `left` spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.
+- `child_right` - The space that should be applied between the right side of the view and its children with individual `Auto` `right` spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.
+- `child_top` - The space that should be applied between the top side of the view and its children with individual `Auto` `top` spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.
+- `child_bottom` - The space that should be applied between the bottom side of the view and its children with individual `Auto` `bottom` spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.
+
+### Size
+The size of a view is determined by its `width` and `height` properties, which are also specified with `Units`:
+- `Pixels(val)` - Sets the size to a fixed number of pixels.
+- `Percentage(val)` - Sets the size to a percentage of the view's parent size.
+- `Stretch(factor)` - Sets the size to a proportion of the free space of the parent within the same axis.
+- `Auto` - Sets the size to either hug the view's children, or to inherit the content size of the view, for example the size of any text within the view. Self-directed children do not contribute to the size of the view when the view size is set to auto.
+
+The `width` and `height` can also be set simultaneously with the `size` property.
+
+### Constraints
+All spacing and size properties can be constrained with corresponding minimum and maximum properties, which are also specified using `Units`. For example, the `width` of a view can be constrained with the `min_width` and `max_width` properties.
+ -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="styling-the-application"><a class="header" href="#styling-the-application">Styling the Application</a></h1>
 <p>Previously we saw how modifiers can be used to style views inline. However, vizia also allows views to be styled with Cascading Style Sheets (CSS) so that style rules can be shared by multiple views. Additionally, stylesheets can be reloaded at runtime by pressing the F5 key.</p>
 <h2 id="adding-class-names-to-the-views"><a class="header" href="#adding-class-names-to-the-views">Adding class names to the views</a></h2>
@@ -368,15 +374,16 @@ fn main() {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
-            Label::new(cx, &quot;0&quot;)
-                .class(&quot;count&quot;);
-        });
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
+            Label::new(cx, "0")
+                .class("count");
+        })
+        .class("row");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
@@ -387,12 +394,16 @@ fn main() {
     col-between: 20px;
 }
 
+button {
+    border-width: 0px;
+}
+
 button.dec {
-    background-color: rgb(150, 40, 40);
+    background-color: rgb(170, 50, 50);
 }
 
 button.inc {
-    background-color: rgb(40, 150, 40);
+    background-color: rgb(50, 170, 50);
 }
 
 label.count {
@@ -412,33 +423,35 @@ fn main() {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
-            Label::new(cx, &quot;0&quot;)
-                .class(&quot;count&quot;);
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
+            Label::new(cx, "0")
+                .class("count");
         })
-        .class(&quot;row&quot;);
+        .class("row");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
 <p>If we run the app now with <code>cargo run</code> we get the following:</p>
-<img src="quickstart/../img/styling.png" alt="A vizia app showing two buttons and a label" width="400"/>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="animating-styles-with-transitions"><a class="header" href="#animating-styles-with-transitions">Animating Styles with Transitions</a></h1>
-<p>Many of the style and layout properties in vizia can be animated. The simplest way to animate style properties is through CSS transitions. </p>
+<p align="center">
+<img src="quickstart/img/styling.png" alt="A vizia app showing two buttons and a label"/>
+</p><div style="break-before: page; page-break-before: always;"></div><h1 id="animating-styles-with-transitions"><a class="header" href="#animating-styles-with-transitions">Animating Styles with Transitions</a></h1>
+<p>Many of the style and layout properties in vizia can be animated. The simplest way to animate style properties is through CSS transitions.</p>
 <p>Transitions are animations for style rule properties which apply when a view matches that rule. Transitions are specified with the <code>transition</code> CSS property, and you must specify the property to animate and the duration of the animation. Optionally you can also specify any delay on the animation, as well as the timing function used.</p>
 <p>The default styling for some of the built-in views already has some of these transition. For example, if you hover a button you'll see its background color animate to a slightly lighter color.</p>
 <h2 id="declaring-a-transition"><a class="header" href="#declaring-a-transition">Declaring a transition</a></h2>
 <p>For example, we can create a transition for the background color of a view when hovered:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-const STYLE: &amp;str = r#&quot;
+const STYLE: &amp;str = r#"
     .my_view {
         background-color: red;
     }
@@ -447,7 +460,7 @@ const STYLE: &amp;str = r#&quot;
         background-color: blue;
         transition: background-color 100ms;
     }
-&quot;#;
+"#;
 
 fn main () {
     Application::new(|cx|{
@@ -455,7 +468,7 @@ fn main () {
         cx.add_stylesheet(STYLE);
 
         Element::new(cx)
-            .class(&quot;my_view&quot;)
+            .class("my_view")
             .size(Pixels(200.0));
     })
     .run();
@@ -495,26 +508,29 @@ fn main() {
         AppData { count: 0 }.build(cx); // Build the data into the app
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
-            Label::new(cx, &quot;0&quot;)
-                .class(&quot;count&quot;);
-        });
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
+            Label::new(cx, "0")
+                .class("count");
+        })
+        .class("row");
 
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 200))
     .run();
 }
 </code></pre>
 <p>This builds the model data into the tree, in this case at the root <code>Window</code>. Internally, models and views are stored separately, however, for processes like event propagation, models can be thought of as existing within the tree, with an associated view.</p>
 <p>Therefore, the model-view tree for the above code can be depicted with the following diagram:</p>
-<p><img src="quickstart/../img/model_view_tree.svg" alt="Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, as well as a child HStack view with two child Button views and a Label view." /></p>
+<p align="center">
+<img src="quickstart/img/model_view_tree.svg" alt="Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, as well as a child HStack view with two child Button views and a Label view">
+</p>
 <p>If the <code>AppData</code> had been built within the contents of the <code>HStack</code>, then the model would be associated with the <code>HStack</code> rather than the <code>Window</code>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="lenses-and-data-binding"><a class="header" href="#lenses-and-data-binding">Lenses and Data Binding</a></h1>
-<p>Now that we have some model data we can <em>bind</em> the <code>count</code> to the <code>Label</code> view. </p>
+<p>Now that we have some model data we can <em>bind</em> the <code>count</code> to the <code>Label</code> view.</p>
 <p>Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update in response.</p>
 <p>In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to <em>select</em> some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.</p>
 <h2 id="generating-lenses"><a class="header" href="#generating-lenses">Generating lenses</a></h2>
@@ -536,20 +552,23 @@ fn main() {
         AppData { count: 0 }.build(cx);
 
         HStack::new(cx, |cx|{
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Decrement&quot;))
-                .class(&quot;dec&quot;);
-            Button::new(cx, |_|{}, |cx| Label::new(cx, &quot;Increment&quot;))
-                .class(&quot;inc&quot;);
+            Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                .class("dec");
+            Button::new(cx, |cx| Label::new(cx, "Increment"))
+                .class("inc");
             Label::new(cx, AppData::count) // Bind the label to the count data
-                .class(&quot;count&quot;);
-        });
+                .class("count");
+        })
+        .class("row");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 100))
     .run();
 }</code></pre>
 <p>This sets up a binding which updates the value of the label whenever the <code>count</code> changes. We can depict this with the following diagram, where the green arrow shows the direct link between the data and the label:</p>
-<img src="quickstart/../img/binding.svg" alt="Diagram of event propagation" width="400"/>
+<p align="center">
+<img src="quickstart/img/binding.svg" alt="Diagram of model-view-tree with an arrow from 'AppData' to 'Label' representing data binding"/>
+</p>
 <h2 id="modifier-bindings"><a class="header" href="#modifier-bindings">Modifier bindings</a></h2>
 <p>Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:</p>
 <pre><code class="language-rust">
@@ -560,7 +579,7 @@ pub struct AppData {
 
 ...
 
-Label::new(cx, &quot;Hello World&quot;)
+Label::new(cx, "Hello World")
     .background_color(AppData::color);</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="mutating-state-with-events"><a class="header" href="#mutating-state-with-events">Mutating State with Events</a></h1>
 <p>The label is now bound to the data so that it updates when the count changes, so now we need to hook up the buttons to change the count.</p>
@@ -572,13 +591,17 @@ Label::new(cx, &quot;Hello World&quot;)
     Decrement,
 }</code></pre>
 <h2 id="emitting-events"><a class="header" href="#emitting-events">Emitting events</a></h2>
-<p>Events are usually emitted in response to some action on a view. This is where the first closure on the <code>Button</code> comes in. When the button is pressed this callback is called. We can use the provided <code>EventContext</code> to emit our events up the tree:</p>
-<pre><code class="language-rust">Button::new(cx, |ex| ex.emit(AppEvent::Decrement), |cx| Label::new(cx, &quot;Decrement&quot;))
-    .class(&quot;dec&quot;);
-Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Increment&quot;))
-    .class(&quot;inc&quot;);</code></pre>
+<p>Events are usually emitted in response to some action on a view. For this we can the <code>on_press</code> callback provided by the <code>Button</code>. When the button is pressed this callback is called. We can use the provided <code>EventContext</code> to emit our events up the tree:</p>
+<pre><code class="language-rust">Button::new(cx, |cx| Label::new(cx, "Decrement"))
+    .on_press(|ex| ex.emit(AppEvent::Decrement))
+    .class("dec");
+Button::new(cx, |cx| Label::new(cx, "Increment"))
+    .on_press(|ex| ex.emit(AppEvent::Increment))
+    .class("inc");</code></pre>
 <p>The flow of events from the buttons, up through the visual tree, to <code>AppData</code> model can be described with the following diagram, where the red arrows indicate the direction of event propagation:</p>
-<img src="quickstart/../img/event_propagation.svg" alt="Diagram of event propagation" width="400"/>
+<p align="center">
+<img src="quickstart/img/event_propagation.svg" alt="Diagram of event propagation"/>
+</p>
 <h2 id="handling-events"><a class="header" href="#handling-events">Handling events</a></h2>
 <p>Events are handled by views and models with the <code>event()</code> method of the <code>View</code> or <code>Model</code> traits. Let's fill in the <code>Model</code> implementation by implementing the <code>event</code> method:</p>
 <pre><code class="language-rust">impl Model for AppData {
@@ -592,7 +615,9 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <p>Calling <code>map()</code> on an event attempts to cast the event message to the specified type and calls the provided closure if it succeeds.</p>
 <p>The closure provides the message type and an <code>EventMeta</code>, which can be used to query the origin and target views of the event, or to consume the event to prevent it propagating further.</p>
 <p>If we run the application now we can see that the buttons cause the state to mutate, which then causes the label to update.</p>
-<!-- // TODO: gif here -->
+<p align="center">
+<img src="quickstart/img/events.gif" alt=""/>
+</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="making-the-counter-reusable"><a class="header" href="#making-the-counter-reusable">Making the Counter Reusable</a></h1>
 <p>In this section we're going to turn our counter into a component by declaring a custom view. This will make our counter reusable so we can easily create multiple instances or export the counter as a component in a library.</p>
 <h2 id="step-1-creating-a-custom-view-struct"><a class="header" href="#step-1-creating-a-custom-view-struct">Step 1: Creating a custom view struct</a></h2>
@@ -621,22 +646,16 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Decrement), 
-                    |cx| Label::new(cx, &quot;Decrement&quot;)
-                )
-                .class(&quot;dec&quot;);
-                
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Increment), 
-                    |cx| Label::new(cx, &quot;Increment&quot;)
-                )
-                .class(&quot;inc&quot;);
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, AppData::count)
-                    .class(&quot;count&quot;);
+                    .class("count");
             })
             .child_space(Stretch(1.0))
             .col_between(Pixels(20.0));
@@ -654,22 +673,16 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Decrement), 
-                    |cx| Label::new(cx, &quot;Decrement&quot;)
-                )
-                .class(&quot;dec&quot;);
-                
-                Button::new(
-                    cx, 
-                    |ex| ex.emit(AppEvent::Increment), 
-                    |cx| Label::new(cx, &quot;Increment&quot;)
-                )
-                .class(&quot;inc&quot;);
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, lens)
-                    .class(&quot;count&quot;);
+                    .class("count");
             })
             .child_space(Stretch(1.0))
             .col_between(Pixels(20.0));
@@ -677,14 +690,14 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
     }
 }</code></pre>
 <h2 id="step-5---user-configurable-events"><a class="header" href="#step-5---user-configurable-events">Step 5 - User-configurable events</a></h2>
-<p>The last part required to make the counter truly reusable is to remove the dependency on <code>AppEvent</code>. To do this we'll add a couple of callbacks to the counter to allow the user to emit their own events when the buttons are presses. </p>
+<p>The last part required to make the counter truly reusable is to remove the dependency on <code>AppEvent</code>. To do this we'll add a couple of callbacks to the counter to allow the user to emit their own events when the buttons are presses.</p>
 <h3 id="adding-callbacks-to-the-view"><a class="header" href="#adding-callbacks-to-the-view">Adding callbacks to the view</a></h3>
 <p>First, change the <code>Counter</code> struct to look like this:</p>
 <pre><code class="language-rust">pub struct Counter {
     on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
     on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
 }</code></pre>
-<p>These boxed function pointers provide the callbacks that will be called when the increment and decrement buttons are pressed. </p>
+<p>These boxed function pointers provide the callbacks that will be called when the increment and decrement buttons are pressed.</p>
 <h3 id="custom-modifiers"><a class="header" href="#custom-modifiers">Custom modifiers</a></h3>
 <p>Next we'll need to add some custom modifiers so the user can configure these callbacks. To do this we can define a trait and implement it on <code>Handle&lt;'_, Counter&gt;</code>:</p>
 <pre><code class="language-rust">pub trait CounterModifiers {
@@ -702,7 +715,7 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
     }
 }</code></pre>
 <h3 id="internal-event-handling"><a class="header" href="#internal-event-handling">Internal event handling</a></h3>
-<p>Unfortunately we can't just call these callbacks from the action callback of the buttons. Instead we'll need to emit some internal events which the counter can receive, and then the counter can call the callbacks. Define an internal event enum for the counter like so: </p>
+<p>Unfortunately we can't just call these callbacks from the action callback of the buttons. Instead we'll need to emit some internal events which the counter can receive, and then the counter can call the callbacks. Define an internal event enum for the counter like so:</p>
 <pre><code class="language-rust">pub enum CounterEvent {
     Decrement,
     Increment,
@@ -711,16 +724,16 @@ Button::new(cx, |ex| ex.emit(AppEvent::Increment), |cx| Label::new(cx, &quot;Inc
 <pre><code class="language-rust">Button::new(
     cx, 
     |ex| ex.emit(CounterEvent::Decrement), 
-    |cx| Label::new(cx, &quot;Decrement&quot;)
+    |cx| Label::new(cx, "Decrement")
 )
-.class(&quot;dec&quot;);
+.class("dec");
 
 Button::new(
     cx, 
     |ex| ex.emit(CounterEvent::Increment), 
-    |cx| Label::new(cx, &quot;Increment&quot;)
+    |cx| Label::new(cx, "Increment")
 )
-.class(&quot;inc&quot;);</code></pre>
+.class("inc");</code></pre>
 <p>Finally, we respond to these events in the <code>event()</code> method of the <code>View</code> trait for the <code>Counter</code>, calling the appropriate callback:</p>
 <pre><code class="language-rust">impl View for Counter {
     fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
@@ -745,7 +758,8 @@ Button::new(
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
@@ -753,17 +767,18 @@ Button::new(
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }
 </code></pre>
-<p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data. </p>
+<p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data.</p>
 <p>When we run our app now it will seem like nothing has changed. However, now that our counter is a component, we could easily add multiple counters all bound to the same data (or different data):</p>
 <pre><code class="language-rust">fn main() {
     Application::new(|cx|{
 
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+        cx.add_stylesheet(include_style!("src/style.css"))
+            .expect("Failed to load stylesheet");
 
         AppData { count: 0 }.build(cx);
 
@@ -777,14 +792,15 @@ Button::new(
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }
 </code></pre>
-<img src="quickstart/../img/component.png" alt="Vizia app with three counter components" width="400"/><div style="break-before: page; page-break-before: always;"></div><h1 id="localizing-the-application"><a class="header" href="#localizing-the-application">Localizing the Application</a></h1>
-<p>An important part of building a GUI is making sure the application is usable for...</p>
-<p>Vizia uses fluent to provide translatable text for an application.</p>
+<p align="center">
+<img src="quickstart/img/component.png" alt="Vizia app with three counter components"/>
+</p><div style="break-before: page; page-break-before: always;"></div><h1 id="localizing-the-application"><a class="header" href="#localizing-the-application">Localizing the Application</a></h1>
+<p>An important part of building a GUI is making sure the application is usable for different regions around the world. Vizia uses fluent to provide translatable text for an application.</p>
 <h2 id="creating-fluent-files"><a class="header" href="#creating-fluent-files">Creating fluent files</a></h2>
 <p>Fluent files provide a key-value store for translated text strings which vizia uses to localize text in an application.</p>
 <p>Let's add two fluent (.ftl) files to our application. We'll call them the same name, <code>counter.ftl</code>, but place them within separate directories, <code>en-Us</code> and <code>es</code>, within a <code>resources</code> directory.</p>
@@ -812,44 +828,39 @@ dec = Decrementar
 </code></pre>
 <h2 id="adding-translations-to-the-application"><a class="header" href="#adding-translations-to-the-application">Adding translations to the application</a></h2>
 <pre><code class="language-rust">cx.add_translation(
-    langid!(&quot;en-US&quot;),
-    include_str!(&quot;resources/en-US/counter.ftl&quot;).to_owned(),
+    langid!("en-US"),
+    include_str!("resources/en-US/counter.ftl").to_owned(),
 );
 
 cx.add_translation(
-    langid!(&quot;es&quot;),
-    include_str!(&quot;resources/es/counter.ftl&quot;).to_owned(),
+    langid!("es"),
+    include_str!("resources/es/counter.ftl").to_owned(),
 );</code></pre>
 <h2 id="localizing-text"><a class="header" href="#localizing-text">Localizing text</a></h2>
 <p>To localize the text in our application we use the <code>Localized</code> type within the labels of the buttons, passing the translation keys to the constructor:</p>
-<pre><code class="language-rust">Button::new(
-    cx,
-    |ex| ex.emit(CounterEvent::Decrement),
-    |cx| Label::new(cx, Localized::new(&quot;dec&quot;)),
-);
+<pre><code class="language-rust">Button::new(cx, |cx| Label::new(cx, Localized::new("dec")));
 
-Button::new(
-    cx,
-    |ex| ex.emit(CounterEvent::Increment),
-    |cx| Label::new(cx, Localized::new(&quot;inc&quot;)),
-);</code></pre>
+Button::new(cx, |cx| Label::new(cx, Localized::new("inc")));</code></pre>
 <p>When the application is run these <code>Localized</code> objects are replaced with the translated strings from the fluent files based on the system locale.</p>
 <h2 id="testing-localization"><a class="header" href="#testing-localization">Testing localization</a></h2>
 <p>The locale used for selecting translations is stored in a model called the <code>Environment</code>. By default the locale used for translations is set to the system locale, however, we can use an <code>EnvironmentEvent</code> to set the locale to a user-specified value. This is useful for testing the localization of an application.</p>
-<pre><code class="language-rust">cx.emit(EnvironmentEvent::SetLocale(langid!(&quot;es&quot;)));</code></pre>
+<pre><code class="language-rust">cx.emit(EnvironmentEvent::SetLocale(langid!("es")));</code></pre>
 <p>If we run our app now we'll see that the text has been translated into Spanish. Because the buttons are set up to hug their content, the widths of the buttons have automatically updated to accommodate the slightly longer text strings.</p>
-<p>Note that if you're following this tutorial on a machine where the system locale is already set to Spanish then you'll see the Spanish translations without needing to emit the <code>SetLocale</code> event. To see the English versions of the text replace the <code>&quot;es&quot;</code> with <code>&quot;en-US&quot;</code> when emitting the event.</p>
+<p align="center">
+<img src="quickstart/img/localization.png" alt="A counter application translated into spanish">
+</p>
+<p>Note that if you're following this tutorial on a machine where the system locale is already set to Spanish then you'll see the Spanish translations without needing to emit the <code>SetLocale</code> event. To see the English versions of the text replace the <code>"es"</code> with <code>"en-US"</code> when emitting the event.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="making-the-application-accessible"><a class="header" href="#making-the-application-accessible">Making the Application Accessible</a></h1>
 <p>Making the application accessibility is about making it so that assistive technologies, such as a screen reader, can navigate and query the application.</p>
 <p>Our application so far is actually already mostly accessible as the built-in views, such as the buttons, are already set up to be accessible. However, even though the built-in views are accessible, this does not mean the app is automatically accessible.</p>
-<p>For the case of our counter, when the increment or decrement buttons are pressed, causing the count to change, a screen reader does not know to speak the current count to inform the user of the change. To account for this we can use something called a 'live region'. </p>
+<p>For the case of our counter, when the increment or decrement buttons are pressed, causing the count to change, a screen reader does not know to speak the current count to inform the user of the change. To account for this we can use something called a 'live region'.</p>
 <p>A live region is a view which has changing content but is not itself interactive. In the counter application a label shows the current counter value. This label is not itself interactive but has content which changes, and so should be marked as a live region. This will cause, for example, a screen reader to announce the value when the count changes.</p>
 <p>A view can be marked as a live region with the <code>live()</code> modifier:</p>
 <pre><code class="language-rust">Label::new(cx, AppData::count)
-    .class(&quot;count&quot;)
+    .class("count")
     .live(Live::Assertive);</code></pre>
 <p>If we were to use our counter application with a screen reader enabled now, the count value would be spoken when either of the buttons are pressed.</p>
-<!-- // Video here -->
+<!-- // Video here? -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-final-code"><a class="header" href="#the-final-code">The Final Code</a></h1>
 <h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
 <pre><code class="language-rust">use vizia::prelude::*;
@@ -892,25 +903,19 @@ impl Counter {
             on_increment: None,
         }.build(cx, |cx|{
             HStack::new(cx, |cx|{
-                Button::new(
-                    cx,
-                    |ex| ex.emit(CounterEvent::Decrement),
-                    |cx| Label::new(cx, Localized::new(&quot;dec&quot;)),
-                )
-                .class(&quot;dec&quot;);
+                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
+                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
+                    .class("dec");
 
-                Button::new(
-                    cx,
-                    |ex| ex.emit(CounterEvent::Increment),
-                    |cx| Label::new(cx, Localized::new(&quot;inc&quot;)),
-                )
-                .class(&quot;inc&quot;);
+                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
+                    .on_press(|ex| ex.emit(CounterEvent::Increment))
+                    .class("inc");
                 
                 Label::new(cx, AppData::count)
-                    .class(&quot;count&quot;)
+                    .class("count")
                     .live(Live::Assertive);
             })
-            .class(&quot;row&quot;);
+            .class("row");
         })
     }
 }
@@ -959,22 +964,22 @@ impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
 
 fn main() {
     Application::new(|cx|{
-        // Add CSS stylesheet
-        cx.add_stylesheet(include_style!(&quot;src/style.css&quot;)).expect(&quot;Failed to load stylesheet&quot;);
+
+        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
 
         cx.add_translation(
-            langid!(&quot;en-US&quot;),
-            include_str!(&quot;resources/en-US/counter.ftl&quot;).to_owned(),
+            langid!("en-US"),
+            include_str!("resources/en-US/counter.ftl").to_owned(),
         );
 
         cx.add_translation(
-            langid!(&quot;es&quot;),
-            include_str!(&quot;resources/es/counter.ftl&quot;).to_owned(),
+            langid!("es"),
+            include_str!("resources/es/counter.ftl").to_owned(),
         );
 
-        // Uncomment to test with spanish locale
-        // If system locale is already Spanish, replace &quot;es&quot; with &quot;en-US&quot;.
-        // cx.emit(EnvironmentEvent::SetLocale(langid!(&quot;es&quot;)));
+        // Uncomment to test with spanish locale.
+        // If system locale is already Spanish, replace "es" with "en-US".
+        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 
         // Build model data into the application
         AppData { count: 0 }.build(cx);
@@ -984,7 +989,7 @@ fn main() {
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
@@ -994,12 +999,16 @@ fn main() {
     col-between: 20px;
 }
 
+button {
+    border-width: 0px;
+}
+
 button.dec {
-    background-color: rgb(200, 50, 50);
+    background-color: rgb(170, 50, 50);
 }
 
 button.inc {
-    background-color: rgb(50, 200, 50);
+    background-color: rgb(50, 170, 50);
 }
 
 label.count {

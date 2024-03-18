@@ -151,14 +151,16 @@
 
 fn main() {
     Application::new(|cx|{
-        Label::new(cx, &quot;Hello Vizia&quot;);
+        Label::new(cx, "Hello Vizia");
     })
-    .title(&quot;Counter&quot;)
+    .title("Counter")
     .inner_size((400, 150))
     .run();
 }</code></pre>
 <p>The first argument to the <code>new()</code> method of the label is a mutable reference to <code>Context</code>, shortened to <code>cx</code>. This allows the view to build itself into the application. For the second argument we pass it a string to display.</p>
-<img src="../img/basic_view.png" alt="A vizia application window with a label view reading 'Hello Vizia'" width="400"/>
+<p align="center">
+<img src="img/basic_view.png" alt="A vizia application window with a label view reading 'Hello Vizia'"/>
+</p>
 
                     </main>
 
