@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item affix "><a href="getting_started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Quickstart</li><li class="chapter-item "><a href="quickstart/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item "><a href="quickstart/setup.html"><strong aria-hidden="true">2.</strong> Creating a new project</a></li><li class="chapter-item "><a href="quickstart/application.html"><strong aria-hidden="true">3.</strong> Creating an application</a></li><li class="chapter-item "><a href="quickstart/window_modifiers.html"><strong aria-hidden="true">4.</strong> Modifying the window</a></li><li class="chapter-item "><a href="quickstart/view.html"><strong aria-hidden="true">5.</strong> Adding views</a></li><li class="chapter-item "><a href="quickstart/modifiers.html"><strong aria-hidden="true">6.</strong> Modifying views</a></li><li class="chapter-item "><a href="quickstart/composing_views.html"><strong aria-hidden="true">7.</strong> Composing views</a></li><li class="chapter-item "><a href="quickstart/layout.html"><strong aria-hidden="true">8.</strong> Customizing the layout</a></li><li class="chapter-item "><a href="quickstart/styling.html"><strong aria-hidden="true">9.</strong> Styling the application</a></li><li class="chapter-item "><a href="quickstart/transitions.html"><strong aria-hidden="true">10.</strong> Animating styles with transitions</a></li><li class="chapter-item "><a href="quickstart/model_data.html"><strong aria-hidden="true">11.</strong> Managing state with model data</a></li><li class="chapter-item "><a href="quickstart/binding.html"><strong aria-hidden="true">12.</strong> Lenses and data binding</a></li><li class="chapter-item "><a href="quickstart/events.html"><strong aria-hidden="true">13.</strong> Mutating state with events</a></li><li class="chapter-item "><a href="quickstart/components.html"><strong aria-hidden="true">14.</strong> Making the counter reusable</a></li><li class="chapter-item "><a href="quickstart/localization.html"><strong aria-hidden="true">15.</strong> Localizing the application</a></li><li class="chapter-item "><a href="quickstart/accessibility.html"><strong aria-hidden="true">16.</strong> Making the application accessible</a></li><li class="chapter-item "><a href="quickstart/final_code.html"><strong aria-hidden="true">17.</strong> The final code</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><a href="foreword.html">Foreword</a></li><li class="chapter-item affix "><a href="getting_started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Quickstart</li><li class="chapter-item "><a href="quickstart/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item "><a href="quickstart/setup.html"><strong aria-hidden="true">2.</strong> Creating a new project</a></li><li class="chapter-item "><a href="quickstart/application.html"><strong aria-hidden="true">3.</strong> Creating an application</a></li><li class="chapter-item "><a href="quickstart/window_modifiers.html"><strong aria-hidden="true">4.</strong> Modifying the window</a></li><li class="chapter-item "><a href="quickstart/view.html"><strong aria-hidden="true">5.</strong> Adding views</a></li><li class="chapter-item "><a href="quickstart/modifiers.html"><strong aria-hidden="true">6.</strong> Modifying views</a></li><li class="chapter-item "><a href="quickstart/composing_views.html"><strong aria-hidden="true">7.</strong> Composing views</a></li><li class="chapter-item "><a href="quickstart/layout.html"><strong aria-hidden="true">8.</strong> Customizing the layout</a></li><li class="chapter-item "><a href="quickstart/styling.html"><strong aria-hidden="true">9.</strong> Styling the application</a></li><li class="chapter-item "><a href="quickstart/transitions.html"><strong aria-hidden="true">10.</strong> Animating styles with transitions</a></li><li class="chapter-item "><a href="quickstart/model_data.html"><strong aria-hidden="true">11.</strong> Managing state with model data</a></li><li class="chapter-item "><a href="quickstart/binding.html"><strong aria-hidden="true">12.</strong> Lenses and data binding</a></li><li class="chapter-item "><a href="quickstart/events.html"><strong aria-hidden="true">13.</strong> Mutating state with events</a></li><li class="chapter-item "><a href="quickstart/components.html"><strong aria-hidden="true">14.</strong> Making the counter reusable</a></li><li class="chapter-item "><a href="quickstart/localization.html"><strong aria-hidden="true">15.</strong> Localizing the application</a></li><li class="chapter-item "><a href="quickstart/accessibility.html"><strong aria-hidden="true">16.</strong> Making the application accessible</a></li><li class="chapter-item "><a href="quickstart/final_code.html"><strong aria-hidden="true">17.</strong> The final code</a></li><li class="chapter-item affix "><li class="part-title">Lenses and Binding</li><li class="chapter-item "><a href="basic/binding/binding.html"><strong aria-hidden="true">18.</strong> Binding</a></li><li class="chapter-item "><a href="basic/binding/data.html"><strong aria-hidden="true">19.</strong> The Data trait</a></li><li class="chapter-item "><a href="basic/binding/lens_map.html"><strong aria-hidden="true">20.</strong> Mapping lenses</a></li><li class="chapter-item "><a href="basic/binding/conditional_views.html"><strong aria-hidden="true">21.</strong> Conditional views</a></li><li class="chapter-item "><a href="basic/binding/nested_data.html"><strong aria-hidden="true">22.</strong> Binding nested data</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -537,7 +537,7 @@ fn main() {
 <p>The <code>Lens</code> derive macro can be used to generate a lens for each field of a struct. These lenses can then be used to transform a reference to the struct into a reference to each of its fields. The generated lenses are given the same name as the field and placed in a module with the same name as the struct. For example, deriving <code>Lens</code> on the model we defined before:</p>
 <pre><code class="language-rust">#[derive(Lens)]
 pub struct AppData {
-    count: Count,
+    count: i32,
 }
 
 impl Model for AppData {}</code></pre>
@@ -1028,6 +1028,169 @@ dec = Decrement
 <p><em>resources/es/counter.ftl</em></p>
 <pre><code class="language-ftl">inc = Incrementar
 dec = Decrementar
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="data-binding"><a class="header" href="#data-binding">Data Binding</a></h1>
+<p>Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update automatically in response. Therefore, it is data binding which provides the mechanism for reactivity in Vizia.</p>
+<p>In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to <em>select</em> some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.</p>
+<h2 id="lenses"><a class="header" href="#lenses">Lenses</a></h2>
+<p>The <code>Lens</code> derive macro can be used to generate a lens for each field of a struct. These lenses can then be used to transform a reference to the struct into a reference to each of its fields. The generated lenses are given the same name as the field and placed in a module with the same name as the struct. For example, given the following definition of some model data:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
+}
+
+impl Model for AppData {}</code></pre>
+<p>A lens to the <code>color</code> field of the <code>AppData</code> struct is generated as <code>AppData::color</code>.</p>
+<h2 id="property-binding"><a class="header" href="#property-binding">Property Binding</a></h2>
+<p>We can then use this lens with the <code>background_color</code> modifier of a view to set up a binding, so that when the data changes the background color is updated. Passing lenses to modifiers is known as <em>property binding</em>.</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
+}
+
+impl Model for AppData {}
+
+fn main() {
+    Application::new(|cx|{
+        Label::new(cx, "Hello Vizia").background_color(AppData::color);
+    }).run();
+}</code></pre>
+<h2 id="view-binding"><a class="header" href="#view-binding">View Binding</a></h2>
+<p>Some views accept a lens as an input. When provided a lens, the view sets up a binding to the data. For example, the <code>Label</code> view accepts a lens to any type which implements <code>ToString</code>:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct Person {
+    pub name: String,
+}
+
+impl Model for Person {}
+
+Application::new(|cx|{
+    Label::new(cx, Person::name);
+})
+.run()</code></pre>
+<p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-data-trait"><a class="header" href="#the-data-trait">The Data Trait</a></h1>
+<p>When views bind to model data the <a href="basic/binding/binding.html">binding system</a> must determine whether the data has changed. To do this it stores a copy of the data for each binding. To be able to compare the previous data to the new version, the data type must implement the <code>Data</code> trait.</p>
+<p>Note that this is only required for the data types which are bound to. The model itself does not need to implement <code>Data</code> unless a view is to bind to the entire model and not just a field within.</p>
+<p>Most simple types already implement the <code>Data</code> trait, but for custom types there is a derive macro that can be used as long as the field types also implement the <code>Data</code> trait:</p>
+<pre><code class="language-rust">#[derive(Clone, Data)]
+pub struct CustomData {
+    text: String,
+} </code></pre>
+<p>The <code>Data</code> trait also requires that the type implements <code>Clone</code>. This is because then the binding system has determined the data has changed, it must replace its stored copy of the data with a new one so it can recompare on the next update cycle.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="lens-map"><a class="header" href="#lens-map">Lens Map</a></h1>
+<p>The <code>map()</code> method on a lens can be used to derive data from the target of the lens. This is useful for when the lens target is not the right type for the binding, but a value of the correct type can be derived from it.</p>
+<p>For example, let's say we have some string data representing a name in our model, but we only want to display the first letter within a label:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+#[derive(Lens)]
+pub struct AppData {
+    pub name: String,
+}
+
+impl Model for AppData {}
+
+fn main() {
+    Application::new(|cx|{
+
+        AppData {
+            name: String::from("John Doe"),
+        }.build(cx);
+
+        Label::new(cx, AppData::name.map(|name| name.chars().nth(0).unwrap()));
+    })
+    .inner_size((400, 100))
+    .run();
+}</code></pre>
+<blockquote>
+<p>Note that in this example we're assuming that the string is not empty.</p>
+</blockquote>
+<img src="basic/binding/../img/stylesheet.png" alt="" width="400"/>
+<p>Now when the name field of the model changes the label will update to display the new first letter.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="conditional-views"><a class="header" href="#conditional-views">Conditional Views</a></h1>
+<p>The <code>Binding</code> view provides a way to explicitely control which parts of the view tree get rebuilt when some state changes, specifically anything within the content closure of a <code>Binding</code> view.</p>
+<p>Because of this, a regular <code>if</code> statement can be used to conditionally rebuild views. In the following example, a label view is built into the tree when a boolean state is true, else the view is removed from the tree.</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+#[derive(Lens)]
+struct AppData {
+    show_view: bool,
+}
+
+enum AppEvent {
+    ToggleShowView,
+}
+
+impl Model for AppData {
+    fn event(&amp;mut self, cx: &amp;mut Context, event: &amp;mut Event) {
+        event.map(|app_event, _| match app_event {
+            AppEvent::ToggleShowView =&gt; self.show_view ^= true,
+        });
+    }
+}
+
+fn main() {
+    Application::new(|cx|{
+
+        AppData {
+            show_view: false,
+        }.build(cx);
+
+        Label::new(cx, "Show View")
+            .on_press(|cx| cx.emit(AppEvent::ToggleShowView));
+        
+        Binding::new(cx, AppData::show_view, |cx, show|{
+            if show.get(cx) {
+                Label::new(cx, "Surprise!");
+            }
+        });
+    })
+    .inner_size((400, 100))
+    .run();
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="binding-nested-data"><a class="header" href="#binding-nested-data">Binding Nested Data</a></h1>
+<p>Let's say we have the following application data structure:</p>
+<pre><code class="language-rs">#[derive(Lens)]
+pub struct AppData {
+    nested: NestedData,
+}
+
+#[derive(Lens)]
+pub struct NestedData {
+    name: String,
+}
+</code></pre>
+<p>Provided that both the parent and nested structures derive the <code>Lens</code> trait, we can use the <code>then()</code> lens modifier to produce a lens which targets the nested data:</p>
+<pre><code class="language-rs">fn main() {
+    Application::new(|cx|{
+
+        AppData {
+            nested: NestedData {
+                name: String::from("John Doe"),
+            },
+        }.build(cx);
+
+        Label::new(cx, AppData::nested.then(NestedData::name));
+    })
+    .inner_size((400, 100))
+    .run();
+}
+</code></pre>
+<p>If the nested data structure does not dderive <code>Lens</code>, then the <code>map_ref()</code> modifier can be used:</p>
+<pre><code class="language-rs">fn main() {
+    Application::new(|cx|{
+
+        AppData {
+            nested: NestedData {
+                name: String::from("John Doe"),
+            },
+        }.build(cx);
+
+        Label::new(cx, AppData::nested.map_ref(|nested| &amp;nested.name));
+    })
+    .inner_size((400, 100))
+    .run();
+}
 </code></pre>
 
                     </main>

@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Binding - vizia-book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../foreword.html">Foreword</a></li><li class="chapter-item affix "><a href="../../getting_started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Quickstart</li><li class="chapter-item "><a href="../../quickstart/overview.html"><strong aria-hidden="true">1.</strong> Overview</a></li><li class="chapter-item "><a href="../../quickstart/setup.html"><strong aria-hidden="true">2.</strong> Creating a new project</a></li><li class="chapter-item "><a href="../../quickstart/application.html"><strong aria-hidden="true">3.</strong> Creating an application</a></li><li class="chapter-item "><a href="../../quickstart/window_modifiers.html"><strong aria-hidden="true">4.</strong> Modifying the window</a></li><li class="chapter-item "><a href="../../quickstart/view.html"><strong aria-hidden="true">5.</strong> Adding views</a></li><li class="chapter-item "><a href="../../quickstart/modifiers.html"><strong aria-hidden="true">6.</strong> Modifying views</a></li><li class="chapter-item "><a href="../../quickstart/composing_views.html"><strong aria-hidden="true">7.</strong> Composing views</a></li><li class="chapter-item "><a href="../../quickstart/layout.html"><strong aria-hidden="true">8.</strong> Customizing the layout</a></li><li class="chapter-item "><a href="../../quickstart/styling.html"><strong aria-hidden="true">9.</strong> Styling the application</a></li><li class="chapter-item "><a href="../../quickstart/transitions.html"><strong aria-hidden="true">10.</strong> Animating styles with transitions</a></li><li class="chapter-item "><a href="../../quickstart/model_data.html"><strong aria-hidden="true">11.</strong> Managing state with model data</a></li><li class="chapter-item "><a href="../../quickstart/binding.html"><strong aria-hidden="true">12.</strong> Lenses and data binding</a></li><li class="chapter-item "><a href="../../quickstart/events.html"><strong aria-hidden="true">13.</strong> Mutating state with events</a></li><li class="chapter-item "><a href="../../quickstart/components.html"><strong aria-hidden="true">14.</strong> Making the counter reusable</a></li><li class="chapter-item "><a href="../../quickstart/localization.html"><strong aria-hidden="true">15.</strong> Localizing the application</a></li><li class="chapter-item "><a href="../../quickstart/accessibility.html"><strong aria-hidden="true">16.</strong> Making the application accessible</a></li><li class="chapter-item "><a href="../../quickstart/final_code.html"><strong aria-hidden="true">17.</strong> The final code</a></li><li class="chapter-item affix "><li class="part-title">Lenses and Binding</li><li class="chapter-item expanded "><a href="../../basic/binding/binding.html" class="active"><strong aria-hidden="true">18.</strong> Binding</a></li><li class="chapter-item "><a href="../../basic/binding/data.html"><strong aria-hidden="true">19.</strong> The Data trait</a></li><li class="chapter-item "><a href="../../basic/binding/lens_map.html"><strong aria-hidden="true">20.</strong> Mapping lenses</a></li><li class="chapter-item "><a href="../../basic/binding/conditional_views.html"><strong aria-hidden="true">21.</strong> Conditional views</a></li><li class="chapter-item "><a href="../../basic/binding/nested_data.html"><strong aria-hidden="true">22.</strong> Binding nested data</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">vizia-book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="data-binding"><a class="header" href="#data-binding">Data Binding</a></h1>
+<p>Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update automatically in response. Therefore, it is data binding which provides the mechanism for reactivity in Vizia.</p>
+<p>In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to <em>select</em> some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.</p>
+<h2 id="lenses"><a class="header" href="#lenses">Lenses</a></h2>
+<p>The <code>Lens</code> derive macro can be used to generate a lens for each field of a struct. These lenses can then be used to transform a reference to the struct into a reference to each of its fields. The generated lenses are given the same name as the field and placed in a module with the same name as the struct. For example, given the following definition of some model data:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
+}
+
+impl Model for AppData {}</code></pre>
+<p>A lens to the <code>color</code> field of the <code>AppData</code> struct is generated as <code>AppData::color</code>.</p>
+<h2 id="property-binding"><a class="header" href="#property-binding">Property Binding</a></h2>
+<p>We can then use this lens with the <code>background_color</code> modifier of a view to set up a binding, so that when the data changes the background color is updated. Passing lenses to modifiers is known as <em>property binding</em>.</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
+}
+
+impl Model for AppData {}
+
+fn main() {
+    Application::new(|cx|{
+        Label::new(cx, "Hello Vizia").background_color(AppData::color);
+    }).run();
+}</code></pre>
+<h2 id="view-binding"><a class="header" href="#view-binding">View Binding</a></h2>
+<p>Some views accept a lens as an input. When provided a lens, the view sets up a binding to the data. For example, the <code>Label</code> view accepts a lens to any type which implements <code>ToString</code>:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct Person {
+    pub name: String,
+}
+
+impl Model for Person {}
+
+Application::new(|cx|{
+    Label::new(cx, Person::name);
+})
+.run()</code></pre>
+<p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../quickstart/final_code.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../../basic/binding/data.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../quickstart/final_code.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../../basic/binding/data.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
