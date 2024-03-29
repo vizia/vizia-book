@@ -21,7 +21,7 @@ fn main() {
             name: String::from("John Doe"),
         }.build(cx);
 
-        Label::new(cx, AppData::name.map(|name| &name[0]));
+        Label::new(cx, AppData::name.map(|name| name.chars().nth(0).unwrap()));
     })
     .inner_size((400, 100))
     .run();

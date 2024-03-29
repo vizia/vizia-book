@@ -1,8 +1,6 @@
 # Data Binding
 
-Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update in response. 
-
-<!-- Therefore, it is data binding which provides the mechanism for reactivity in Vizia. -->
+Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update automatically in response. Therefore, it is data binding which provides the mechanism for reactivity in Vizia.
 
 In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to *select* some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.
 
@@ -39,7 +37,6 @@ fn main() {
     }).run();
 }
 ```
-
 
 ## View Binding 
 

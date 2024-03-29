@@ -22,6 +22,14 @@
 - [Making the application accessible](./quickstart/accessibility.md)
 - [The final code](./quickstart/final_code.md)
 
+# Lenses and Binding
+- [Binding](./basic/binding/binding.md)
+- [The Data trait](./basic/binding/data.md)
+- [Mapping lenses](./basic/binding/lens_map.md)
+- [Conditional views](./basic/binding/conditional_views.md)
+- [Binding nested data](./basic/binding/nested_data.md)
+
+
 <!-- - [Styling]()
     - [Style modifiers]()
     - [Adding a stylesheet]()
