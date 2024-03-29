@@ -14,7 +14,7 @@ The `Lens` derive macro can be used to generate a lens for each field of a struc
 ```rust
 #[derive(Lens)]
 pub struct AppData {
-    count: Count,
+    count: i32,
 }
 
 impl Model for AppData {}
