@@ -144,12 +144,12 @@
                     <main>
                         <h1 id="modifying-views"><a class="header" href="#modifying-views">Modifying Views</a></h1>
 <p>Modifiers are used to customize the appearance and behavior of views in a declarative way. Many of the built-in modifiers in Vizia can be applied to any View, which includes built-in views as well as user-defined views.</p>
-<h2 id="customizing-the-button-with-a-modifier"><a class="header" href="#customizing-the-button-with-a-modifier">Customizing the button with a modifier</a></h2>
+<h2 id="customizing-the-label-with-a-modifier"><a class="header" href="#customizing-the-label-with-a-modifier">Customizing the label with a modifier</a></h2>
 <p>Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the <code>background_color()</code> modifier to set the background color of the label view:</p>
 <pre><code class="language-rust">Label::new(cx, "Hello Vizia")
     .background_color(Color::rgb(200, 200, 200));</code></pre>
 <img src="img/view_modifier.png" alt=""/>
-<p>Note how this overrides the default background color of the button, which is provided by a CSS stylesheet.</p>
+<p>Note how this overrides the default background color of the label, which is provided by a CSS stylesheet.</p>
 <p>Multiple modifiers can be chained together to achieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.</p>
 <pre><code class="language-rust">Label::new(cx, "Hello Vizia")
     .width(Pixels(200.0))
