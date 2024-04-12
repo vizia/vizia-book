@@ -1,0 +1,10 @@
+# Decreasing Binary Size
+
+```toml
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "z"
+panic = "abort"
+strip = true
+```

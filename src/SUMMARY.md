@@ -22,6 +22,26 @@
 - [Making the application accessible](./quickstart/accessibility.md)
 - [The final code](./quickstart/final_code.md)
 
+# Project Setup
+
+
+# Application and Windows
+- [Application](./basic/application/application.md)
+- [Window Modifiers](./basic/application/window_modifiers.md)
+
+# Managing Resources
+- [Resources](./basic/resources/resources.md)
+- [Custom Fonts](./basic/resources/fonts.md)
+- [Images](./basic/resources/images.md)
+
+
+# Application Data
+- [Models](./basic/models/models.md)
+
+# Adding Views
+- [Views](./basic/views/views.md)
+- [Modifiers](./basic/views/modifiers.md)
+
 # Lenses and Binding
 - [Binding](./basic/binding/binding.md)
 - [The Data trait](./basic/binding/data.md)
@@ -29,6 +49,38 @@
 - [Conditional views](./basic/binding/conditional_views.md)
 - [Binding nested data](./basic/binding/nested_data.md)
 
+# Events
+- [Events](./basic/events/events.md)
+
+# Styling
+- [Background](./basic/styling/background.md)
+- [Border](./basic/styling/border.md)
+- [Corners](./basic/styling/corner.md)
+- [Shadows](./basic/styling/shadows.md)
+- [Outline](./basic/styling/outline.md)
+- [Layer](./basic/styling/layer.md)
+- [Text](./basic/styling/text.md)
+
+# Layout
+
+
+# Animations
+
+# Custom Views
+- [Custom Drawing]()
+
+# Localization
+
+# Accessibility
+
+# Bundling
+- [Decreasing Binary Size](./basic/bundling/binary_size.md)
+
+<!-- - [Properties]()
+    - [background-color](./basic/styling/background/background_color.md)
+    - [background-image](./basic/styling/background/background_image.md)
+    - [background-size](./basic/styling/background/background_size.md)
+    - [background-position](./basic/styling/background/background_position.md) -->
 
 <!-- - [Styling]()
     - [Style modifiers]()

@@ -50,7 +50,7 @@ impl Counter {
                     .on_press(|ex| ex.emit(CounterEvent::Increment))
                     .class("inc");
                 
-                Label::new(cx, AppData::count)
+                Label::new(cx, lens)
                     .class("count")
                     .live(Live::Assertive);
             })
