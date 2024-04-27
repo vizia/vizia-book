@@ -1077,7 +1077,7 @@ Application::new(|cx|{
 pub struct CustomData {
     text: String,
 } </code></pre>
-<p>The <code>Data</code> trait also requires that the type implements <code>Clone</code>. This is because then the binding system has determined the data has changed, it must replace its stored copy of the data with a new one so it can recompare on the next update cycle.</p>
+<p>The <code>Data</code> trait also requires that the type implements <code>Clone</code>. This is because when the binding system has determined the data has changed, it must replace its stored copy of the data with a new one so it can recompare on the next update cycle.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="lens-map"><a class="header" href="#lens-map">Lens Map</a></h1>
 <p>The <code>map()</code> method on a lens can be used to derive data from the target of the lens. This is useful for when the lens target is not the right type for the binding, but a value of the correct type can be derived from it.</p>
 <p>For example, let's say we have some string data representing a name in our model, but we only want to display the first letter within a label:</p>
