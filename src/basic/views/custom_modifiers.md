@@ -33,5 +33,3 @@ As long as `CustomModifiers` is imported we can then use the custom `title()` mo
 ```rust
 Label::new("Some Kind of Title").title();
 ```
-
-// TODO: Image here

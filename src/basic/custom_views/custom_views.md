@@ -2,9 +2,9 @@
 
 A custom view can be used to create re-usable components which can contain model data and react to events.
 
-For this section of the book, let's create a somewhat complex custom view, a hsla color picker.
+For this section of the book, let's create a somewhat complex custom view, a rgb color picker.
 
-To create the color picker view, first we'll declare a struct with the desired viw name:
+To create the color picker view, first we'll declare a struct with the desired view name:
 
 ```rust
 pub struct ColorPicker {
@@ -43,6 +43,11 @@ This is all we need to be able to use our custom `ColorPicker` view in an applic
 ```rust
 use vizia::prelude::*;
 
-
+fn main() {
+    Application::new(|cx|{
+        ColorPicker::new(cx);
+    })
+    .run();    
+}
 ```
 

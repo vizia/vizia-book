@@ -4,7 +4,7 @@ So far we have a horizontal row of buttons and a label, but they're positioned i
 
 ## Centering the views
 
-By default the `HStack` view will stretch to fill its parent, in this case the window. We can center the contents of the `HStack` by applying stretch space around all of the children, which we can do using the `child_space()` modifier and setting it to `Stretch(1.0)`. Then we can add horizontal space between the children using the `col_between()` modifier:
+By default the `HStack` view will stretch to fill its parent, in this case the window. We can center the contents of the `HStack` using the `alignment()` modifier and setting it to `Alignment::Center`. Then we can add horizontal space between the children using the `gap()` modifier:
 
 ```rust
 use vizia::prelude::*;
@@ -17,8 +17,8 @@ fn main() {
             Button::new(cx, |cx| Label::new(cx, "Increment"));
             Label::new(cx, "0");
         })
-        .child_space(Stretch(1.0))
-        .col_between(Pixels(20.0));
+        .alignment(Alignment::Center)
+        .gap(Pixels(20.0));
     })
     .inner_size((400, 100))
     .run();

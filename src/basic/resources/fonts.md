@@ -23,7 +23,7 @@ fn main() {
         cx.add_font_mem(CUSTOM_FONT);
 
         Label::new(cx, "Hello Custom Font - Inline")
-            .font("custom");
+            .font("font-name");
 
         Label::new(cx, "Hello Custom Font - CSS")
             .class("foo");

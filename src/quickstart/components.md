@@ -55,8 +55,7 @@ impl Counter {
                 Label::new(cx, AppData::count)
                     .class("count");
             })
-            .child_space(Stretch(1.0))
-            .col_between(Pixels(20.0));
+            .class("row");
         })
     }
 }
@@ -86,8 +85,7 @@ impl Counter {
                 Label::new(cx, lens)
                     .class("count");
             })
-            .child_space(Stretch(1.0))
-            .col_between(Pixels(20.0));
+            .class("row");
         })
     }
 }
@@ -184,8 +182,8 @@ impl View for Counter {
     }
 }
 ```
-To recap, now when the user presses on one of the buttons, the button will emit an internal `CounterEvent`, which is then handled by the `Counter` view to call the appropriate callback, which the user can set using the custom modifiers we added using the `CounterModifiers` trait.
 
+To recap, now when the user presses on one of the buttons, the button will emit an internal `CounterEvent`, which is then handled by the `Counter` view to call the appropriate callback, which the user can set using the custom modifiers we added using the `CounterModifiers` trait.
 
 ## Step 6: Using the custom view
 Finally, we can use our custom view in the application:

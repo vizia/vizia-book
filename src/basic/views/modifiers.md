@@ -11,8 +11,6 @@ Label::new(cx, "Hello World")
     .background_color(Color::rgb(255, 0, 0));
 ```
 
-<img src="../../img/label_background.png" alt="A window with the title 'My Awesome Application'" width="200"/>
-
 Multiple modifiers can be chained together to acheieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.
 
 ```rust

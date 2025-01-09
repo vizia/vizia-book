@@ -32,8 +32,8 @@ Next, we'll create a `style.css` file in the `src` directory with the following 
 
 ```css
 .row {
-    child-space: 1s;
-    col-between: 20px;
+    alignment: center;
+    gap: 20px;
 }
 
 button {
@@ -49,7 +49,7 @@ button.inc {
 }
 
 label.count {
-    child-space: 1s;
+    alignment: center;
     border-width: 1px;
     border-color: #808080;
     border-radius: 4px;

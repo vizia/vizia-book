@@ -29,7 +29,7 @@ fn main () {
 
 ```
 
-Note that the transition only occurs when the cursor hovers the element and not when the cursor leaves the element (unless the transition did not complete when the cursor left). This is because the transiiton has been specified on the `:hover` state of the element, and so the background color will transition when going *to* this state.
+Note that the transition only occurs when the cursor hovers the element and not when the cursor leaves the element (unless the transition did not complete when the cursor left). This is because the transition has been specified on the `:hover` state of the element, and so the background color will transition when going *to* this state.
 
 To transition back again, we need to specify a transition on the non-hover state as well:
 

@@ -1,9 +1,48 @@
-# Border
+# Border Properties
 
-# Border Width
+## Border (shorthand)
 
-# Border Color
+The border property is shorthand for [`border-width`](#border-width), [`border-style`](#border-style), and [`border-color`](#border-color), and sets the border of a view.
 
-# Border Style
+```css
+/* style */
+border: solid;
 
-# Border Origin
+/* width | style */
+border: 2px dashed;
+
+/* style | color */
+border: solid red;
+
+/* width | style | color */
+border: 5px dashed green;
+```
+
+## Border Width
+
+The `border-width` property sets the width of a view's border.
+
+```css
+border-width: 5px;
+border-width: 20%;
+```
+
+## Border Style
+
+The `border-style` property sets the style of a view's border.
+
+```css
+border-style: none;
+border-style: solid;
+border-style: dashed;
+border-style: dotted;
+```
+
+## Border Color
+
+The `border-color` property sets the color of a view's border.
+
+```css
+border-color: red;
+border-color: #566;
+```
