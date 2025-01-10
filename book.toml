@@ -12,6 +12,5 @@ runnable = false
 enable = true
 level = 0
 
-[preprocessor.toc]
-command = "mdbook-toc"
-renderer = ["html"]
+[output.html]
+cname = "book.vizia.dev"

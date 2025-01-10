@@ -40,8 +40,6 @@ jobs:
 
     - name: Build book
       run: mdbook build
-      env:
-        MDBOOK_output__html__site_url: "/tuix-book/"
         
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.0
