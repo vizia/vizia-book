@@ -33,7 +33,7 @@ fn main() {
 }
 ```
 
-If the nested data structure does not dderive `Lens`, then the `map_ref()` modifier can be used:
+If the nested data structure does not derive `Lens`, then the `map_ref()` modifier can be used:
 
 ```rs
 fn main() {

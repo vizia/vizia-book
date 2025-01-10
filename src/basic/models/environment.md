@@ -1,6 +1,6 @@
 # Environment
 
-The `Environment` is a built-in model used to specify system specific application data, such as the current locale, which can then be used by any view in the application.
+The `Environment` is a built-in model used to specify system specific application data, such as the current system locale and current system theme preference, which can then be used by any view in the application.
 
 For example, we can bind to the locale and conditionally change the properties of a view depending on the selected language:
 

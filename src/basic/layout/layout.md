@@ -2,91 +2,89 @@
 
 The position and size of a view is determined by its layout properties. Vizia uses a custom layout system called [morphorm](https://github.com/vizia/morphorm) which can achieve similar results to flexbox.
 
-### Layout Type
-The layout type property determines how children of a node will be arranged. There are two variants:
-- `LayoutType::Row` - The node will arrange its children into a horizontal row.
-- `LayoutType::Column` - The node will arrange its children into a vertical column.
+The following sections details the functioning of the layout system:
 
-![](docs/images/layout_type.svg)
+- [Size](./size.md)
+- [Layout Type](./layout_type.md)
+- [Alignment](./alignment.md)
+- [Padding](./padding.md)
+- [Gap](./gap.md)
+- [Position Type](./position_type.md)
+- [Spacing](./spacing.md)
+- [Constraints](./constraints.md)
 
-### Size
-The size of a node is determined by its `width` and `height` properties. These properties are specified with `Units`, which has four variants:
-- `Units::Pixels(val)` - Sets the size to a fixed number of pixels.
+## Units
 
-![](/docs/images/size_pixels.svg)
-- `Units::Percentage(val)` - Sets the size to a percentage of the nodes parent size.
+Many of the layout properties used in vizia use the `Units` type to specify their value. The `Units` type has four variants:
 
-![](/docs/images/size_percentage.svg)
-- `Units::Stretch(factor)` - Sets the size to a proportion of the free space of the parent within the same axis.
+- Pixels
+- Percentage
+- Stretch
+- Auto
 
-![](/docs/images/size_stretch.svg)
-- `Units::Auto` - Sets the size to either hug the nodes children, or to inherit the [content size](#content-size) of the node.
+Not all variants may have an effect on a particular property. For example, the padding properties do not use the stretch or auto variants.
 
-![](/docs/images/size_auto.svg)
+### Pixels
 
-### Content Size
-Content size is used to determine the size of a node which has no children but may have an intrinsic size due to contents which do not correspond to nodes in the layout tree. For example, a node which contains text has an intrinsic size of the bounds of the text, which may introduce a dependency between the width and height (i.e. when text wraps). Similarly, content size can be used to size a node with a particular aspect ratio by constraining the height to be some proportion of the width (or conversely).
+The **pixels** variant allows space and size to be specified with a fixed number of logical pixels. The physical space or size is determined by the window scale factor:
 
-![](/docs/images/content_size.svg)
+```
+physical_pixels = logical_pixels * scale_factor
+```
 
-### Space
-The position of a node within a stack can be adjusted by the spacing applied to each of its four sides:
-- `left` - The space that should be applied to the left side of the node. This takes precedent over `right` spacing.
-- `right` - The space that should be applied to the right side of the node.
-- `top` - The space that should be applied to the top side of (above) the node. This takes precedent over `bottom` space.
-- `bottom` - The space that should be applied to the bottom side of (below) the node.
+### Percentage
 
-![](/docs/images/spacing.svg)
+The **percentage** variant allows space and size to be specified as a fraction of the parent size: 
 
-Spacing is specified with `Units`, which has four variants:
-- `Units::Pixels(val)` - Sets the spacing to a fixed number of pixels.
+```
+computed_value = percentage_value * parent_size / 100.0
+```
 
-![](/docs/images/space_pixels.svg)
-- `Units::Percentage(val)` - Sets the spacing to a percentage of the nodes parent size.
+The dimension is consistent, so specifying the `left` space as a percentage will use the parent `width` to calculate the desired space.
 
-![](/docs/images/space_percentage.svg)
-- `Units::Stretch(factor)` - Sets the spacing to a proportion of the free space of the parent within the same axis.
+### Stretch
 
-![](/docs/images/space_stretch.svg)
-- `Units::Auto` - Sets the spacing to inherit the [child spacing](#child-space) of the parent.
+The **stretch** variant allows space and size within a stack to be specified as a ratio of the remaining free space of the parent after subtracting any fixed-size space and size.
 
-![](/docs/images/space_auto.svg)
+This is best understood with an example. For two views in a horizontal stack, the first with a width of stretch factor 1.0 and the second with a width of stretch factor 2.0, the first will occupy 1/3 of the horizontal free space and the second will occupy 2/3 of the horizontal free space.
 
-### Position Type
-The position type property determines whether a node should be positioned in-line with its siblings in a stack, or out-of-line and independently of its siblings. There are two variants:
-- `PositionType::ParentDirected` - The node will be positioned relative to its in-line position with its siblings.
-- `PositionType::SelfDirected` - The node will be positioned out-of-line and relative to the top-left corner of its parent.
+### Auto
 
-![](/docs/images/position_type.svg)
+The **auto** variant is typically the default value for a layout property and has no effect. The exception to this is with the size and size constraint properties, where an auto value represents the total size of the children of a view. So for example, setting the `width` to `auto` will cause the view to 'hug' its children in the horizontal direction.
 
-Self directed nodes do not contribute to the size of the parent when the parent size is set to auto.
+## Layout Properties
 
-### Child Space
-The child space of a node applies space around its children by overriding the individual auto spacing of the nodes children and is also specified with `Units`.
-- `child_left` - The space that should be applied between the left side of the view and its children with individual `Auto` left spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.
+This section provides a list of the currently supported style properties in vizia.
 
-![](/docs/images/child_left.svg)
-- `child_right` - The space that should be applied between the right side of the view and its children with individual `Auto` right spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.
-
-![](/docs/images/child_right.svg)
-- `child_top` - The space that should be applied between the top side of the view and its children with individual `Auto` top spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.
-
-![](/docs/images/child_top.svg)
-- `child_bottom` - The space that should be applied between the bottom side of the view and its children with individual `Auto` bottom spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.
-
-![](/docs/images/child_bottom.svg)
-
-There are two additional child-spacing properties for setting the space between child nodes:
-- `row-between` - The space that should be applied between the children within a `Column` layout. Works by overriding the individual `top` and `bottom` spacing of the children if they are set to `Auto`.
-- `col-between` - The space that should be applied between the children within a `Row` layout. Works by overriding the individual `left` and `right` spacing of the children if they are set to `Auto`.
-
-![](/docs/images/space_between.svg)
-
-### Constraints
-All spacing and size properties can be constrained with corresponding minimum and maximum properties, which are also specified using `Units`. For example, the `width` of a node can be constrained with the `min_width` and `max_width` properties.
-
-![](/docs/images/min_width_pixels.svg)
-
-Specifying a minimum size of `Auto` will cause the node to be at least as large as its contents.
-
-![](/docs/images/min_width_auto.svg)
+| Property                     | Type                 | Initial Value     | Inherited | Animatable |
+|------------------------------|----------------------|-------------------|-----------|------------|
+| `layout-type`                | `LayoutType`         | `column`          | No        | No         |
+| `position-type`              | `PositionType`       | `relative`        | No        | No         |
+| `gap`                        | shorthand            |                   |           |            |
+| `horizontal-gap`             | `Units`              | `auto`            | No        | Yes        |
+| `vertical-gap`               | `Units`              | `auto`            | No        | Yes        |
+| `min-gap`                    | shorthand            |                   |           |            |
+| `min-horizontal-gap`         | `Units`              | `auto`            | No        | Yes        |
+| `min-vertical-gap`           | `Units`              | `auto`            | No        | Yes        |
+| `max-gap`                    | shorthand            |                   |           |            |
+| `max-horizontal-gap`         | `Units`              | `0px`             | No        | Yes        |
+| `max-vertical-gap`           | `Units`              | `solid`           | No        | Yes        |
+| `padding`                    | shorthand            |                   |           |            |
+| `padding-left`               | `Units`              | `auto`            | No        | Yes        |
+| `padding-right`              | `Units`              | `auto`            | No        | Yes        |
+| `padding-top`                | `Units`              | `auto`            | No        | Yes        |
+| `padding-bottom`             | `Units`              | `auto`            | No        | Yes        |
+| `size`                       | shorthand            |                   |           |            |
+| `width`                      | `Units`              | `1s`              | No        | Yes        |
+| `height`                     | `Units`              | `1s`              | No        | Yes        |
+| `min-size`                   | shorthand            |                   |           |            |
+| `min-width`                  | `Units`              | `auto`            | No        | Yes        |
+| `min-height`                 | `Units`              | `auto`            | No        | Yes        |
+| `max-size`                   | shorthand            |                   |           |            |
+| `max-width`                  | `Units`              | `auto`            | No        | Yes        |
+| `max-height`                 | `Units`              | `auto`            | No        | Yes        |
+| `space`                      | shorthand            |                   |           |            |
+| `left`                       | `Units`              | `auto`            | No        | Yes        |
+| `right`                      | `Units`              | `auto`            | No        | Yes        |
+| `top`                        | `Units`              | `auto`            | No        | Yes        |
+| `bottom`                     | `Units`              | `auto`            | No        | Yes        |

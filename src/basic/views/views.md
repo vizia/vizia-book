@@ -20,8 +20,6 @@ fn main() {
 }
 ```
 
-<img src="../../img/hello_world.png" alt="A window with its size set to 400 by 200 with a label displaying 'Hello World'" width="400"/>
-
 The first argument to the `new()` method of the label is a mutable reference to `Context`, shortened to `cx`. This allows the view to build itself into the application and is passed from view to view.
 
 # Composing views

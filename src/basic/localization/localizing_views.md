@@ -1,6 +1,6 @@
 # Localizing Views
 
-Things like colors and symbols can have different meanings across cultures and languages, and so for some locales the contents of a view, or even the view itself, must be replaced. This can be achieved with a binding to the locale data in the `Environment` model.
+Things like colors and symbols can have different meanings across cultures and languages, and so for some locales the contents of a view, or even the view itself, must be replaced. This can be achieved with a binding to the `locale` data in the `Environment` model.
 
 For example, to replace a view based on the locale:
 
