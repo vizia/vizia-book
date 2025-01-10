@@ -13,4 +13,5 @@ enable = true
 level = 0
 
 [output.html]
+git-repository-url = "https://github.com/vizia/vizia-book"
 cname = "book.vizia.dev"
