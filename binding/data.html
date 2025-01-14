@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Alignment - vizia-book</title>
+        <title>The Data trait - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -12,32 +12,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../favicon.svg">
-        <link rel="shortcut icon" href="../../favicon.png">
-        <link rel="stylesheet" href="../../css/variables.css">
-        <link rel="stylesheet" href="../../css/general.css">
-        <link rel="stylesheet" href="../../css/chrome.css">
-        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../highlight.css">
-        <link rel="stylesheet" href="../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../../";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -89,7 +89,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -123,7 +123,7 @@
                     <h1 class="menu-title">vizia-book</h1>
 
                     <div class="right-buttons">
-                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/vizia/vizia-book" title="Git repository" aria-label="Git repository">
@@ -155,43 +155,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="alignment"><a class="header" href="#alignment">Alignment</a></h1>
-<p>The <code>alignment</code> property determines how the children will be aligned within a view. There are 9 options:</p>
-<ul>
-<li><code>top-left</code></li>
-<li><code>top-center</code></li>
-<li><code>top-right</code></li>
-<li><code>left</code></li>
-<li><code>center</code></li>
-<li><code>right</code></li>
-<li><code>bottom-left</code></li>
-<li><code>bottom-center</code></li>
-<li><code>bottom-right</code></li>
-</ul>
-<p>Alignment also applies to text within a view, unless overridden by the <code>text-align</code> property.</p>
-<p><img src="../layout/images/alignment.svg" alt="alignment" /></p>
-<h2 id=""><a class="header" href="#"></a></h2>
-<p>The <code>alignment</code> of a view can be specified using the respective layout modifier:</p>
-<pre><code class="language-rust">VStack::new(cx, |cx|{
-    Label::new(cx, "Hello");
-    Label::new(cx, "World");
-})
-.alignment(Alignment::Center);</code></pre>
-<p>Or in CSS:</p>
-<pre><code class="language-css">.container {
-    alignment: center;
-}
-</code></pre>
+                        <h1 id="the-data-trait"><a class="header" href="#the-data-trait">The Data Trait</a></h1>
+<p>When views bind to model data the <a href="binding.html">binding system</a> must determine whether the data has changed. To do this it stores a copy of the data for each binding. To be able to compare the previous data to the new version, the data type must implement the <code>Data</code> trait.</p>
+<p>Note that this is only required for the data types which are bound to. The model itself does not need to implement <code>Data</code> unless a view is to bind to the entire model and not just a field within.</p>
+<p>Most simple types already implement the <code>Data</code> trait, but for custom types there is a derive macro that can be used as long as the field types also implement the <code>Data</code> trait:</p>
+<pre><code class="language-rust">#[derive(Clone, Data)]
+pub struct CustomData {
+    text: String,
+} </code></pre>
+<p>The <code>Data</code> trait also requires that the type implements <code>Clone</code>. This is because when the binding system has determined the data has changed, it must replace its stored copy of the data with a new one so it can recompare on the next update cycle.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../basic/layout/layout_type.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../binding/binding.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../basic/layout/padding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../binding/lens_map.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -201,11 +183,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../basic/layout/layout_type.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../binding/binding.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../basic/layout/padding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../binding/lens_map.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -220,13 +202,13 @@
         </script>
 
 
-        <script src="../../elasticlunr.min.js"></script>
-        <script src="../../mark.min.js"></script>
-        <script src="../../searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../../clipboard.min.js"></script>
-        <script src="../../highlight.js"></script>
-        <script src="../../book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

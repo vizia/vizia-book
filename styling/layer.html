@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The final code - vizia-book</title>
+        <title>Layer - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,184 +155,69 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-final-code"><a class="header" href="#the-final-code">The Final Code</a></h1>
-<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-// Define the application data
-#[derive(Lens)]
-pub struct AppData {
-    count: i32,
-}
-
-// Define events for mutating the application data
-pub enum AppEvent {
-    Increment,
-    Decrement,
-}
-
-// Mutate application data in response to events
-impl Model for AppData {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement =&gt; self.count -= 1,
-            AppEvent::Increment =&gt; self.count += 1,
-        });
-    }
-}
-
-// Define a custom view for the counter
-pub struct Counter {
-    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-}
-
-impl Counter {
-    pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt;
-    where
-        L: Lens&lt;Target = i32&gt;
-    {
-        Self {
-            on_decrement: None,
-            on_increment: None,
-        }.build(cx, |cx|{
-            HStack::new(cx, |cx|{
-                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
-                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
-                    .class("dec");
-
-                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
-                    .on_press(|ex| ex.emit(CounterEvent::Increment))
-                    .class("inc");
-                
-                Label::new(cx, lens)
-                    .class("count")
-                    .live(Live::Assertive);
-            })
-            .class("row");
-        })
-    }
-}
-
-// Internal events
-pub enum CounterEvent {
-    Decrement,
-    Increment,
-}
-
-// Handle internal events
-impl View for Counter {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|counter_event, meta| match counter_event{
-            CounterEvent::Increment =&gt; {
-                if let Some(callback) = &amp;self.on_increment {
-                    (callback)(cx);
-                }
-            }
-
-            CounterEvent::Decrement =&gt; {
-                if let Some(callback) = &amp;self.on_decrement {
-                    (callback)(cx);
-                }
-            }
-        });
-    }
-}
-
-// Custom modifiers
-pub trait CounterModifiers {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-}
-
-// Implement custom modifiers
-impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
-    }
-
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
-    }
-}
-
-fn main() {
-    Application::new(|cx|{
-
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
-
-        cx.add_translation(
-            langid!("en-US"),
-            include_str!("resources/en-US/counter.ftl").to_owned(),
-        );
-
-        cx.add_translation(
-            langid!("es"),
-            include_str!("resources/es/counter.ftl").to_owned(),
-        );
-
-        // Uncomment to test with spanish locale.
-        // If system locale is already Spanish, replace "es" with "en-US".
-        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
-
-        // Build model data into the application
-        AppData { count: 0 }.build(cx);
-
-        // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count)
-            .on_increment(|cx| cx.emit(AppEvent::Increment))
-            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run();
-}</code></pre>
-<h2 id="css"><a class="header" href="#css">CSS</a></h2>
-<pre><code class="language-css">.row {
-    child-space: 1s;
-    col-between: 20px;
-}
-
-button {
-    border-width: 0px;
-}
-
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
-
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    child-space: 1s;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
-}
+                        <h1 id="layer-properties"><a class="header" href="#layer-properties">Layer Properties</a></h1>
+<h2 id="visibility"><a class="header" href="#visibility">Visibility</a></h2>
+<p>The visibility property shows or hides a view without affecting its layout.</p>
+<pre><code class="language-css">/* Keyword values */
+visibility: visible;
+visibility: hidden;
 </code></pre>
-<h2 id="fluent"><a class="header" href="#fluent">Fluent</a></h2>
-<p><em>resources/en-US/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Increment
-dec = Decrement
+<h2 id="opacity"><a class="header" href="#opacity">Opacity</a></h2>
+<p>The <code>opacity</code> property determines how much of the content behind a view can be seen.</p>
+<pre><code class="language-css">opacity: 0.9;
+
+opacity: 90%;
 </code></pre>
-<p><em>resources/es/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Incrementar
-dec = Decrementar
+<h2 id="blend-mode"><a class="header" href="#blend-mode">Blend mode</a></h2>
+<p>The <code>blend-mode</code> property determines how a view's content should blend with the content of the view's behind it.</p>
+<pre><code class="language-css">/* Keyword values */
+blend-mode: normal;
+blend-mode: multiply;
+blend-mode: screen;
+blend-mode: overlay;
+blend-mode: darken;
+blend-mode: lighten;
+blend-mode: color-dodge;
+blend-mode: color-burn;
+blend-mode: hard-light;
+blend-mode: soft-light;
+blend-mode: difference;
+blend-mode: exclusion;
+blend-mode: hue;
+blend-mode: saturation;
+blend-mode: color;
+blend-mode: luminosity;
+blend-mode: plus;
+</code></pre>
+<h2 id="z-index"><a class="header" href="#z-index">Z-Index</a></h2>
+<p>The <code>z-index</code> property determines the z-order of a view and its descendants. Overlapping elements with a larger z-index cover those with a smaller one.</p>
+<h2 id="overflow"><a class="header" href="#overflow">Overflow</a></h2>
+<p>The overflow shorthand property sets the desired behavior when content does not fit in the view's bounds in the horizontal and/or vertical direction.</p>
+<pre><code class="language-css">/* Keyword values */
+overflow: visible;
+overflow: hidden;
+overflow: hidden visible;
+</code></pre>
+<p>The overflow can be set for each axis using the <code>overflow-x</code> and <code>overflow-y</code> properties.</p>
+<h2 id="clip-path"><a class="header" href="#clip-path">Clip Path</a></h2>
+<p>The <code>clip-path</code> property creates a clipping region that sets what part of an element should be shown. Parts that are inside the region are shown, while those outside are hidden.</p>
+<pre><code class="language-css">/* Keyword values */
+clip-path: auto;
+
+/* &lt;basic-shape&gt; values */
+clip-path: inset(100px 50px);
+clip-path: rect(5px 5px 160px 145px);
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/accessibility.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../styling/transitions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../binding/binding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../styling/background.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -342,11 +227,11 @@ dec = Decrementar
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/accessibility.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../styling/transitions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../binding/binding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../styling/background.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

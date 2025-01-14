@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mapping lenses - vizia-book</title>
+        <title>Background - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -12,32 +12,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../favicon.svg">
-        <link rel="shortcut icon" href="../../favicon.png">
-        <link rel="stylesheet" href="../../css/variables.css">
-        <link rel="stylesheet" href="../../css/general.css">
-        <link rel="stylesheet" href="../../css/chrome.css">
-        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../highlight.css">
-        <link rel="stylesheet" href="../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../../";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="../../toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -89,7 +89,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="../../toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -123,7 +123,7 @@
                     <h1 class="menu-title">vizia-book</h1>
 
                     <div class="right-buttons">
-                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         <a href="https://github.com/vizia/vizia-book" title="Git repository" aria-label="Git repository">
@@ -155,45 +155,98 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="lens-map"><a class="header" href="#lens-map">Lens Map</a></h1>
-<p>The <code>map()</code> method on a lens can be used to derive data from the target of the lens. This is useful for when the lens target is not the right type for the binding, but a value of the correct type can be derived from it.</p>
-<p>For example, let's say we have some string data representing a name in our model, but we only want to display the first letter within a label:</p>
-<pre><code class="language-rust">use vizia::prelude::*;
+                        <h1 id="background-properties"><a class="header" href="#background-properties">Background Properties</a></h1>
+<h2 id="background-color"><a class="header" href="#background-color">Background Color</a></h2>
+<p>Sets the <code>background-color</code> of a view.</p>
+<pre><code class="language-css">/* Keyword values */
+background-color: red;
+background-color: indigo;
 
-#[derive(Lens)]
-pub struct AppData {
-    pub name: String,
-}
+/* Hexadecimal value */
+background-color: #bbff00; /* Fully opaque */
+background-color: #bf0; /* Fully opaque shorthand */
+background-color: #11ffee00; /* Fully transparent */
+background-color: #1fe0; /* Fully transparent shorthand */
+background-color: #11ffeeff; /* Fully opaque */
+background-color: #1fef; /* Fully opaque shorthand */
 
-impl Model for AppData {}
+/* RGB value */
+background-color: rgb(255 255 128); /* Fully opaque */
+background-color: rgb(117 190 218 / 50%); /* 50% transparent */
 
-fn main() {
-    Application::new(|cx|{
+/* HSL value */
+background-color: hsl(50 33% 25%); /* Fully opaque */
+background-color: hsl(50 33% 25% / 75%); /* 75% opaque, i.e. 25% transparent */
 
-        AppData {
-            name: String::from("John Doe"),
-        }.build(cx);
+</code></pre>
+<p>The background color is rendered behind any <a href="#background-image"><code>background-image</code></a> but will show through any transparency in the image.</p>
+<h2 id="background-image"><a class="header" href="#background-image">Background Image</a></h2>
+<p>The <code>background-image</code> property sets one or more background images on a view.</p>
+<pre><code class="language-css">/* single image */
+background-image: linear-gradient(black, white);
+background-image: url("cat-front.png");
 
-        Label::new(cx, AppData::name.map(|name| name.chars().nth(0).unwrap()));
-    })
-    .inner_size((400, 100))
-    .run();
-}</code></pre>
-<blockquote>
-<p>Note that in this example we're assuming that the string is not empty.</p>
-</blockquote>
-<img src="../img/stylesheet.png" alt="" width="400"/>
-<p>Now when the name field of the model changes the label will update to display the new first letter.</p>
+/* multiple images */
+background-image: radial-gradient(circle, #0000 45%, #000f 48%),
+  radial-gradient(ellipse farthest-corner, #fc1c14 20%, #cf15cf 80%);
+</code></pre>
+<h2 id="background-size"><a class="header" href="#background-size">Background Size</a></h2>
+<p>The <code>background-size</code> property sets the size of the view's background image. The image can be left to its natural size, stretched, or constrained to fit the available space.</p>
+<pre><code class="language-css">/* Keyword values */
+background-size: cover;
+background-size: contain;
+
+/* One-value syntax */
+/* the width of the image (height becomes 'auto') */
+background-size: 50%;
+background-size: 3.2em;
+background-size: 12px;
+background-size: auto;
+
+/* Two-value syntax */
+/* first value: width of the image, second value: height */
+background-size: 50% auto;
+background-size: 3em 25%;
+background-size: auto 6px;
+background-size: auto auto;
+
+/* Multiple backgrounds */
+background-size: auto, auto; /* Not to be confused with `auto auto` */
+background-size: 50%, 25%, 25%;
+background-size: 6px, auto, contain;
+</code></pre>
+<h2 id="background-position"><a class="header" href="#background-position">Background Position</a></h2>
+<p>The <code>background-position</code> CSS property sets the initial position for each background image.</p>
+<pre><code class="language-css">/* Keyword values */
+background-position: top;
+background-position: bottom;
+background-position: left;
+background-position: right;
+background-position: center;
+
+/* &lt;percentage&gt; values */
+background-position: 25% 75%;
+
+/* &lt;length&gt; values */
+background-position: 0 0;
+background-position: 1cm 2cm;
+background-position: 10ch 8em;
+
+/* Multiple images */
+background-position:
+  0 0,
+  center;
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../basic/binding/data.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../styling/layer.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../../basic/binding/conditional_views.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../styling/border.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -203,11 +256,11 @@ fn main() {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../basic/binding/data.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../styling/layer.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../../basic/binding/conditional_views.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../styling/border.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -222,13 +275,13 @@ fn main() {
         </script>
 
 
-        <script src="../../elasticlunr.min.js"></script>
-        <script src="../../mark.min.js"></script>
-        <script src="../../searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../../clipboard.min.js"></script>
-        <script src="../../highlight.js"></script>
-        <script src="../../book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

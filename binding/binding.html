@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The final code - vizia-book</title>
+        <title>Binding - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,184 +155,56 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-final-code"><a class="header" href="#the-final-code">The Final Code</a></h1>
-<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-// Define the application data
-#[derive(Lens)]
+                        <h1 id="data-binding"><a class="header" href="#data-binding">Data Binding</a></h1>
+<p>Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update automatically in response. Therefore, it is data binding which provides the mechanism for reactivity in Vizia.</p>
+<p>In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to <em>select</em> some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.</p>
+<h2 id="lenses"><a class="header" href="#lenses">Lenses</a></h2>
+<p>The <code>Lens</code> derive macro can be used to generate a lens for each field of a struct. These lenses can then be used to transform a reference to the struct into a reference to each of its fields. The generated lenses are given the same name as the field and placed in a module with the same name as the struct. For example, given the following definition of some model data:</p>
+<pre><code class="language-rust">#[derive(Lens)]
 pub struct AppData {
-    count: i32,
+    color: Color,
 }
 
-// Define events for mutating the application data
-pub enum AppEvent {
-    Increment,
-    Decrement,
+impl Model for AppData {}</code></pre>
+<p>A lens to the <code>color</code> field of the <code>AppData</code> struct is generated as <code>AppData::color</code>.</p>
+<h2 id="property-binding"><a class="header" href="#property-binding">Property Binding</a></h2>
+<p>We can then use this lens with the <code>background_color</code> modifier of a view to set up a binding, so that when the data changes the background color is updated. Passing lenses to modifiers is known as <em>property binding</em>.</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
 }
 
-// Mutate application data in response to events
-impl Model for AppData {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement =&gt; self.count -= 1,
-            AppEvent::Increment =&gt; self.count += 1,
-        });
-    }
-}
-
-// Define a custom view for the counter
-pub struct Counter {
-    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-}
-
-impl Counter {
-    pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt;
-    where
-        L: Lens&lt;Target = i32&gt;
-    {
-        Self {
-            on_decrement: None,
-            on_increment: None,
-        }.build(cx, |cx|{
-            HStack::new(cx, |cx|{
-                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
-                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
-                    .class("dec");
-
-                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
-                    .on_press(|ex| ex.emit(CounterEvent::Increment))
-                    .class("inc");
-                
-                Label::new(cx, lens)
-                    .class("count")
-                    .live(Live::Assertive);
-            })
-            .class("row");
-        })
-    }
-}
-
-// Internal events
-pub enum CounterEvent {
-    Decrement,
-    Increment,
-}
-
-// Handle internal events
-impl View for Counter {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|counter_event, meta| match counter_event{
-            CounterEvent::Increment =&gt; {
-                if let Some(callback) = &amp;self.on_increment {
-                    (callback)(cx);
-                }
-            }
-
-            CounterEvent::Decrement =&gt; {
-                if let Some(callback) = &amp;self.on_decrement {
-                    (callback)(cx);
-                }
-            }
-        });
-    }
-}
-
-// Custom modifiers
-pub trait CounterModifiers {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-}
-
-// Implement custom modifiers
-impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
-    }
-
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
-    }
-}
+impl Model for AppData {}
 
 fn main() {
     Application::new(|cx|{
-
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
-
-        cx.add_translation(
-            langid!("en-US"),
-            include_str!("resources/en-US/counter.ftl").to_owned(),
-        );
-
-        cx.add_translation(
-            langid!("es"),
-            include_str!("resources/es/counter.ftl").to_owned(),
-        );
-
-        // Uncomment to test with spanish locale.
-        // If system locale is already Spanish, replace "es" with "en-US".
-        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
-
-        // Build model data into the application
-        AppData { count: 0 }.build(cx);
-
-        // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count)
-            .on_increment(|cx| cx.emit(AppEvent::Increment))
-            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run();
+        Label::new(cx, "Hello Vizia").background_color(AppData::color);
+    }).run();
 }</code></pre>
-<h2 id="css"><a class="header" href="#css">CSS</a></h2>
-<pre><code class="language-css">.row {
-    child-space: 1s;
-    col-between: 20px;
+<h2 id="view-binding"><a class="header" href="#view-binding">View Binding</a></h2>
+<p>Some views accept a lens as an input. When provided a lens, the view sets up a binding to the data. For example, the <code>Label</code> view accepts a lens to any type which implements <code>ToString</code>:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct Person {
+    pub name: String,
 }
 
-button {
-    border-width: 0px;
-}
+impl Model for Person {}
 
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
-
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    child-space: 1s;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
-}
-</code></pre>
-<h2 id="fluent"><a class="header" href="#fluent">Fluent</a></h2>
-<p><em>resources/en-US/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Increment
-dec = Decrement
-</code></pre>
-<p><em>resources/es/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Incrementar
-dec = Decrementar
-</code></pre>
+Application::new(|cx|{
+    Label::new(cx, Person::name);
+})
+.run()</code></pre>
+<p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/accessibility.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../quickstart/final_code.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../binding/binding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../binding/data.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -342,11 +214,11 @@ dec = Decrementar
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/accessibility.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../quickstart/final_code.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../binding/binding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../binding/data.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

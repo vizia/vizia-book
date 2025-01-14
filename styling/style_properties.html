@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The final code - vizia-book</title>
+        <title>Properties - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,184 +155,76 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-final-code"><a class="header" href="#the-final-code">The Final Code</a></h1>
-<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-// Define the application data
-#[derive(Lens)]
-pub struct AppData {
-    count: i32,
-}
-
-// Define events for mutating the application data
-pub enum AppEvent {
-    Increment,
-    Decrement,
-}
-
-// Mutate application data in response to events
-impl Model for AppData {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement =&gt; self.count -= 1,
-            AppEvent::Increment =&gt; self.count += 1,
-        });
-    }
-}
-
-// Define a custom view for the counter
-pub struct Counter {
-    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-}
-
-impl Counter {
-    pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt;
-    where
-        L: Lens&lt;Target = i32&gt;
-    {
-        Self {
-            on_decrement: None,
-            on_increment: None,
-        }.build(cx, |cx|{
-            HStack::new(cx, |cx|{
-                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
-                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
-                    .class("dec");
-
-                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
-                    .on_press(|ex| ex.emit(CounterEvent::Increment))
-                    .class("inc");
-                
-                Label::new(cx, lens)
-                    .class("count")
-                    .live(Live::Assertive);
-            })
-            .class("row");
-        })
-    }
-}
-
-// Internal events
-pub enum CounterEvent {
-    Decrement,
-    Increment,
-}
-
-// Handle internal events
-impl View for Counter {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|counter_event, meta| match counter_event{
-            CounterEvent::Increment =&gt; {
-                if let Some(callback) = &amp;self.on_increment {
-                    (callback)(cx);
-                }
-            }
-
-            CounterEvent::Decrement =&gt; {
-                if let Some(callback) = &amp;self.on_decrement {
-                    (callback)(cx);
-                }
-            }
-        });
-    }
-}
-
-// Custom modifiers
-pub trait CounterModifiers {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-}
-
-// Implement custom modifiers
-impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
-    }
-
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
-    }
-}
-
-fn main() {
-    Application::new(|cx|{
-
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
-
-        cx.add_translation(
-            langid!("en-US"),
-            include_str!("resources/en-US/counter.ftl").to_owned(),
-        );
-
-        cx.add_translation(
-            langid!("es"),
-            include_str!("resources/es/counter.ftl").to_owned(),
-        );
-
-        // Uncomment to test with spanish locale.
-        // If system locale is already Spanish, replace "es" with "en-US".
-        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
-
-        // Build model data into the application
-        AppData { count: 0 }.build(cx);
-
-        // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count)
-            .on_increment(|cx| cx.emit(AppEvent::Increment))
-            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run();
-}</code></pre>
-<h2 id="css"><a class="header" href="#css">CSS</a></h2>
-<pre><code class="language-css">.row {
-    child-space: 1s;
-    col-between: 20px;
-}
-
-button {
-    border-width: 0px;
-}
-
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
-
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    child-space: 1s;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
-}
-</code></pre>
-<h2 id="fluent"><a class="header" href="#fluent">Fluent</a></h2>
-<p><em>resources/en-US/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Increment
-dec = Decrement
-</code></pre>
-<p><em>resources/es/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Incrementar
-dec = Decrementar
-</code></pre>
-
+                        <h1 id="list-of-supported-style-properties"><a class="header" href="#list-of-supported-style-properties">List of supported style properties</a></h1>
+<p>This section provides a list of the currently supported style properties in vizia. This excludes layout properties which are detailed in the <a href="../layout/layout.html">layout section</a> of this guide.</p>
+<p>For the corresponding modifier name, replace any hyphens with underscores. For example, <code>background-color</code> in CSS becomes the <code>background_color()</code> modifier in Rust.</p>
+<div class="table-wrapper"><table><thead><tr><th>Property</th><th>Type</th><th>Initial Value</th><th>Inherited</th><th>Animatable</th></tr></thead><tbody>
+<tr><td><code>backdrop-filter</code></td><td><code>Filter</code></td><td><code>none</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>background-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>background-image</code></td><td><code>BackgroundImage</code></td><td><code>none</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>background-size</code></td><td><code>BackgroundSize</code></td><td><code>auto auto</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>blend-mode</code></td><td><code>BlendMode</code></td><td><code>normal</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>border</code></td><td>shorthand</td><td></td><td></td><td></td></tr>
+<tr><td><code>border-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>border-style</code></td><td><code>BorderStyle</code></td><td><code>solid</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>border-width</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>caret-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>clip-path</code></td><td><code>ClipPath</code></td><td><code>none</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>corner-radius</code></td><td><code>CornerRadius</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-top-left-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-top-right-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-bottom-left-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-bottom-right-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-shape</code></td><td><code>Rect&lt;CornerShape&gt;</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-top-left-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-top-right-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-bottom-left-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-bottom-right-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>cursor</code></td><td><code>CursorIcon</code></td><td><code>default</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>display</code></td><td><code>Display</code></td><td><code>flex</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>font-family</code></td><td><code>FontFamily</code></td><td></td><td>Yes</td><td>No</td></tr>
+<tr><td><code>font-size</code></td><td><code>FontSize</code></td><td><code>16</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>font-slant</code></td><td><code>FontSlant</code></td><td><code>normal</code></td><td>Yes</td><td>No</td></tr>
+<tr><td><code>font-weight</code></td><td><code>FontWidth</code></td><td><code>regular</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>font-width</code></td><td><code>FontWeight</code></td><td><code>normal</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>font-variation-settings</code></td><td><code>FontVariation</code></td><td><code>none</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>line-clamp</code></td><td><code>u32</code></td><td><code>1</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>opacity</code></td><td><code>f32</code></td><td><code>1.0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>outline</code></td><td>shorthand</td><td></td><td>No</td><td></td></tr>
+<tr><td><code>outline-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>outline-offset</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>outline-width</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>overflow</code></td><td><code>Overflow</code></td><td><code>visible</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>overflow-x</code></td><td><code>Overflow</code></td><td><code>visible</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>overflow-y</code></td><td><code>Overflow</code></td><td><code>visible</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>pointer-events</code></td><td><code>PointerEvents</code></td><td><code>auto</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>rotate</code></td><td><code>Angle</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>scale</code></td><td><code>Scale</code></td><td><code>1</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>selection-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>shadow</code></td><td><code>Shadow</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>text-align</code></td><td><code>TextAlign</code></td><td><code>left</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>text-decoration</code></td><td>shorthand</td><td></td><td></td><td></td></tr>
+<tr><td><code>text-decoration-line</code></td><td></td><td></td><td>Yes</td><td>No</td></tr>
+<tr><td><code>text-overflow</code></td><td></td><td><code>clip</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>text-wrap</code></td><td><code>bool</code></td><td><code>true</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>transform</code></td><td><code>Transform</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>transform-origin</code></td><td><code>Position</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>transition</code></td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>translate</code></td><td><code>Translate</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>visibility</code></td><td><code>Visibility</code></td><td></td><td>No</td><td>No</td></tr>
+<tr><td><code>z-index</code></td><td><code>i32</code></td><td><code>0</code></td><td>No</td><td>No</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/accessibility.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../styling/selectors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../binding/binding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../styling/transitions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -342,11 +234,11 @@ dec = Decrementar
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/accessibility.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../styling/selectors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../binding/binding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../styling/transitions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

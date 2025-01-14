@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The final code - vizia-book</title>
+        <title>Transform - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,184 +155,81 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-final-code"><a class="header" href="#the-final-code">The Final Code</a></h1>
-<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-// Define the application data
-#[derive(Lens)]
-pub struct AppData {
-    count: i32,
-}
-
-// Define events for mutating the application data
-pub enum AppEvent {
-    Increment,
-    Decrement,
-}
-
-// Mutate application data in response to events
-impl Model for AppData {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement =&gt; self.count -= 1,
-            AppEvent::Increment =&gt; self.count += 1,
-        });
-    }
-}
-
-// Define a custom view for the counter
-pub struct Counter {
-    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-}
-
-impl Counter {
-    pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt;
-    where
-        L: Lens&lt;Target = i32&gt;
-    {
-        Self {
-            on_decrement: None,
-            on_increment: None,
-        }.build(cx, |cx|{
-            HStack::new(cx, |cx|{
-                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
-                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
-                    .class("dec");
-
-                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
-                    .on_press(|ex| ex.emit(CounterEvent::Increment))
-                    .class("inc");
-                
-                Label::new(cx, lens)
-                    .class("count")
-                    .live(Live::Assertive);
-            })
-            .class("row");
-        })
-    }
-}
-
-// Internal events
-pub enum CounterEvent {
-    Decrement,
-    Increment,
-}
-
-// Handle internal events
-impl View for Counter {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|counter_event, meta| match counter_event{
-            CounterEvent::Increment =&gt; {
-                if let Some(callback) = &amp;self.on_increment {
-                    (callback)(cx);
-                }
-            }
-
-            CounterEvent::Decrement =&gt; {
-                if let Some(callback) = &amp;self.on_decrement {
-                    (callback)(cx);
-                }
-            }
-        });
-    }
-}
-
-// Custom modifiers
-pub trait CounterModifiers {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-}
-
-// Implement custom modifiers
-impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
-    }
-
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
-    }
-}
-
-fn main() {
-    Application::new(|cx|{
-
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
-
-        cx.add_translation(
-            langid!("en-US"),
-            include_str!("resources/en-US/counter.ftl").to_owned(),
-        );
-
-        cx.add_translation(
-            langid!("es"),
-            include_str!("resources/es/counter.ftl").to_owned(),
-        );
-
-        // Uncomment to test with spanish locale.
-        // If system locale is already Spanish, replace "es" with "en-US".
-        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
-
-        // Build model data into the application
-        AppData { count: 0 }.build(cx);
-
-        // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count)
-            .on_increment(|cx| cx.emit(AppEvent::Increment))
-            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run();
-}</code></pre>
-<h2 id="css"><a class="header" href="#css">CSS</a></h2>
-<pre><code class="language-css">.row {
-    child-space: 1s;
-    col-between: 20px;
-}
-
-button {
-    border-width: 0px;
-}
-
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
-
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    child-space: 1s;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
-}
+                        <h1 id="transform-properties"><a class="header" href="#transform-properties">Transform Properties</a></h1>
+<p>Transforms are a post-layout effect and therefore affect the rendering of a view but not its layout.</p>
+<h2 id="transform"><a class="header" href="#transform">Transform</a></h2>
+<p>The <code>transform</code> property lets you rotate, scale, skew, or translate a view.</p>
+<pre><code class="language-css">/* Function values */
+transform: matrix(1, 2, 3, 4, 5, 6);
+transform: rotate(0.5turn);
+transform: rotateX(10deg);
+transform: rotateY(10deg);
+transform: translate(12px, 50%);
+transform: translateX(2em);
+transform: translateY(3in);
+transform: scale(2, 0.5);
+transform: scaleX(2);
+transform: scaleY(0.5);
+transform: skew(30deg, 20deg);
+transform: skewX(30deg);
+transform: skewY(1.07rad);
 </code></pre>
-<h2 id="fluent"><a class="header" href="#fluent">Fluent</a></h2>
-<p><em>resources/en-US/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Increment
-dec = Decrement
+<h2 id="transform-origin"><a class="header" href="#transform-origin">Transform Origin</a></h2>
+<p>The <code>transform-origin</code> property determines the origin for a view's transformations.</p>
+<pre><code class="language-css">/* One-value syntax */
+transform-origin: 2px;
+transform-origin: bottom;
+
+/* x-offset | y-offset */
+transform-origin: 3cm 2px;
+
+/* x-offset-keyword | y-offset */
+transform-origin: left 2px;
+
+/* x-offset-keyword | y-offset-keyword */
+transform-origin: right top;
+
+/* y-offset-keyword | x-offset-keyword */
+transform-origin: top right;
 </code></pre>
-<p><em>resources/es/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Incrementar
-dec = Decrementar
+<h2 id="translate"><a class="header" href="#translate">Translate</a></h2>
+<p>The <code>translate</code> property allows you to specify translation transforms individually and independently of the <a href="#transform"><code>transform</code></a> property.</p>
+<pre><code class="language-css">/* Single values */
+translate: 100px;
+translate: 50%;
+
+/* Two values */
+translate: 100px 200px;
+translate: 50% 105px;
+</code></pre>
+<h2 id="rotate"><a class="header" href="#rotate">Rotate</a></h2>
+<p>The <code>rotate</code> property allows you to specify rotation transforms individually and independently of the <a href="#transform"><code>transform</code></a> property.</p>
+<pre><code class="language-css">/* Angle value */
+rotate: 90deg;
+rotate: 0.25turn;
+rotate: 1.57rad;
+</code></pre>
+<h2 id="scale"><a class="header" href="#scale">Scale</a></h2>
+<p>The <code>scale</code> property allows you to specify scale transforms individually and independently of the <a href="#transform"><code>transform</code></a> property.</p>
+<pre><code class="language-css">/* Single values */
+/* values of more than 1 or 100% make the element grow */
+scale: 2;
+/* values of less than 1 or 100% make the element shrink */
+scale: 50%;
+
+/* Two values */
+scale: 2 0.5;
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/accessibility.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../styling/text.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../binding/binding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../styling/other.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -342,11 +239,11 @@ dec = Decrementar
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/accessibility.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../styling/text.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../binding/binding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../styling/other.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

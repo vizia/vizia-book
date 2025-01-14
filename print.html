@@ -158,8 +158,7 @@
                     <main>
                         <h1 id="foreword"><a class="header" href="#foreword">Foreword</a></h1>
 <p>Welcome to the Vizia book!</p>
-<p>Vizia is a crate for building GUI applications.
-It presently supports Windows, Linux, and MacOS desktop targets, as well as audio plugins and Web.</p>
+<p>Vizia is a crate for building desktop GUI applications. It presently supports Windows, Linux, and MacOS desktop targets.</p>
 <p>The Vizia project's home is <a href="https://github.com/vizia">https://github.com/vizia</a> and the main Vizia repository is <a href="https://github.com/vizia/vizia">https://github.com/vizia/vizia</a>.</p>
 <p>This book aims to act as a guide and reference for Vizia, and hopes to teach you how to use Vizia, whether you've done any GUI programming in the past or not.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
@@ -1081,7 +1080,7 @@ Application::new(|cx|{
 .run()</code></pre>
 <p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-data-trait"><a class="header" href="#the-data-trait">The Data Trait</a></h1>
-<p>When views bind to model data the <a href="basic/binding/binding.html">binding system</a> must determine whether the data has changed. To do this it stores a copy of the data for each binding. To be able to compare the previous data to the new version, the data type must implement the <code>Data</code> trait.</p>
+<p>When views bind to model data the <a href="binding/binding.html">binding system</a> must determine whether the data has changed. To do this it stores a copy of the data for each binding. To be able to compare the previous data to the new version, the data type must implement the <code>Data</code> trait.</p>
 <p>Note that this is only required for the data types which are bound to. The model itself does not need to implement <code>Data</code> unless a view is to bind to the entire model and not just a field within.</p>
 <p>Most simple types already implement the <code>Data</code> trait, but for custom types there is a derive macro that can be used as long as the field types also implement the <code>Data</code> trait:</p>
 <pre><code class="language-rust">#[derive(Clone, Data)]
@@ -1116,7 +1115,7 @@ fn main() {
 <blockquote>
 <p>Note that in this example we're assuming that the string is not empty.</p>
 </blockquote>
-<img src="basic/binding/../img/stylesheet.png" alt="" width="400"/>
+<img src="binding/../img/stylesheet.png" alt="" width="400"/>
 <p>Now when the name field of the model changes the label will update to display the new first letter.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="conditional-views"><a class="header" href="#conditional-views">Conditional Views</a></h1>
 <p>The <code>Binding</code> view provides a way to explicitely control which parts of the view tree get rebuilt when some state changes, specifically anything within the content closure of a <code>Binding</code> view.</p>
@@ -1203,18 +1202,589 @@ pub struct NestedData {
     .run();
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="stylesheets"><a class="header" href="#stylesheets">Stylesheets</a></h1>
+<p>Styling refers to modifying the visual properties of a view, such as its background, border, font, etc.</p>
+<p>Previously it was shown how modifiers can be used to style views inline. However, it is also possible for multiple views to share the same styling through the use of Cascading Style Sheets (CSS).</p>
+<p>Vizia can use CSS to apply style rules to multiple views simultaneously. A CSS string can be defined within a rust file as a constant, or within an external CSS file.</p>
+<h2 id="adding-a-constant-stylesheet-string"><a class="header" href="#adding-a-constant-stylesheet-string">Adding a constant stylesheet string</a></h2>
+<p>To add a stylesheet which is already a string in rust code, use the <code>add_stylesheet()</code> method on <code>Context</code>. For example:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+const STYLE: &amp;str = r#"
+    element {
+        background-color: red;
+    }
+"#
+
+fn main() {
+    Application::new(|cx|{
+        
+        cx.add_stylesheet(STYLE);
+        
+        Element::new(cx)
+            .size(Pixels(100.0));
+    })
+}</code></pre>
+<h2 id="adding-an-external-css-file"><a class="header" href="#adding-an-external-css-file">Adding an external CSS file</a></h2>
+<p>To add a stylesheet which is defined in a separate <code>.css</code> file, use <code>add_stylesheet()</code> method with the <code>include_style!()</code> macro. For example:</p>
+<pre><code class="language-css">/* style.css */
+element {
+    background-color: blue;
+}
+</code></pre>
+<pre><code class="language-rust">/* main.rs */
+use vizia::prelude::*;
+
+fn main() {
+    Application::new(|cx|{
+        
+        cx.add_stylesheet(include_style!("style.css"));
+        
+        Element::new(cx)
+            .size(Pixels(100.0));
+    })
+}</code></pre>
+<blockquote>
+<p>External stylesheets can be hot-reloaded using the <code>F5</code> key while the application is running in debug mode.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="rules--selectors"><a class="header" href="#rules--selectors">Rules &amp; Selectors</a></h1>
+<p>Vizia currently supports a custom subset of the CSS standard. This section provides an overview and reference of the supported CSS selectors, selector combinators and pseudo-classes available in vizia.</p>
+<h2 id="style-rules"><a class="header" href="#style-rules">Style Rules</a></h2>
+<p>A typical style rule might look something like this:</p>
+<pre><code class="language-css">hstack.one label {
+    background-color: red;
+    width: 30px;
+}
+</code></pre>
+<p>The first part before the opening brace is called a <a href="styling/selectors.html#selectors">selector</a>, which determines which views the rule applies to, and the part inside the brackets are a list of properties and values to apply to the styling of matching views.</p>
+<h2 id="selectors"><a class="header" href="#selectors">Selectors</a></h2>
+<h3 id="basic-selectors"><a class="header" href="#basic-selectors">Basic Selectors</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Selector</th><th>Description</th></tr></thead><tbody>
+<tr><td>type</td><td>Selects all views that have the given element name, e.g. <code>button</code> will select all <code>Button</code> views.</td></tr>
+<tr><td>class</td><td>Sselects all views that have the given class name prefixed with a period, e.g. <code>.class-name</code> will match any view that has <code>class("class-name")</code>. A class name can be added to a view with the <code>class</code> style modifier. The <code>toggle_class</code> modifier can be used to conditionally add/remove a class from a view, typically with the use of a lens to a boolean.</td></tr>
+<tr><td>ID</td><td>Selects views with the specified ID name, prefixed with a hash, e.g. <code>#id-name</code> will match the view that has <code>id("id-name")</code>.  An ID name can be added to a view with the <code>id</code> style modifier and must be a unique name.</td></tr>
+<tr><td>universal</td><td>The universal selector, denoted with an asterisk, selects all views.</td></tr>
+</tbody></table>
+</div>
+<h3 id="combinators"><a class="header" href="#combinators">Combinators</a></h3>
+<p>Using combinators, we can combine selectors to select views based on their relationship to other views within the tree.</p>
+<div class="table-wrapper"><table><thead><tr><th>Combinator</th><th>Description</th></tr></thead><tbody>
+<tr><td>descendant</td><td>Selects views which match the selector after the space if they are descended from an view which matches the selector before the space. For example, <code>hstack label</code> will match any <code>Label</code> which has an <code>HStack</code> as an ancestor further up the tree.</td></tr>
+<tr><td>child</td><td>Selects views which match the selector after the greater than character (<code>&gt;</code>) if they are the child of a view which matches the selector before the greater than character. For example, <code>hstack &gt; label</code> will match any <code>Label</code> which has an <code>HStack</code> as a parent.</td></tr>
+<tr><td>subsquent-sibling</td><td>The subsequent-sibling combinator, denoted with a tilde (<code>~</code>), selects siblings. Given <code>A ~ B</code>, all views matching <code>B</code> will be selected if they are preceded by <code>A</code>, provided both <code>A</code> and <code>B</code> share the same parent.</td></tr>
+<tr><td>next-sibling</td><td>The next-sibling combinator, denoted by the plus symbol (<code>+</code>), is similar to the subsequent-sibling. However, given <code>A + B</code>, it only matches <code>B</code> if <code>B</code> is immediately preceded by <code>A</code>, with both sharing the same parent.</td></tr>
+</tbody></table>
+</div>
+<h3 id="pseudo-classes"><a class="header" href="#pseudo-classes">Pseudo-classes</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Pseudo-class</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>:root</code></td><td>Selects the root window.</td></tr>
+<tr><td><code>:hover</code></td><td>Selects the currently hovered view.</td></tr>
+<tr><td><code>:checked</code></td><td>Selects any view which has been marked as checked. A view can be marked as checked with the <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.checked"><code>checked</code></a> style modifier.</td></tr>
+<tr><td><code>:disabled</code></td><td>Selects any view which has been marked as disabled. A view can be marked as disabled with the <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.disabled"><code>disabled</code></a> style modifier.</td></tr>
+<tr><td><code>:active</code></td><td>Selects any view which has been marked as active.</td></tr>
+<tr><td><code>:focus</code></td><td>Selects the currently focused view.</td></tr>
+<tr><td><code>:focus-visible</code></td><td>Selects the currently focused view if the view was focused via keyboard navigation.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="list-of-supported-style-properties"><a class="header" href="#list-of-supported-style-properties">List of supported style properties</a></h1>
+<p>This section provides a list of the currently supported style properties in vizia. This excludes layout properties which are detailed in the <a href="styling/../layout/layout.html">layout section</a> of this guide.</p>
+<p>For the corresponding modifier name, replace any hyphens with underscores. For example, <code>background-color</code> in CSS becomes the <code>background_color()</code> modifier in Rust.</p>
+<div class="table-wrapper"><table><thead><tr><th>Property</th><th>Type</th><th>Initial Value</th><th>Inherited</th><th>Animatable</th></tr></thead><tbody>
+<tr><td><code>backdrop-filter</code></td><td><code>Filter</code></td><td><code>none</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>background-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>background-image</code></td><td><code>BackgroundImage</code></td><td><code>none</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>background-size</code></td><td><code>BackgroundSize</code></td><td><code>auto auto</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>blend-mode</code></td><td><code>BlendMode</code></td><td><code>normal</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>border</code></td><td>shorthand</td><td></td><td></td><td></td></tr>
+<tr><td><code>border-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>border-style</code></td><td><code>BorderStyle</code></td><td><code>solid</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>border-width</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>caret-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>clip-path</code></td><td><code>ClipPath</code></td><td><code>none</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>corner-radius</code></td><td><code>CornerRadius</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-top-left-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-top-right-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-bottom-left-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-bottom-right-radius</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>corner-shape</code></td><td><code>Rect&lt;CornerShape&gt;</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-top-left-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-top-right-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-bottom-left-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>corner-bottom-right-shape</code></td><td><code>CornerShape</code></td><td><code>round</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>cursor</code></td><td><code>CursorIcon</code></td><td><code>default</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>display</code></td><td><code>Display</code></td><td><code>flex</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>font-family</code></td><td><code>FontFamily</code></td><td></td><td>Yes</td><td>No</td></tr>
+<tr><td><code>font-size</code></td><td><code>FontSize</code></td><td><code>16</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>font-slant</code></td><td><code>FontSlant</code></td><td><code>normal</code></td><td>Yes</td><td>No</td></tr>
+<tr><td><code>font-weight</code></td><td><code>FontWidth</code></td><td><code>regular</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>font-width</code></td><td><code>FontWeight</code></td><td><code>normal</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>font-variation-settings</code></td><td><code>FontVariation</code></td><td><code>none</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>line-clamp</code></td><td><code>u32</code></td><td><code>1</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>opacity</code></td><td><code>f32</code></td><td><code>1.0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>outline</code></td><td>shorthand</td><td></td><td>No</td><td></td></tr>
+<tr><td><code>outline-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>outline-offset</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>outline-width</code></td><td><code>LengthOrPercentage</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>overflow</code></td><td><code>Overflow</code></td><td><code>visible</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>overflow-x</code></td><td><code>Overflow</code></td><td><code>visible</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>overflow-y</code></td><td><code>Overflow</code></td><td><code>visible</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>pointer-events</code></td><td><code>PointerEvents</code></td><td><code>auto</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>rotate</code></td><td><code>Angle</code></td><td><code>0</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>scale</code></td><td><code>Scale</code></td><td><code>1</code></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>selection-color</code></td><td><code>Color</code></td><td><code>transparent</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>shadow</code></td><td><code>Shadow</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>text-align</code></td><td><code>TextAlign</code></td><td><code>left</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>text-decoration</code></td><td>shorthand</td><td></td><td></td><td></td></tr>
+<tr><td><code>text-decoration-line</code></td><td></td><td></td><td>Yes</td><td>No</td></tr>
+<tr><td><code>text-overflow</code></td><td></td><td><code>clip</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>text-wrap</code></td><td><code>bool</code></td><td><code>true</code></td><td>No</td><td>No</td></tr>
+<tr><td><code>transform</code></td><td><code>Transform</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>transform-origin</code></td><td><code>Position</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>transition</code></td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>translate</code></td><td><code>Translate</code></td><td></td><td>No</td><td>Yes</td></tr>
+<tr><td><code>visibility</code></td><td><code>Visibility</code></td><td></td><td>No</td><td>No</td></tr>
+<tr><td><code>z-index</code></td><td><code>i32</code></td><td><code>0</code></td><td>No</td><td>No</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="transitions"><a class="header" href="#transitions">Transitions</a></h1>
+<p>Transitions are animations for style rule properties which apply when a view matches that rule. Transitions are specified with the <code>transition</code> CSS property, and you must specify the property to animate and the duration of the animation, and optionally any delay on the animation and a timing function.</p>
+<p>For example, we can create a transition for the background color of a view when hovered:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+const STYLE: &amp;str = r#"
+    .my_view {
+        background-color: red;
+    }
+
+    .my_view:hover {
+        background-color: blue;
+        transition: background-color 100ms;
+    }
+"#;
+
+fn main () {
+    Application::new(|cx|{
+        Element::new(cx)
+            .class("my_view")
+            .size(Pixels(200.0));
+    })
+    .run();
+}
+</code></pre>
+<p>Note that the transition only occurs when the cursor hovers the element and not when the cursor leaves the element (unless the transition did not complete when the cursor left). This is because the transition has been specified on the <code>:hover</code> state of the element, and so the background color will transition when going <em>to</em> this state.</p>
+<p>To transition back again, we need to specify a transition on the non-hover state as well:</p>
+<pre><code class="language-css">.my_view {
+    background-color: red;
+    transition: background-color 100ms;
+}
+
+.my_view:hover {
+    background-color: blue;
+    transition: background-color 100ms;
+}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="layer-properties"><a class="header" href="#layer-properties">Layer Properties</a></h1>
+<h2 id="visibility"><a class="header" href="#visibility">Visibility</a></h2>
+<p>The visibility property shows or hides a view without affecting its layout.</p>
+<pre><code class="language-css">/* Keyword values */
+visibility: visible;
+visibility: hidden;
+</code></pre>
+<h2 id="opacity"><a class="header" href="#opacity">Opacity</a></h2>
+<p>The <code>opacity</code> property determines how much of the content behind a view can be seen.</p>
+<pre><code class="language-css">opacity: 0.9;
+
+opacity: 90%;
+</code></pre>
+<h2 id="blend-mode"><a class="header" href="#blend-mode">Blend mode</a></h2>
+<p>The <code>blend-mode</code> property determines how a view's content should blend with the content of the view's behind it.</p>
+<pre><code class="language-css">/* Keyword values */
+blend-mode: normal;
+blend-mode: multiply;
+blend-mode: screen;
+blend-mode: overlay;
+blend-mode: darken;
+blend-mode: lighten;
+blend-mode: color-dodge;
+blend-mode: color-burn;
+blend-mode: hard-light;
+blend-mode: soft-light;
+blend-mode: difference;
+blend-mode: exclusion;
+blend-mode: hue;
+blend-mode: saturation;
+blend-mode: color;
+blend-mode: luminosity;
+blend-mode: plus;
+</code></pre>
+<h2 id="z-index"><a class="header" href="#z-index">Z-Index</a></h2>
+<p>The <code>z-index</code> property determines the z-order of a view and its descendants. Overlapping elements with a larger z-index cover those with a smaller one.</p>
+<h2 id="overflow"><a class="header" href="#overflow">Overflow</a></h2>
+<p>The overflow shorthand property sets the desired behavior when content does not fit in the view's bounds in the horizontal and/or vertical direction.</p>
+<pre><code class="language-css">/* Keyword values */
+overflow: visible;
+overflow: hidden;
+overflow: hidden visible;
+</code></pre>
+<p>The overflow can be set for each axis using the <code>overflow-x</code> and <code>overflow-y</code> properties.</p>
+<h2 id="clip-path"><a class="header" href="#clip-path">Clip Path</a></h2>
+<p>The <code>clip-path</code> property creates a clipping region that sets what part of an element should be shown. Parts that are inside the region are shown, while those outside are hidden.</p>
+<pre><code class="language-css">/* Keyword values */
+clip-path: auto;
+
+/* &lt;basic-shape&gt; values */
+clip-path: inset(100px 50px);
+clip-path: rect(5px 5px 160px 145px);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="background-properties"><a class="header" href="#background-properties">Background Properties</a></h1>
+<h2 id="background-color"><a class="header" href="#background-color">Background Color</a></h2>
+<p>Sets the <code>background-color</code> of a view.</p>
+<pre><code class="language-css">/* Keyword values */
+background-color: red;
+background-color: indigo;
+
+/* Hexadecimal value */
+background-color: #bbff00; /* Fully opaque */
+background-color: #bf0; /* Fully opaque shorthand */
+background-color: #11ffee00; /* Fully transparent */
+background-color: #1fe0; /* Fully transparent shorthand */
+background-color: #11ffeeff; /* Fully opaque */
+background-color: #1fef; /* Fully opaque shorthand */
+
+/* RGB value */
+background-color: rgb(255 255 128); /* Fully opaque */
+background-color: rgb(117 190 218 / 50%); /* 50% transparent */
+
+/* HSL value */
+background-color: hsl(50 33% 25%); /* Fully opaque */
+background-color: hsl(50 33% 25% / 75%); /* 75% opaque, i.e. 25% transparent */
+
+</code></pre>
+<p>The background color is rendered behind any <a href="styling/background.html#background-image"><code>background-image</code></a> but will show through any transparency in the image.</p>
+<h2 id="background-image"><a class="header" href="#background-image">Background Image</a></h2>
+<p>The <code>background-image</code> property sets one or more background images on a view.</p>
+<pre><code class="language-css">/* single image */
+background-image: linear-gradient(black, white);
+background-image: url("cat-front.png");
+
+/* multiple images */
+background-image: radial-gradient(circle, #0000 45%, #000f 48%),
+  radial-gradient(ellipse farthest-corner, #fc1c14 20%, #cf15cf 80%);
+</code></pre>
+<h2 id="background-size"><a class="header" href="#background-size">Background Size</a></h2>
+<p>The <code>background-size</code> property sets the size of the view's background image. The image can be left to its natural size, stretched, or constrained to fit the available space.</p>
+<pre><code class="language-css">/* Keyword values */
+background-size: cover;
+background-size: contain;
+
+/* One-value syntax */
+/* the width of the image (height becomes 'auto') */
+background-size: 50%;
+background-size: 3.2em;
+background-size: 12px;
+background-size: auto;
+
+/* Two-value syntax */
+/* first value: width of the image, second value: height */
+background-size: 50% auto;
+background-size: 3em 25%;
+background-size: auto 6px;
+background-size: auto auto;
+
+/* Multiple backgrounds */
+background-size: auto, auto; /* Not to be confused with `auto auto` */
+background-size: 50%, 25%, 25%;
+background-size: 6px, auto, contain;
+</code></pre>
+<h2 id="background-position"><a class="header" href="#background-position">Background Position</a></h2>
+<p>The <code>background-position</code> CSS property sets the initial position for each background image.</p>
+<pre><code class="language-css">/* Keyword values */
+background-position: top;
+background-position: bottom;
+background-position: left;
+background-position: right;
+background-position: center;
+
+/* &lt;percentage&gt; values */
+background-position: 25% 75%;
+
+/* &lt;length&gt; values */
+background-position: 0 0;
+background-position: 1cm 2cm;
+background-position: 10ch 8em;
+
+/* Multiple images */
+background-position:
+  0 0,
+  center;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="border-properties"><a class="header" href="#border-properties">Border Properties</a></h1>
+<h2 id="border-shorthand"><a class="header" href="#border-shorthand">Border (shorthand)</a></h2>
+<p>The border property is shorthand for <a href="styling/border.html#border-width"><code>border-width</code></a>, <a href="styling/border.html#border-style"><code>border-style</code></a>, and <a href="styling/border.html#border-color"><code>border-color</code></a>, and sets the border of a view.</p>
+<pre><code class="language-css">/* style */
+border: solid;
+
+/* width | style */
+border: 2px dashed;
+
+/* style | color */
+border: solid red;
+
+/* width | style | color */
+border: 5px dashed green;
+</code></pre>
+<h2 id="border-width"><a class="header" href="#border-width">Border Width</a></h2>
+<p>The <code>border-width</code> property sets the width of a view's border.</p>
+<pre><code class="language-css">border-width: 5px;
+border-width: 20%;
+</code></pre>
+<h2 id="border-style"><a class="header" href="#border-style">Border Style</a></h2>
+<p>The <code>border-style</code> property sets the style of a view's border.</p>
+<pre><code class="language-css">border-style: none;
+border-style: solid;
+border-style: dashed;
+border-style: dotted;
+</code></pre>
+<h2 id="border-color"><a class="header" href="#border-color">Border Color</a></h2>
+<p>The <code>border-color</code> property sets the color of a view's border.</p>
+<pre><code class="language-css">border-color: red;
+border-color: #566;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="corner-properties"><a class="header" href="#corner-properties">Corner Properties</a></h1>
+<h2 id="corner-radius"><a class="header" href="#corner-radius">Corner Radius</a></h2>
+<p>The <code>corner-radius</code> property rounds the corners of a view's outer border edge. You can set a single radius to make circular corners.</p>
+<pre><code class="language-css">/* Radius is set for all 4 sides */
+corner-radius: 10px;
+
+/* top-left-and-bottom-right | top-right-and-bottom-left */
+corner-radius: 10px 5%;
+
+/* top-left | top-right-and-bottom-left | bottom-right */
+corner-radius: 2px 4px 2px;
+
+/* top-left | top-right | bottom-right | bottom-left */
+corner-radius: 1px 0 3px 4px;
+</code></pre>
+<p>Individual corner radii can be set using the <code>corner-top-left-radius</code>, <code>corner-top-right-radius</code>, <code>corner-bottom-left-radius</code>, and <code>corner-bottom-right-radius</code> properties.</p>
+<p>A circular shape can be achieved by setting the corner radius to 50%:</p>
+<pre><code class="language-css">corner-radius: 50%;
+</code></pre>
+<h2 id="corner-shape"><a class="header" href="#corner-shape">Corner Shape</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="effects"><a class="header" href="#effects">Effects</a></h1>
+<h2 id="shadows"><a class="header" href="#shadows">Shadows</a></h2>
+<p>The <code>shadow</code> property adds shadow effects around a view's frame. You can set multiple shadows separated by commas. A shadow is described by X and Y offsets relative to the element, blur and spread radius, and color.</p>
+<pre><code class="language-css">/* A color and two length values */
+/* &lt;color&gt; | &lt;length&gt; | &lt;length&gt; */
+shadow: red 60px -16px;
+
+/* Three length values and a color */
+/* &lt;length&gt; | &lt;length&gt; | &lt;length&gt; | &lt;color&gt; */
+shadow: 10px 5px 5px black;
+
+/* Four length values and a color */
+/* &lt;length&gt; | &lt;length&gt; | &lt;length&gt; | &lt;length&gt; | &lt;color&gt; */
+shadow: 2px 2px 2px 1px rgb(0 0 0 / 20%);
+
+/* inset, length values, and a color */
+/* &lt;inset&gt; | &lt;length&gt; | &lt;length&gt; | &lt;color&gt; */
+shadow: inset 5em 1em gold;
+
+/* Any number of shadows, separated by commas */
+shadow:
+  3px 3px red inset,
+  -1em 0 0.4em olive;
+</code></pre>
+<h2 id="backdrop-filter"><a class="header" href="#backdrop-filter">Backdrop Filter</a></h2>
+<p>The <code>backdrop-filter</code> property allows you apply a blur effect to the area behind a view. Because it applies to everything behind the view, to see the effect the view or its background needs to be transparent or partially transparent.</p>
+<pre><code class="language-css">backdrop-filter: blur(2px);
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="outline-properties"><a class="header" href="#outline-properties">Outline Properties</a></h1>
+<h2 id="outline-shorthand"><a class="header" href="#outline-shorthand">Outline (shorthand)</a></h2>
+<p>The <code>outline</code> property is shorthand for <a href="styling/outline.html#outline-width"><code>outline-width</code></a> and <a href="styling/outline.html#border-color"><code>outline-color</code></a>.</p>
+<pre><code class="language-css">/* width | color */
+outline: 2px red;
+</code></pre>
+<h2 id="outline-width"><a class="header" href="#outline-width">Outline Width</a></h2>
+<p>The <code>outline-width</code> property sets the width of a view's outline.</p>
+<pre><code class="language-css">outline-width: 5px;
+outline-width: 20%;
+</code></pre>
+<h2 id="outline-offset"><a class="header" href="#outline-offset">Outline Offset</a></h2>
+<p>The outline-offset property sets the amount of space between an outline and the edge or border of a view.</p>
+<pre><code class="language-css">/* &lt;length&gt; values */
+outline-offset: 3px;
+</code></pre>
+<h2 id="outline-color"><a class="header" href="#outline-color">Outline Color</a></h2>
+<p>The <code>outline-color</code> property sets the color of a view's outline.</p>
+<pre><code class="language-css">outline-color: red;
+outline-color: #566;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="text-properties"><a class="header" href="#text-properties">Text Properties</a></h1>
+<h2 id="font-family"><a class="header" href="#font-family">Font Family</a></h2>
+<p>The <code>font-family</code> property specifies a prioritized list of one or more font family names and/or generic family names for the selected view.</p>
+<pre><code class="language-css">/* A font family name and a generic family name */
+font-family: "Gill Sans Extrabold", sans-serif;
+font-family: "Goudy Bookletter 1911", sans-serif;
+
+/* A generic family name only */
+font-family: serif;
+font-family: sans-serif;
+font-family: monospace;
+font-family: cursive;
+font-family: fantasy;
+</code></pre>
+<h2 id="font-size"><a class="header" href="#font-size">Font Size</a></h2>
+<p>The <code>font-size</code> property sets the size of the font.</p>
+<pre><code class="language-css">/* &lt;absolute-size&gt; values */
+font-size: xx-small;
+font-size: x-small;
+font-size: small;
+font-size: medium;
+font-size: large;
+font-size: x-large;
+font-size: xx-large;
+font-size: xxx-large;
+
+/* &lt;relative-size&gt; values */
+font-size: smaller;
+font-size: larger;
+
+/* &lt;length&gt; values */
+font-size: 12px;
+</code></pre>
+<h2 id="font-weight"><a class="header" href="#font-weight">Font Weight</a></h2>
+<p>The <code>font-weight</code> property determines the weight (or boldness) of the font. The weights available depend on the <a href="styling/text.html#font-family"><code>font-family</code></a> that is currently set.</p>
+<pre><code class="language-css">/* &lt;font-weight-absolute&gt; keyword values */
+font-weight: normal;
+font-weight: bold;
+
+/* &lt;font-weight-absolute&gt; numeric values [1,1000] */
+font-weight: 100;
+font-weight: 200;
+font-weight: 300;
+font-weight: 400; /* normal */
+font-weight: 500;
+font-weight: 600;
+font-weight: 700; /* bold */
+font-weight: 800;
+font-weight: 900;
+</code></pre>
+<h2 id="font-slant"><a class="header" href="#font-slant">Font Slant</a></h2>
+<p>The <code>font-slant</code> property determines whether a font should be styled with a normal, italic, or oblique face from its <a href="styling/text.html#font-family"><code>font-family</code></a>.</p>
+<pre><code class="language-css">font-slant: normal;
+font-slant: italic;
+font-slant: oblique;
+font-slant: oblique 10deg;
+</code></pre>
+<h2 id="font-width"><a class="header" href="#font-width">Font Width</a></h2>
+<p>The <code>font-width</code> property selects a normal, condensed, or expanded face from a font.</p>
+<pre><code class="language-css">/* keyword values */
+font-width: normal;
+font-width: ultra-condensed;
+font-width: extra-condensed;
+font-width: condensed;
+font-width: semi-condensed;
+font-width: semi-expanded;
+font-width: expanded;
+font-width: extra-expanded;
+font-width: ultra-expanded;
+</code></pre>
+<h2 id="font-variation-settings"><a class="header" href="#font-variation-settings">Font Variation Settings</a></h2>
+<p>The <code>font-variation-settings</code> property provides low-level control over variable font characteristics by letting you specify the four letter axis names of the characteristics you want to vary along with their values.</p>
+<pre><code class="language-css">/* Set values for variable font axis names */
+font-variation-settings: "xhgt" 0.7;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="transform-properties"><a class="header" href="#transform-properties">Transform Properties</a></h1>
+<p>Transforms are a post-layout effect and therefore affect the rendering of a view but not its layout.</p>
+<h2 id="transform"><a class="header" href="#transform">Transform</a></h2>
+<p>The <code>transform</code> property lets you rotate, scale, skew, or translate a view.</p>
+<pre><code class="language-css">/* Function values */
+transform: matrix(1, 2, 3, 4, 5, 6);
+transform: rotate(0.5turn);
+transform: rotateX(10deg);
+transform: rotateY(10deg);
+transform: translate(12px, 50%);
+transform: translateX(2em);
+transform: translateY(3in);
+transform: scale(2, 0.5);
+transform: scaleX(2);
+transform: scaleY(0.5);
+transform: skew(30deg, 20deg);
+transform: skewX(30deg);
+transform: skewY(1.07rad);
+</code></pre>
+<h2 id="transform-origin"><a class="header" href="#transform-origin">Transform Origin</a></h2>
+<p>The <code>transform-origin</code> property determines the origin for a view's transformations.</p>
+<pre><code class="language-css">/* One-value syntax */
+transform-origin: 2px;
+transform-origin: bottom;
+
+/* x-offset | y-offset */
+transform-origin: 3cm 2px;
+
+/* x-offset-keyword | y-offset */
+transform-origin: left 2px;
+
+/* x-offset-keyword | y-offset-keyword */
+transform-origin: right top;
+
+/* y-offset-keyword | x-offset-keyword */
+transform-origin: top right;
+</code></pre>
+<h2 id="translate"><a class="header" href="#translate">Translate</a></h2>
+<p>The <code>translate</code> property allows you to specify translation transforms individually and independently of the <a href="styling/transform.html#transform"><code>transform</code></a> property.</p>
+<pre><code class="language-css">/* Single values */
+translate: 100px;
+translate: 50%;
+
+/* Two values */
+translate: 100px 200px;
+translate: 50% 105px;
+</code></pre>
+<h2 id="rotate"><a class="header" href="#rotate">Rotate</a></h2>
+<p>The <code>rotate</code> property allows you to specify rotation transforms individually and independently of the <a href="styling/transform.html#transform"><code>transform</code></a> property.</p>
+<pre><code class="language-css">/* Angle value */
+rotate: 90deg;
+rotate: 0.25turn;
+rotate: 1.57rad;
+</code></pre>
+<h2 id="scale"><a class="header" href="#scale">Scale</a></h2>
+<p>The <code>scale</code> property allows you to specify scale transforms individually and independently of the <a href="styling/transform.html#transform"><code>transform</code></a> property.</p>
+<pre><code class="language-css">/* Single values */
+/* values of more than 1 or 100% make the element grow */
+scale: 2;
+/* values of less than 1 or 100% make the element shrink */
+scale: 50%;
+
+/* Two values */
+scale: 2 0.5;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="other-properties"><a class="header" href="#other-properties">Other Properties</a></h1>
+<h2 id="cursor"><a class="header" href="#cursor">Cursor</a></h2>
+<p>The <code>cursor</code> property sets the mouse cursor, if any, to show when the mouse pointer is over a view.</p>
+<pre><code class="language-css">/* Keyword value */
+cursor: auto;
+cursor: pointer;
+/* … */
+cursor: zoom-out;
+</code></pre>
+<h2 id="pointer-events"><a class="header" href="#pointer-events">Pointer Events</a></h2>
+<p>The <code>pointer-events</code> property sets under what circumstances (if any) a view can become the target of pointer events.</p>
+<pre><code class="language-css">/* Keyword values */
+pointer-events: auto;
+pointer-events: none;
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="layout"><a class="header" href="#layout">Layout</a></h1>
 <p>The position and size of a view is determined by its layout properties. Vizia uses a custom layout system called <a href="https://github.com/vizia/morphorm">morphorm</a> which can achieve similar results to flexbox.</p>
 <p>The following sections details the functioning of the layout system:</p>
 <ul>
-<li><a href="basic/layout/./size.html">Size</a></li>
-<li><a href="basic/layout/./layout_type.html">Layout Type</a></li>
-<li><a href="basic/layout/./alignment.html">Alignment</a></li>
-<li><a href="basic/layout/./padding.html">Padding</a></li>
-<li><a href="basic/layout/./gap.html">Gap</a></li>
-<li><a href="basic/layout/./position_type.html">Position Type</a></li>
-<li><a href="basic/layout/./spacing.html">Spacing</a></li>
-<li><a href="basic/layout/./constraints.html">Constraints</a></li>
+<li><a href="layout/./size.html">Size</a></li>
+<li><a href="layout/./layout_type.html">Layout Type</a></li>
+<li><a href="layout/./alignment.html">Alignment</a></li>
+<li><a href="layout/./padding.html">Padding</a></li>
+<li><a href="layout/./gap.html">Gap</a></li>
+<li><a href="layout/./position_type.html">Position Type</a></li>
+<li><a href="layout/./spacing.html">Spacing</a></li>
+<li><a href="layout/./constraints.html">Constraints</a></li>
 </ul>
 <h2 id="units"><a class="header" href="#units">Units</a></h2>
 <p>Many of the layout properties used in vizia use the <code>Units</code> type to specify their value. The <code>Units</code> type has four variants:</p>
@@ -1277,13 +1847,13 @@ pub struct NestedData {
 <p>The <code>size</code> of a view is controlled by the <code>width</code> and <code>height</code> properties, and can be specified using pixels, a percentage, a stretch factor, or auto.</p>
 <h2 id="fixed-size-pixels"><a class="header" href="#fixed-size-pixels">Fixed Size (Pixels)</a></h2>
 <p>The width and height of a view can be specified with a number of logical pixels. In this case changes to the size of the parent view, or to the children of the view, will have no effect on its size.</p>
-<p><img src="basic/layout/../layout/images/fixed_width.svg" alt="fixed_width" /></p>
+<p><img src="layout/../layout/images/fixed_width.svg" alt="fixed_width" /></p>
 <h2 id="percentage-size"><a class="header" href="#percentage-size">Percentage Size</a></h2>
 <p>The width and height of a view can also be specified as a percentage of the parent view size.</p>
-<p><img src="basic/layout/../layout/images/percentage_width.svg" alt="percentage_width" /></p>
+<p><img src="layout/../layout/images/percentage_width.svg" alt="percentage_width" /></p>
 <h2 id="stretch-size"><a class="header" href="#stretch-size">Stretch Size</a></h2>
 <p>The width and height of a view can also be specified with a stretch factor, which will cause the view to fill a proportion of the free space.</p>
-<p><img src="basic/layout/../layout/images/stretch_width.svg" alt="stretch_width" /></p>
+<p><img src="layout/../layout/images/stretch_width.svg" alt="stretch_width" /></p>
 <p>For example, given the following code:</p>
 <pre><code class="language-rust">HStack::new(cx, |cx|{
     Label::new(cx, "Hello")
@@ -1297,7 +1867,7 @@ pub struct NestedData {
 <p>The free space is the size of the parent in the main axis (width for row, height for column) minus any fixed space/size.</p>
 <h2 id="auto-size-hug"><a class="header" href="#auto-size-hug">Auto Size (Hug)</a></h2>
 <p>The width and height of a view can be specified as <code>auto</code>, which results in the view 'hugging' its children in the specified axis.</p>
-<p><img src="basic/layout/../layout/images/auto_width.svg" alt="auto_width" /></p>
+<p><img src="layout/../layout/images/auto_width.svg" alt="auto_width" /></p>
 <p>For example, given the following code:</p>
 <pre><code class="language-rust">HStack::new(cx, |cx|{
     Label::new(cx, "Hello");
@@ -1324,7 +1894,7 @@ pub struct NestedData {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="layout-type-direction"><a class="header" href="#layout-type-direction">Layout Type (Direction)</a></h1>
 <p>The <code>layout-type</code> determines the direction which a parent will stack its children. A parent element can arrange its children into a vertical stack (<code>layout-type: column</code>) or a horizontal stack (<code>layout-type: row</code>).</p>
-<p><img src="basic/layout/../layout/images/layout_type.svg" alt="layout_type" /></p>
+<p><img src="layout/../layout/images/layout_type.svg" alt="layout_type" /></p>
 <h2 id="-1"><a class="header" href="#-1"></a></h2>
 <p>The <code>layout-type</code> of a view can be specified using the respective layout modifier:</p>
 <pre><code class="language-rust">VStack::new(cx, |cx|{
@@ -1351,7 +1921,7 @@ pub struct NestedData {
 <li><code>bottom-right</code></li>
 </ul>
 <p>Alignment also applies to text within a view, unless overridden by the <code>text-align</code> property.</p>
-<p><img src="basic/layout/../layout/images/alignment.svg" alt="alignment" /></p>
+<p><img src="layout/../layout/images/alignment.svg" alt="alignment" /></p>
 <h2 id="-2"><a class="header" href="#-2"></a></h2>
 <p>The <code>alignment</code> of a view can be specified using the respective layout modifier:</p>
 <pre><code class="language-rust">VStack::new(cx, |cx|{
@@ -1366,7 +1936,7 @@ pub struct NestedData {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="padding"><a class="header" href="#padding">Padding</a></h1>
 <p>The <code>padding</code> property, Shorthand for <code>padding-left</code>, <code>padding-top</code>, <code>padding-right</code>, and <code>padding-bottom</code>, determines the spacing between the parent bounds and the children of a view. It can be specified as pixels or a percentage.</p>
-<p><img src="basic/layout/../layout/images/padding.svg" alt="padding" /></p>
+<p><img src="layout/../layout/images/padding.svg" alt="padding" /></p>
 <h2 id="-3"><a class="header" href="#-3"></a></h2>
 <p>The <code>padding-left</code>, <code>padding-top</code>, <code>padding-right</code>, and <code>padding-bottom</code> of a view can be specified using the respective layout modifiers:</p>
 <pre><code class="language-rust">Label::new(cx, "Hello World")
@@ -1389,13 +1959,13 @@ pub struct NestedData {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gap"><a class="header" href="#gap">Gap</a></h1>
 <p>The <code>gap</code> property, shorthand for <code>horizontal-gap</code> and <code>vertical-gap</code>, determines the spacing between the children of a view. It can be specified as pixels, a percentage, or a stretch factor.</p>
-<p><img src="basic/layout/../layout/images/gap.svg" alt="gap" /></p>
+<p><img src="layout/../layout/images/gap.svg" alt="gap" /></p>
 <h2 id="stretch-gap"><a class="header" href="#stretch-gap">Stretch Gap</a></h2>
 <p>Setting the gap to a stretch factor will result in evenly distributed space between children.</p>
-<p><img src="basic/layout/../layout/images/stretch_gap.svg" alt="stretch_gap" /></p>
+<p><img src="layout/../layout/images/stretch_gap.svg" alt="stretch_gap" /></p>
 <h2 id="negative-gap"><a class="header" href="#negative-gap">Negative Gap</a></h2>
 <p>A negative pixels value for gap can be used and results in the children of the view overlapping.</p>
-<p><img src="basic/layout/../layout/images/negative_gap.svg" alt="negative_gap" /></p>
+<p><img src="layout/../layout/images/negative_gap.svg" alt="negative_gap" /></p>
 <h2 id="-4"><a class="header" href="#-4"></a></h2>
 <p>The <code>gap</code> of a view can be specified using the respective layout modifier:</p>
 <pre><code class="language-rust">VStack::new(cx, |cx|{
@@ -1423,7 +1993,7 @@ pub struct NestedData {
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="position-type"><a class="header" href="#position-type">Position Type</a></h1>
 <p>The position type property determines whether a view should be positioned in-line with its siblings in a stack (<code>position-type: relative</code>), which is the default, or out-of-line and independently of its siblings (<code>position-type: absolute</code>).</p>
-<p><img src="basic/layout/../layout/images/position_type.svg" alt="position-type" /></p>
+<p><img src="layout/../layout/images/position_type.svg" alt="position-type" /></p>
 <h2 id="-5"><a class="header" href="#-5"></a></h2>
 <p>The <code>position-type</code> of a view can be specified using the respective layout modifier:</p>
 <pre><code class="language-rust">VStack::new(cx, |cx|{
@@ -1439,7 +2009,7 @@ pub struct NestedData {
 <div style="break-before: page; page-break-before: always;"></div><h1 id="spacing"><a class="header" href="#spacing">Spacing</a></h1>
 <p>Spacing applies only to children with a position type of absolute, and is specified using the <code>left</code>, <code>right</code>, <code>top</code>, and <code>bottom</code> properties, or the <code>space</code> property as a shorthand. Each of these properties can have a value in pixels, a percentage, or a stretch factor.</p>
 <p>A combination of pixels and stretch spacing can be used to align a view within its parent. For example, stretch factors can be used to center a view by applying equal stretch factors to all spacing properties.</p>
-<p><img src="basic/layout/../layout/images/spacing.svg" alt="spacing" /></p>
+<p><img src="layout/../layout/images/spacing.svg" alt="spacing" /></p>
 <h2 id="-6"><a class="header" href="#-6"></a></h2>
 <p>The <code>left</code>, <code>top</code>, <code>right</code>, and <code>bottom</code> of a view can be specified using the respective layout modifiers:</p>
 <pre><code class="language-rust">Label::new(cx, "Hello World")
@@ -1467,23 +2037,23 @@ pub struct NestedData {
 <h2 id="size-constraints"><a class="header" href="#size-constraints">Size Constraints</a></h2>
 <p>Size constraints can have a value in pixels, a percentage, or auto.</p>
 <p>The <code>min-size</code> property, which is shorthand for <code>min_width</code> and <code>min_height</code>, can be used to set a minimum constraint for the size of a view.</p>
-<p><img src="basic/layout/../layout/images/min_width.svg" alt="min_width" /></p>
+<p><img src="layout/../layout/images/min_width.svg" alt="min_width" /></p>
 <p>The <code>max-size</code> property, which is shorthand for <code>max_width</code> and <code>max_height</code>, can be used to set a maximum constraint for the size of a view.</p>
-<p><img src="basic/layout/../layout/images/max_width.svg" alt="max_width" /></p>
+<p><img src="layout/../layout/images/max_width.svg" alt="max_width" /></p>
 <h3 id="auto-min-widthheight"><a class="header" href="#auto-min-widthheight">Auto min-width/height</a></h3>
 <p>An auto <code>min-width</code> or <code>min-height</code> can be used to specify that a view should not be any smaller than its contents, i.e. the sum or max of its children depending on layout type, in the horizontal or vertical directions respectively.</p>
 <p>This is useful in combination with a stretch size, so the view can contract with its parent container but still maintain a minimum size of its content, for example the text of a view.</p>
-<p><img src="basic/layout/../layout/images/auto_min_width.svg" alt="auto_min_width" /></p>
+<p><img src="layout/../layout/images/auto_min_width.svg" alt="auto_min_width" /></p>
 <h3 id="auto-max-widthheight"><a class="header" href="#auto-max-widthheight">Auto max-width/height</a></h3>
 <p>An auto <code>max-width</code> or <code>max-height</code> can be used to specify that a view should not be any larger than its contents, i.e. the sum or max of its children depending on layout type, in the horizontal or vertical directions respectively.</p>
 <p>This is useful in combination with a stretch size, so the view can grow with its parent container but no larger than the size of its content.</p>
-<p><img src="basic/layout/../layout/images/auto_max_width.svg" alt="auto_max_width" /></p>
+<p><img src="layout/../layout/images/auto_max_width.svg" alt="auto_max_width" /></p>
 <h2 id="gap-constraints"><a class="header" href="#gap-constraints">Gap Constraints</a></h2>
 <p>Gap constraints can have a value in pixels or a percentage.</p>
 <p>The <code>min-gap</code> property, which is shorthand for <code>min_horizontal_gap</code> and <code>min_vertical_gap</code>, can be used to set a minimum constraint for the gap between the children of a view. This is particularly useful in combination with a stretch gap, so that the children are evenly distributed but cannot be closer than the minimum gap When the parent container shrinks.</p>
-<p><img src="basic/layout/../layout/images/min_gap.svg" alt="min_gap" /></p>
+<p><img src="layout/../layout/images/min_gap.svg" alt="min_gap" /></p>
 <p>Similarly, the <code>max-gap</code> property, which is shorthand for <code>max_horizontal_gap</code> and <code>max_vertical_gap</code>, can be used to set a maximum constraint for the gap between the children of a view.</p>
-<p><img src="basic/layout/../layout/images/max_gap.svg" alt="max_gap" /></p>
+<p><img src="layout/../layout/images/max_gap.svg" alt="max_gap" /></p>
 
                     </main>
 

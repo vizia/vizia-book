@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The final code - vizia-book</title>
+        <title>Selectors - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,184 +155,54 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-final-code"><a class="header" href="#the-final-code">The Final Code</a></h1>
-<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-// Define the application data
-#[derive(Lens)]
-pub struct AppData {
-    count: i32,
-}
-
-// Define events for mutating the application data
-pub enum AppEvent {
-    Increment,
-    Decrement,
-}
-
-// Mutate application data in response to events
-impl Model for AppData {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement =&gt; self.count -= 1,
-            AppEvent::Increment =&gt; self.count += 1,
-        });
-    }
-}
-
-// Define a custom view for the counter
-pub struct Counter {
-    on_increment: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-    on_decrement: Option&lt;Box&lt;dyn Fn(&amp;mut EventContext)&gt;&gt;,
-}
-
-impl Counter {
-    pub fn new&lt;L&gt;(cx: &amp;mut Context, lens: L) -&gt; Handle&lt;Self&gt;
-    where
-        L: Lens&lt;Target = i32&gt;
-    {
-        Self {
-            on_decrement: None,
-            on_increment: None,
-        }.build(cx, |cx|{
-            HStack::new(cx, |cx|{
-                Button::new(cx, |cx| Label::new(cx, Localized::new("dec")))
-                    .on_press(|ex| ex.emit(CounterEvent::Decrement))
-                    .class("dec");
-
-                Button::new(cx, |cx| Label::new(cx, Localized::new("inc")))
-                    .on_press(|ex| ex.emit(CounterEvent::Increment))
-                    .class("inc");
-                
-                Label::new(cx, lens)
-                    .class("count")
-                    .live(Live::Assertive);
-            })
-            .class("row");
-        })
-    }
-}
-
-// Internal events
-pub enum CounterEvent {
-    Decrement,
-    Increment,
-}
-
-// Handle internal events
-impl View for Counter {
-    fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
-        event.map(|counter_event, meta| match counter_event{
-            CounterEvent::Increment =&gt; {
-                if let Some(callback) = &amp;self.on_increment {
-                    (callback)(cx);
-                }
-            }
-
-            CounterEvent::Decrement =&gt; {
-                if let Some(callback) = &amp;self.on_decrement {
-                    (callback)(cx);
-                }
-            }
-        });
-    }
-}
-
-// Custom modifiers
-pub trait CounterModifiers {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self;
-}
-
-// Implement custom modifiers
-impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
-    fn on_increment&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_increment = Some(Box::new(callback)))
-    }
-
-    fn on_decrement&lt;F: Fn(&amp;mut EventContext) + 'static&gt;(self, callback: F) -&gt; Self {
-        self.modify(|counter| counter.on_decrement = Some(Box::new(callback)))
-    }
-}
-
-fn main() {
-    Application::new(|cx|{
-
-        cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
-
-        cx.add_translation(
-            langid!("en-US"),
-            include_str!("resources/en-US/counter.ftl").to_owned(),
-        );
-
-        cx.add_translation(
-            langid!("es"),
-            include_str!("resources/es/counter.ftl").to_owned(),
-        );
-
-        // Uncomment to test with spanish locale.
-        // If system locale is already Spanish, replace "es" with "en-US".
-        // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
-
-        // Build model data into the application
-        AppData { count: 0 }.build(cx);
-
-        // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count)
-            .on_increment(|cx| cx.emit(AppEvent::Increment))
-            .on_decrement(|cx| cx.emit(AppEvent::Decrement));
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run();
-}</code></pre>
-<h2 id="css"><a class="header" href="#css">CSS</a></h2>
-<pre><code class="language-css">.row {
-    child-space: 1s;
-    col-between: 20px;
-}
-
-button {
-    border-width: 0px;
-}
-
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
-
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    child-space: 1s;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
+                        <h1 id="rules--selectors"><a class="header" href="#rules--selectors">Rules &amp; Selectors</a></h1>
+<p>Vizia currently supports a custom subset of the CSS standard. This section provides an overview and reference of the supported CSS selectors, selector combinators and pseudo-classes available in vizia.</p>
+<h2 id="style-rules"><a class="header" href="#style-rules">Style Rules</a></h2>
+<p>A typical style rule might look something like this:</p>
+<pre><code class="language-css">hstack.one label {
+    background-color: red;
+    width: 30px;
 }
 </code></pre>
-<h2 id="fluent"><a class="header" href="#fluent">Fluent</a></h2>
-<p><em>resources/en-US/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Increment
-dec = Decrement
-</code></pre>
-<p><em>resources/es/counter.ftl</em></p>
-<pre><code class="language-ftl">inc = Incrementar
-dec = Decrementar
-</code></pre>
-
+<p>The first part before the opening brace is called a <a href="#selectors">selector</a>, which determines which views the rule applies to, and the part inside the brackets are a list of properties and values to apply to the styling of matching views.</p>
+<h2 id="selectors"><a class="header" href="#selectors">Selectors</a></h2>
+<h3 id="basic-selectors"><a class="header" href="#basic-selectors">Basic Selectors</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Selector</th><th>Description</th></tr></thead><tbody>
+<tr><td>type</td><td>Selects all views that have the given element name, e.g. <code>button</code> will select all <code>Button</code> views.</td></tr>
+<tr><td>class</td><td>Sselects all views that have the given class name prefixed with a period, e.g. <code>.class-name</code> will match any view that has <code>class("class-name")</code>. A class name can be added to a view with the <code>class</code> style modifier. The <code>toggle_class</code> modifier can be used to conditionally add/remove a class from a view, typically with the use of a lens to a boolean.</td></tr>
+<tr><td>ID</td><td>Selects views with the specified ID name, prefixed with a hash, e.g. <code>#id-name</code> will match the view that has <code>id("id-name")</code>.  An ID name can be added to a view with the <code>id</code> style modifier and must be a unique name.</td></tr>
+<tr><td>universal</td><td>The universal selector, denoted with an asterisk, selects all views.</td></tr>
+</tbody></table>
+</div>
+<h3 id="combinators"><a class="header" href="#combinators">Combinators</a></h3>
+<p>Using combinators, we can combine selectors to select views based on their relationship to other views within the tree.</p>
+<div class="table-wrapper"><table><thead><tr><th>Combinator</th><th>Description</th></tr></thead><tbody>
+<tr><td>descendant</td><td>Selects views which match the selector after the space if they are descended from an view which matches the selector before the space. For example, <code>hstack label</code> will match any <code>Label</code> which has an <code>HStack</code> as an ancestor further up the tree.</td></tr>
+<tr><td>child</td><td>Selects views which match the selector after the greater than character (<code>&gt;</code>) if they are the child of a view which matches the selector before the greater than character. For example, <code>hstack &gt; label</code> will match any <code>Label</code> which has an <code>HStack</code> as a parent.</td></tr>
+<tr><td>subsquent-sibling</td><td>The subsequent-sibling combinator, denoted with a tilde (<code>~</code>), selects siblings. Given <code>A ~ B</code>, all views matching <code>B</code> will be selected if they are preceded by <code>A</code>, provided both <code>A</code> and <code>B</code> share the same parent.</td></tr>
+<tr><td>next-sibling</td><td>The next-sibling combinator, denoted by the plus symbol (<code>+</code>), is similar to the subsequent-sibling. However, given <code>A + B</code>, it only matches <code>B</code> if <code>B</code> is immediately preceded by <code>A</code>, with both sharing the same parent.</td></tr>
+</tbody></table>
+</div>
+<h3 id="pseudo-classes"><a class="header" href="#pseudo-classes">Pseudo-classes</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Pseudo-class</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>:root</code></td><td>Selects the root window.</td></tr>
+<tr><td><code>:hover</code></td><td>Selects the currently hovered view.</td></tr>
+<tr><td><code>:checked</code></td><td>Selects any view which has been marked as checked. A view can be marked as checked with the <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.checked"><code>checked</code></a> style modifier.</td></tr>
+<tr><td><code>:disabled</code></td><td>Selects any view which has been marked as disabled. A view can be marked as disabled with the <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.disabled"><code>disabled</code></a> style modifier.</td></tr>
+<tr><td><code>:active</code></td><td>Selects any view which has been marked as active.</td></tr>
+<tr><td><code>:focus</code></td><td>Selects the currently focused view.</td></tr>
+<tr><td><code>:focus-visible</code></td><td>Selects the currently focused view if the view was focused via keyboard navigation.</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/accessibility.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../styling/styling.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../binding/binding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../styling/style_properties.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -342,11 +212,11 @@ dec = Decrementar
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/accessibility.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../styling/styling.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../binding/binding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../styling/style_properties.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
