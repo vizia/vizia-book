@@ -160,11 +160,11 @@
 <p>Add the following code to the <code>main.rs</code> file, replacing the hello world code that was generated for us:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         // Content goes here
     })
-    .run();    
+    .run()    
 }</code></pre>
 <p>The <code>run()</code> method on the <code>Application</code> causes the program to enter the event loop and for the main window to display.</p>
 <p>We can run our application with <code>cargo run</code> in the terminal, which should result in the following:</p>

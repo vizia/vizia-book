@@ -162,13 +162,13 @@
 <p>We can declare a <code>Label</code> view with the following code:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         Label::new(cx, "Hello Vizia");
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p>The first argument to the <code>new()</code> method of the label is a mutable reference to <code>Context</code>, shortened to <code>cx</code>. This allows the view to build itself into the application. For the second argument we pass it a string to display.</p>
 <p align="center">

@@ -168,7 +168,7 @@ pub struct NestedData {
 }
 </code></pre>
 <p>Provided that both the parent and nested structures derive the <code>Lens</code> trait, we can use the <code>then()</code> lens modifier to produce a lens which targets the nested data:</p>
-<pre><code class="language-rs">fn main() {
+<pre><code class="language-rs">fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -180,11 +180,11 @@ pub struct NestedData {
         Label::new(cx, AppData::nested.then(NestedData::name));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 </code></pre>
 <p>If the nested data structure does not derive <code>Lens</code>, then the <code>map_ref()</code> modifier can be used:</p>
-<pre><code class="language-rs">fn main() {
+<pre><code class="language-rs">fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -196,7 +196,7 @@ pub struct NestedData {
         Label::new(cx, AppData::nested.map_ref(|nested| &amp;nested.name));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 </code></pre>
 
@@ -208,7 +208,7 @@ pub struct NestedData {
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../styling/styling.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../events/events.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -222,7 +222,7 @@ pub struct NestedData {
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../styling/styling.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../events/events.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

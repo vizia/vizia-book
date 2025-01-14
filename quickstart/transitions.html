@@ -174,7 +174,7 @@ const STYLE: &amp;str = r#"
     }
 "#;
 
-fn main () {
+fn main () -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         cx.add_stylesheet(STYLE);
@@ -183,7 +183,7 @@ fn main () {
             .class("my_view")
             .size(Pixels(200.0));
     })
-    .run();
+    .run()
 }
 </code></pre>
 <p>Note here that we have not used the <code>include_style!()</code> macro within the call to <code>cx.add_stylesheet</code> as the stylesheet is defined as a constant within the Rust code.</p>

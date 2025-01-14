@@ -167,7 +167,7 @@ pub struct AppData {
 
 impl Model for AppData {}
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -177,7 +177,7 @@ fn main() {
         Label::new(cx, AppData::name.map(|name| name.chars().nth(0).unwrap()));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <blockquote>
 <p>Note that in this example we're assuming that the string is not empty.</p>

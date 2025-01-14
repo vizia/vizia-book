@@ -176,10 +176,10 @@ pub struct AppData {
 
 impl Model for AppData {}
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         Label::new(cx, "Hello Vizia").background_color(AppData::color);
-    }).run();
+    }).run()
 }</code></pre>
 <h2 id="view-binding"><a class="header" href="#view-binding">View Binding</a></h2>
 <p>Some views accept a lens as an input. When provided a lens, the view sets up a binding to the data. For example, the <code>Label</code> view accepts a lens to any type which implements <code>ToString</code>:</p>
@@ -190,17 +190,19 @@ pub struct Person {
 
 impl Model for Person {}
 
-Application::new(|cx|{
-    Label::new(cx, Person::name);
-})
-.run()</code></pre>
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        Label::new(cx, Person::name);
+    })
+    .run()    
+}</code></pre>
 <p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/final_code.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../models/environment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -214,7 +216,7 @@ Application::new(|cx|{
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/final_code.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../models/environment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 

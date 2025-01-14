@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Styling the application - vizia-book</title>
+        <title>Application - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,95 +155,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="styling-the-application"><a class="header" href="#styling-the-application">Styling the Application</a></h1>
-<p>Previously we saw how modifiers can be used to style views inline. However, vizia also allows views to be styled with Cascading Style Sheets (CSS) so that style rules can be shared by multiple views. Additionally, stylesheets can be reloaded at runtime by pressing the F5 key.</p>
-<h2 id="adding-class-names-to-the-views"><a class="header" href="#adding-class-names-to-the-views">Adding class names to the views</a></h2>
-<p>First we'll add some class names to our views, using the <code>class</code> style modifier, so we can target them with a CSS stylesheet:</p>
+                        <h1 id="creating-an-application"><a class="header" href="#creating-an-application">Creating an Application</a></h1>
+<p>The first step to building a GUI with vizia is to create an application. Creating a new application creates a main window and a <a href="https://docs.vizia.dev/vizia/context/struct.Context.html"><code>context</code></a>. Views declared within the closure passed to <code>Application::new()</code> are added to the context and rendered into the main window.</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
 fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
-
-        HStack::new(cx, |cx|{
-            Button::new(cx, |cx| Label::new(cx, "Decrement"))
-                .class("dec");
-            Button::new(cx, |cx| Label::new(cx, "Increment"))
-                .class("inc");
-            Label::new(cx, "0")
-                .class("count");
-        })
-        .class("row");
+        // Content goes here
     })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run()
+    .run()   
 }</code></pre>
-<h2 id="creating-a-stylesheet"><a class="header" href="#creating-a-stylesheet">Creating a stylesheet</a></h2>
-<p>Next, we'll create a <code>style.css</code> file in the <code>src</code> directory with the following CSS code:</p>
-<pre><code class="language-css">.row {
-    alignment: center;
-    gap: 20px;
-}
+<p>Calling <code>run()</code> on the <code>Application</code> causes the program to enter the event loop and for the main window to display.</p>
+<p><img src="./img/application.png" alt="An empty vizia application main window" /></p>
 
-button {
-    border-width: 0px;
-}
-
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
-
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    alignment: center;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
-}
-</code></pre>
-<h2 id="adding-the-stylesheet-to-the-app"><a class="header" href="#adding-the-stylesheet-to-the-app">Adding the stylesheet to the app</a></h2>
-<p>Finally, we'll add the CSS file to the vizia application using the <code>.add_stylesheet()</code> function on the context. Here we're using the <code>include_style!()</code> macro, which will dynamically load the stylesheet at runtime in debug mode, but include the stylesheet into the binary in release mode. This should be done just after creating the application:</p>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-fn main() -&gt; Result&lt;(), ApplicationError&gt; {
-    Application::new(|cx|{
-
-        // Add the stylesheet to the app
-        cx.add_stylesheet(include_style!("src/style.css"))
-            .expect("Failed to load stylesheet");
-
-        HStack::new(cx, |cx|{
-            Button::new(cx, |cx| Label::new(cx, "Decrement"))
-                .class("dec");
-            Button::new(cx, |cx| Label::new(cx, "Increment"))
-                .class("inc");
-            Label::new(cx, "0")
-                .class("count");
-        })
-        .class("row");
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run()
-}</code></pre>
-<p>If we run the app now with <code>cargo run</code> we get the following:</p>
-<p align="center">
-<img src="img/styling.png" alt="A vizia app showing two buttons and a label"/>
-</p>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/layout.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../quickstart/final_code.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../quickstart/transitions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../application/multiple_windows.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -253,11 +186,11 @@ fn main() -&gt; Result&lt;(), ApplicationError&gt; {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/layout.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../quickstart/final_code.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../quickstart/transitions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../application/multiple_windows.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

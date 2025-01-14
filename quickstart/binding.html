@@ -172,7 +172,7 @@ impl Model for AppData {}</code></pre>
 <p>With the generated <code>AppData::count</code> lens, we can bind the <code>count</code> data to the <code>Label</code> by passing the lens in place of the string:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData { count: 0 }.build(cx);
@@ -189,7 +189,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <p>This sets up a binding which updates the value of the label whenever the <code>count</code> changes. We can depict this with the following diagram, where the green arrow shows the direct link between the data and the label:</p>
 <p align="center">

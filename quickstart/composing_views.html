@@ -160,7 +160,7 @@
 <p>For example, the <code>HStack</code> container view will arrange its contents into a horizontal row. Let's use this to declare the rest of the views for our counter application:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -171,7 +171,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p>For now we have hard-coded the label to display the number 0, but later we will hook this up to some model data so that it updates when the data changes. We've also removed the modifiers from the label, as we'll be replacing these with CSS styling later on.</p>
 <p>Note that the <code>Button</code> view is also a container, and is designed to allow things like a button with both text and a leading or trailing icon.</p>

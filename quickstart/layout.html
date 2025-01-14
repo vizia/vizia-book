@@ -161,7 +161,7 @@
 <p>By default the <code>HStack</code> view will stretch to fill its parent, in this case the window. We can center the contents of the <code>HStack</code> using the <code>alignment()</code> modifier and setting it to <code>Alignment::Center</code>. Then we can add horizontal space between the children using the <code>gap()</code> modifier:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -173,11 +173,11 @@ fn main() {
         .gap(Pixels(20.0));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <img src="img/layout.png" alt="A vizia app showing two buttons and a label"/>
 <h2 id="understanding-the-layout-system"><a class="header" href="#understanding-the-layout-system">Understanding the layout system</a></h2>
-<p>The layout system used by vizia is called <a href="https://github.com/vizia/morphorm">morphorm</a> and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found <a href="../basic/layout/layout.html">here</a>.</p>
+<p>The layout system used by vizia is called <a href="https://github.com/vizia/morphorm">morphorm</a> and can achieve results similar to flexbox on the web but with fewer concepts to learn. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found <a href="../layout/layout.html">here</a>.</p>
 <!-- ### Layout Type
 The children of a view will be arranged into a stack. The `layout-type` property determines how children of a view will be arranged. There are two variants:
 - `Row` - The view will arrange its children into a horizontal row.

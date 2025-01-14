@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Styling the application - vizia-book</title>
+        <title>Modifiers - vizia-book</title>
 
 
         <!-- Custom HTML head -->
@@ -155,95 +155,52 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="styling-the-application"><a class="header" href="#styling-the-application">Styling the Application</a></h1>
-<p>Previously we saw how modifiers can be used to style views inline. However, vizia also allows views to be styled with Cascading Style Sheets (CSS) so that style rules can be shared by multiple views. Additionally, stylesheets can be reloaded at runtime by pressing the F5 key.</p>
-<h2 id="adding-class-names-to-the-views"><a class="header" href="#adding-class-names-to-the-views">Adding class names to the views</a></h2>
-<p>First we'll add some class names to our views, using the <code>class</code> style modifier, so we can target them with a CSS stylesheet:</p>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-fn main() -&gt; Result&lt;(), ApplicationError&gt; {
-    Application::new(|cx|{
-
-        HStack::new(cx, |cx|{
-            Button::new(cx, |cx| Label::new(cx, "Decrement"))
-                .class("dec");
-            Button::new(cx, |cx| Label::new(cx, "Increment"))
-                .class("inc");
-            Label::new(cx, "0")
-                .class("count");
-        })
-        .class("row");
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run()
-}</code></pre>
-<h2 id="creating-a-stylesheet"><a class="header" href="#creating-a-stylesheet">Creating a stylesheet</a></h2>
-<p>Next, we'll create a <code>style.css</code> file in the <code>src</code> directory with the following CSS code:</p>
-<pre><code class="language-css">.row {
-    alignment: center;
-    gap: 20px;
+                        <h1 id="mofiying-views"><a class="header" href="#mofiying-views">Mofiying Views</a></h1>
+<p>Modifiers are used to customize the appearance and behaviour of views in a declarative way. Many of the built-in modifiers in Vizia can be applied to any View, which includes built-in views as well as user-defined views.</p>
+<h2 id="customize-a-view-with-a-modifier"><a class="header" href="#customize-a-view-with-a-modifier">Customize a view with a modifier</a></h2>
+<p>Modifiers are functions which are called on a <a href="https://docs.vizia.dev/vizia/view/struct.Handle.html"><code>Handle</code></a>, which is returned by the constructor of all views. Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the <code>background_color()</code> modifier to set the background color of a label view:</p>
+<pre><code class="language-rust">Label::new(cx, "Hello World")
+    .background_color(Color::rgb(255, 0, 0));</code></pre>
+<p><img src="./img/modifier.png" alt="A label with a background color modifier" /></p>
+<p>Multiple modifiers can be chained together to acheieve more complex view configuration.</p>
+<pre><code class="language-rust">Label::new(cx, "Hello World")
+    .width(Pixels(200.0))
+    .border_width(Pixels(1.0))
+    .border_color(Color::black())
+    .background_color(Color::rgb(200, 200, 200));</code></pre>
+<p><img src="./img/modifiers.png" alt="A label with a multiple modifiers applied" /></p>
+<h2 id="view-specific-modifiers"><a class="header" href="#view-specific-modifiers">View specific modifiers</a></h2>
+<p>Some views have modifiers which are specific to that view type. For example, the <code>Slider</code> view has a modifier for setting the slider <code>range</code>:</p>
+<pre><code class="language-rust">Slider::new(cx, AppData::value)
+    .range(0.0..100.0);</code></pre>
+<p>View specific modifiers can still be combined with regular modifiers, and the order doesn't matter. Both of these produce the same result:</p>
+<pre><code class="language-rust">Slider::new(cx, AppData::value)
+    .range(0.0..100.0)
+    .width(Pixels(200.0));</code></pre>
+<pre><code class="language-rust">Slider::new(cx, AppData::value)
+    .width(Pixels(200.0))
+    .range(0.0..100.0);</code></pre>
+<h2 id="modifier-bindings"><a class="header" href="#modifier-bindings">Modifier bindings</a></h2>
+<p>Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
 }
 
-button {
-    border-width: 0px;
-}
+...
 
-button.dec {
-    background-color: rgb(170, 50, 50);
-}
+Label::new(cx, "Hello World")
+    .background_color(AppData::color);</code></pre>
 
-button.inc {
-    background-color: rgb(50, 170, 50);
-}
-
-label.count {
-    alignment: center;
-    border-width: 1px;
-    border-color: #808080;
-    border-radius: 4px;
-    width: 50px;
-    height: 32px;
-}
-</code></pre>
-<h2 id="adding-the-stylesheet-to-the-app"><a class="header" href="#adding-the-stylesheet-to-the-app">Adding the stylesheet to the app</a></h2>
-<p>Finally, we'll add the CSS file to the vizia application using the <code>.add_stylesheet()</code> function on the context. Here we're using the <code>include_style!()</code> macro, which will dynamically load the stylesheet at runtime in debug mode, but include the stylesheet into the binary in release mode. This should be done just after creating the application:</p>
-<pre><code class="language-rust">use vizia::prelude::*;
-
-fn main() -&gt; Result&lt;(), ApplicationError&gt; {
-    Application::new(|cx|{
-
-        // Add the stylesheet to the app
-        cx.add_stylesheet(include_style!("src/style.css"))
-            .expect("Failed to load stylesheet");
-
-        HStack::new(cx, |cx|{
-            Button::new(cx, |cx| Label::new(cx, "Decrement"))
-                .class("dec");
-            Button::new(cx, |cx| Label::new(cx, "Increment"))
-                .class("inc");
-            Label::new(cx, "0")
-                .class("count");
-        })
-        .class("row");
-    })
-    .title("Counter")
-    .inner_size((400, 150))
-    .run()
-}</code></pre>
-<p>If we run the app now with <code>cargo run</code> we get the following:</p>
-<p align="center">
-<img src="img/styling.png" alt="A vizia app showing two buttons and a label"/>
-</p>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../quickstart/layout.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../views/views.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../quickstart/transitions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../views/custom_modifiers.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -253,11 +210,11 @@ fn main() -&gt; Result&lt;(), ApplicationError&gt; {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../quickstart/layout.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../views/views.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../quickstart/transitions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../views/custom_modifiers.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

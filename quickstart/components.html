@@ -290,7 +290,7 @@ Button::new(
 <p>To recap, now when the user presses on one of the buttons, the button will emit an internal <code>CounterEvent</code>, which is then handled by the <code>Counter</code> view to call the appropriate callback, which the user can set using the custom modifiers we added using the <code>CounterModifiers</code> trait.</p>
 <h2 id="step-6-using-the-custom-view"><a class="header" href="#step-6-using-the-custom-view">Step 6: Using the custom view</a></h2>
 <p>Finally, we can use our custom view in the application:</p>
-<pre><code class="language-rust">fn main() {
+<pre><code class="language-rust">fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         cx.add_stylesheet(include_style!("src/style.css"))
@@ -304,7 +304,7 @@ Button::new(
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 </code></pre>
 <p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data.</p>

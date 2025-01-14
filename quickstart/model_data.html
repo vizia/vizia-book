@@ -169,7 +169,7 @@ impl Model for AppData {}</code></pre>
 <p>To use a model, an instance of the data must be built into the application with the <code>build()</code> method:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         AppData { count: 0 }.build(cx); // Build the data into the app
 
@@ -186,7 +186,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 200))
-    .run();
+    .run()
 }
 </code></pre>
 <p>This builds the model data into the tree, in this case at the root <code>Window</code>. Internally, models and views are stored separately, however, for processes like event propagation, models can be thought of as existing within the tree, with an associated view.</p>

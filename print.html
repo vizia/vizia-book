@@ -213,11 +213,11 @@ vizia = {git = "https://github.com/vizia/vizia"}
 <p>Add the following code to the <code>main.rs</code> file, replacing the hello world code that was generated for us:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         // Content goes here
     })
-    .run();    
+    .run()    
 }</code></pre>
 <p>The <code>run()</code> method on the <code>Application</code> causes the program to enter the event loop and for the main window to display.</p>
 <p>We can run our application with <code>cargo run</code> in the terminal, which should result in the following:</p>
@@ -228,13 +228,13 @@ fn main() {
 <p>For example, the <code>title()</code> and <code>inner_size()</code> window modifiers can be used to set the title and size of the window respectively.</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p align="center">
 <img src="quickstart/img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size"/>
@@ -245,13 +245,13 @@ fn main() {
 <p>We can declare a <code>Label</code> view with the following code:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         Label::new(cx, "Hello Vizia");
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p>The first argument to the <code>new()</code> method of the label is a mutable reference to <code>Context</code>, shortened to <code>cx</code>. This allows the view to build itself into the application. For the second argument we pass it a string to display.</p>
 <p align="center">
@@ -265,7 +265,7 @@ fn main() {
     .background_color(Color::rgb(200, 200, 200));</code></pre>
 <img src="quickstart/img/view_modifier.png" alt=""/>
 <p>Note how this overrides the default background color of the label, which is provided by a CSS stylesheet.</p>
-<p>Multiple modifiers can be chained together to achieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.</p>
+<p>Multiple modifiers can be chained together to achieve more complex view configuration.</p>
 <pre><code class="language-rust">Label::new(cx, "Hello Vizia")
     .width(Pixels(200.0))
     .border_width(Pixels(1.0))
@@ -288,7 +288,7 @@ fn main() {
 <p>For example, the <code>HStack</code> container view will arrange its contents into a horizontal row. Let's use this to declare the rest of the views for our counter application:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -299,7 +299,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p>For now we have hard-coded the label to display the number 0, but later we will hook this up to some model data so that it updates when the data changes. We've also removed the modifiers from the label, as we'll be replacing these with CSS styling later on.</p>
 <p>Note that the <code>Button</code> view is also a container, and is designed to allow things like a button with both text and a leading or trailing icon.</p>
@@ -315,7 +315,7 @@ fn main() {
 <p>By default the <code>HStack</code> view will stretch to fill its parent, in this case the window. We can center the contents of the <code>HStack</code> using the <code>alignment()</code> modifier and setting it to <code>Alignment::Center</code>. Then we can add horizontal space between the children using the <code>gap()</code> modifier:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -327,11 +327,11 @@ fn main() {
         .gap(Pixels(20.0));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <img src="quickstart/img/layout.png" alt="A vizia app showing two buttons and a label"/>
 <h2 id="understanding-the-layout-system"><a class="header" href="#understanding-the-layout-system">Understanding the layout system</a></h2>
-<p>The layout system used by vizia is called <a href="https://github.com/vizia/morphorm">morphorm</a> and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found <a href="quickstart/../basic/layout/layout.html">here</a>.</p>
+<p>The layout system used by vizia is called <a href="https://github.com/vizia/morphorm">morphorm</a> and can achieve results similar to flexbox on the web but with fewer concepts to learn. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found <a href="quickstart/../layout/layout.html">here</a>.</p>
 <!-- ### Layout Type
 The children of a view will be arranged into a stack. The `layout-type` property determines how children of a view will be arranged. There are two variants:
 - `Row` - The view will arrange its children into a horizontal row.
@@ -382,7 +382,7 @@ All spacing and size properties can be constrained with corresponding minimum an
 <p>First we'll add some class names to our views, using the <code>class</code> style modifier, so we can target them with a CSS stylesheet:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -397,7 +397,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <h2 id="creating-a-stylesheet"><a class="header" href="#creating-a-stylesheet">Creating a stylesheet</a></h2>
 <p>Next, we'll create a <code>style.css</code> file in the <code>src</code> directory with the following CSS code:</p>
@@ -431,7 +431,7 @@ label.count {
 <p>Finally, we'll add the CSS file to the vizia application using the <code>.add_stylesheet()</code> function on the context. Here we're using the <code>include_style!()</code> macro, which will dynamically load the stylesheet at runtime in debug mode, but include the stylesheet into the binary in release mode. This should be done just after creating the application:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
@@ -450,7 +450,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p>If we run the app now with <code>cargo run</code> we get the following:</p>
 <p align="center">
@@ -474,7 +474,7 @@ const STYLE: &amp;str = r#"
     }
 "#;
 
-fn main () {
+fn main () -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         cx.add_stylesheet(STYLE);
@@ -483,7 +483,7 @@ fn main () {
             .class("my_view")
             .size(Pixels(200.0));
     })
-    .run();
+    .run()
 }
 </code></pre>
 <p>Note here that we have not used the <code>include_style!()</code> macro within the call to <code>cx.add_stylesheet</code> as the stylesheet is defined as a constant within the Rust code.</p>
@@ -515,7 +515,7 @@ impl Model for AppData {}</code></pre>
 <p>To use a model, an instance of the data must be built into the application with the <code>build()</code> method:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         AppData { count: 0 }.build(cx); // Build the data into the app
 
@@ -532,7 +532,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 200))
-    .run();
+    .run()
 }
 </code></pre>
 <p>This builds the model data into the tree, in this case at the root <code>Window</code>. Internally, models and views are stored separately, however, for processes like event propagation, models can be thought of as existing within the tree, with an associated view.</p>
@@ -558,7 +558,7 @@ impl Model for AppData {}</code></pre>
 <p>With the generated <code>AppData::count</code> lens, we can bind the <code>count</code> data to the <code>Label</code> by passing the lens in place of the string:</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData { count: 0 }.build(cx);
@@ -575,7 +575,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <p>This sets up a binding which updates the value of the label whenever the <code>count</code> changes. We can depict this with the following diagram, where the green arrow shows the direct link between the data and the label:</p>
 <p align="center">
@@ -765,7 +765,7 @@ Button::new(
 <p>To recap, now when the user presses on one of the buttons, the button will emit an internal <code>CounterEvent</code>, which is then handled by the <code>Counter</code> view to call the appropriate callback, which the user can set using the custom modifiers we added using the <code>CounterModifiers</code> trait.</p>
 <h2 id="step-6-using-the-custom-view"><a class="header" href="#step-6-using-the-custom-view">Step 6: Using the custom view</a></h2>
 <p>Finally, we can use our custom view in the application:</p>
-<pre><code class="language-rust">fn main() {
+<pre><code class="language-rust">fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         cx.add_stylesheet(include_style!("src/style.css"))
@@ -779,7 +779,7 @@ Button::new(
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 </code></pre>
 <p>We pass it the <code>AppData::lens</code>, but the custom view can accept any lens to an <code>i32</code> value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit <code>AppEvent</code> events to mutate the model data.</p>
@@ -972,7 +972,7 @@ impl&lt;'a&gt; CounterModifiers for Handle&lt;'a, Counter&gt; {
     }
 }
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
@@ -1001,7 +1001,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <h2 id="css"><a class="header" href="#css">CSS</a></h2>
 <pre><code class="language-css">.row {
@@ -1039,6 +1039,260 @@ dec = Decrement
 <pre><code class="language-ftl">inc = Incrementar
 dec = Decrementar
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="creating-an-application-1"><a class="header" href="#creating-an-application-1">Creating an Application</a></h1>
+<p>The first step to building a GUI with vizia is to create an application. Creating a new application creates a main window and a <a href="https://docs.vizia.dev/vizia/context/struct.Context.html"><code>context</code></a>. Views declared within the closure passed to <code>Application::new()</code> are added to the context and rendered into the main window.</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        // Content goes here
+    })
+    .run()   
+}</code></pre>
+<p>Calling <code>run()</code> on the <code>Application</code> causes the program to enter the event loop and for the main window to display.</p>
+<p><img src="application/./img/application.png" alt="An empty vizia application main window" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="multiple-windows"><a class="header" href="#multiple-windows">Multiple Windows</a></h1>
+<p>While an application provides a default main window, additional windows can be created with the <a href="https://docs.vizia.dev/vizia_winit/window/struct.Window.html"><code>Window</code></a> view:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        // Main window content
+
+        Window::new(cx, |cx| {
+            // Secondary window content
+        });
+    })
+    .run()
+}
+</code></pre>
+<p>Windows, like other views, are built into the view tree. Therefore, they can access data in models further up the tree from them, and if the containing view is destroyed the window is closed.</p>
+<p>A <a href="application/../binding/conditional_views.html">binding view</a> can be used to a conditionally create windows:</p>
+<pre><code class="language-rust">Binding::new(cx, AppData::show_window, |cx, show_subwindow| {
+    if show_subwindow.get(cx) {
+        Window::new(cx, |cx| {
+            
+        })
+        .on_close(|cx| {
+            cx.emit(AppEvent::WindowClosed);
+        });
+    }
+});</code></pre>
+<p>Here we've used the <a href="https://docs.vizia.dev/vizia_winit/window_modifiers/trait.WindowModifiers.html#tymethod.on_close"><code>on_close</code></a> window modifier to reset the app state when the window is closed by the user.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="modifying-window-properties"><a class="header" href="#modifying-window-properties">Modifying Window Properties</a></h1>
+<p>The properties of a window can be changed using <a href="https://docs.vizia.dev/vizia_winit/window_modifiers/trait.WindowModifiers.html">window modifiers</a>. For the main window, these modifiers are called on the application prior to calling <code>run()</code>.</p>
+<p>For example, the <code>title()</code> and <code>inner_size()</code> window modifiers can be used to set the title and size of the window respectively.</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+
+    })
+    .title("My Awesome Application")
+    .inner_size((400, 200))
+    .run()
+}</code></pre>
+<p><img src="application/./img/window_modifiers.png" alt="A window with the title &#39;My Awesome Application&#39;" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="adding-views-1"><a class="header" href="#adding-views-1">Adding views</a></h1>
+<p>Views are the building bocks of a vizia GUI and are used to visually present <a href="views/./models.html">model data</a> and to act as controls which, when interacted with, send events to mutate model data.</p>
+<p>We'll learn more about models and events in the following sections.</p>
+<h2 id="declaring-views"><a class="header" href="#declaring-views">Declaring views</a></h2>
+<p>For example, we can declare a <code>Label</code> view to display a text string:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        Label::new(cx, "Hello World");
+    })
+    .inner_size((400, 200))
+    .run()
+}</code></pre>
+<p><img src="views/./img/declaring_views.png" alt="A label view" /></p>
+<p>The first argument to the <code>new()</code> method of the label is a mutable reference to <code>Context</code>, shortened to <code>cx</code>. This allows the view to build itself into the application and is passed from view to view.</p>
+<h2 id="composing-views-1"><a class="header" href="#composing-views-1">Composing views</a></h2>
+<p>Composition of views is achieved through container views, which typically take a closure which allows us to build child views within it. Some container views may arrange their content in a particular way.</p>
+<p>For example, the <code>VStack</code> container view will arrange its contents into a vertical column:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        
+        VStack::new(cx, |cx|{    
+            Label::new(cx, "Hello");
+            Label::new(cx, "World");
+        });
+    })
+    .inner_size((400, 100))
+    .run()
+}</code></pre>
+<p><img src="views/./img/composing_views.png" alt="" /></p>
+<p>Composing views together forms a tree, where each view has a single parent and zero or more children. For example, for the code above the view tree can be depicted with the following diagram:</p>
+<p><img src="views/./img/basic_tree.svg" alt="Diagram of a basic view tree depicting a Window view with a child HStack view with two child Label views." /></p>
+<p>The Window is the <em>parent</em> of the VStack, while the VStack is the <em>parent</em> of both the Labels. Therefore, the Window is an <em>ancestor</em> of the Labels and the Labels are <em>descendants</em> of the window. This terminology is relevant when writing CSS style rules, which we'll cover later in this guide.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mofiying-views"><a class="header" href="#mofiying-views">Mofiying Views</a></h1>
+<p>Modifiers are used to customize the appearance and behaviour of views in a declarative way. Many of the built-in modifiers in Vizia can be applied to any View, which includes built-in views as well as user-defined views.</p>
+<h2 id="customize-a-view-with-a-modifier"><a class="header" href="#customize-a-view-with-a-modifier">Customize a view with a modifier</a></h2>
+<p>Modifiers are functions which are called on a <a href="https://docs.vizia.dev/vizia/view/struct.Handle.html"><code>Handle</code></a>, which is returned by the constructor of all views. Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the <code>background_color()</code> modifier to set the background color of a label view:</p>
+<pre><code class="language-rust">Label::new(cx, "Hello World")
+    .background_color(Color::rgb(255, 0, 0));</code></pre>
+<p><img src="views/./img/modifier.png" alt="A label with a background color modifier" /></p>
+<p>Multiple modifiers can be chained together to acheieve more complex view configuration.</p>
+<pre><code class="language-rust">Label::new(cx, "Hello World")
+    .width(Pixels(200.0))
+    .border_width(Pixels(1.0))
+    .border_color(Color::black())
+    .background_color(Color::rgb(200, 200, 200));</code></pre>
+<p><img src="views/./img/modifiers.png" alt="A label with a multiple modifiers applied" /></p>
+<h2 id="view-specific-modifiers-1"><a class="header" href="#view-specific-modifiers-1">View specific modifiers</a></h2>
+<p>Some views have modifiers which are specific to that view type. For example, the <code>Slider</code> view has a modifier for setting the slider <code>range</code>:</p>
+<pre><code class="language-rust">Slider::new(cx, AppData::value)
+    .range(0.0..100.0);</code></pre>
+<p>View specific modifiers can still be combined with regular modifiers, and the order doesn't matter. Both of these produce the same result:</p>
+<pre><code class="language-rust">Slider::new(cx, AppData::value)
+    .range(0.0..100.0)
+    .width(Pixels(200.0));</code></pre>
+<pre><code class="language-rust">Slider::new(cx, AppData::value)
+    .width(Pixels(200.0))
+    .range(0.0..100.0);</code></pre>
+<h2 id="modifier-bindings-1"><a class="header" href="#modifier-bindings-1">Modifier bindings</a></h2>
+<p>Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:</p>
+<pre><code class="language-rust">#[derive(Lens)]
+pub struct AppData {
+    color: Color,
+}
+
+...
+
+Label::new(cx, "Hello World")
+    .background_color(AppData::color);</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="custom-view-modifiers"><a class="header" href="#custom-view-modifiers">Custom View Modifiers</a></h1>
+<p>To create a set of custom view modifiers, first declare a trait with the desired modifier functions. The modifier functions must take <code>self</code> by value and return <code>Self</code>.</p>
+<pre><code class="language-rust">pub trait CustomModifiers:  {
+    fn title(self) -&gt; Self;
+}</code></pre>
+<p>Next, we can implement the custom modifiers for all views like so:</p>
+<pre><code class="language-rust">impl&lt;'a, V: View&gt; CustomModifiers for Handle&lt;'a, V&gt; {
+    fn title(self) -&gt; Self {
+        self.font_size(24.0).font_weight(FontWeightKeyword::Bold)
+    }
+}</code></pre>
+<p>Sometimes it may be more appropriate to implement the custom modifiers for specific views. For example, we can implement the custom modifiers just the <code>Label</code> view like so:</p>
+<pre><code class="language-rust">impl&lt;'a&gt; CustomModifiers for Handle&lt;'a, Label&gt; {
+    fn title(self) -&gt; Self {
+        self.font_size(24.0).font_weight(FontWeightKeyword::Bold)
+    }
+}</code></pre>
+<p>As long as <code>CustomModifiers</code> is imported we can then use the custom <code>title()</code> modifier like any other modifier on a label:</p>
+<pre><code class="language-rust">Label::new("Some Kind of Title").title();</code></pre>
+<p><img src="views/./img/custom_modifiers.png" alt="A label with a custom modifier" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="models"><a class="header" href="#models">Models</a></h1>
+<p>Application data in Vizia is stored in models. Views can then bind to the data in these models in order to react to changes in the data.</p>
+<h2 id="declaring-models"><a class="header" href="#declaring-models">Declaring Models</a></h2>
+<p>A model definition can be any type, typically a struct, which implements the <code>Model</code> trait:</p>
+<pre><code class="language-rust">pub struct Person {
+    pub name: String,
+    pub email: String,
+}
+
+impl Model for Person {}</code></pre>
+<h2 id="building-models"><a class="header" href="#building-models">Building Models</a></h2>
+<p>A model definition can be built into the view tree with the <code>build()</code> method:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        Person {
+            name: String::from("John Doe"),
+            email: String::from("john.doe@company.com"),
+        }.build(cx);
+
+        HStack::new(cx, |cx|{
+            Label::new(cx, "Hello");
+            Label::new(cx, "World");
+        });
+    })
+    .run();
+}
+</code></pre>
+<p>This builds the model data into the tree, in this case at the root <code>Window</code>.</p>
+<p>Internally, Vizia enforces a separation between views and models by storing them separately. However, for processes like event propagation, models can be thought of as existing within the tree, with an associated parent view.</p>
+<p>The model-view tree for the above code can be depicted with the following diagram:</p>
+<p><img src="models/../../img/basic_tree_model.svg" alt="Diagram of a basic model-view tree depicting a Window view, with an associated AppData model, and with a child HStack view with two child Label views." /></p>
+<p>If the <code>AppData</code> had been built within the contents of the <code>HStack</code>, then the model would be associated with the <code>HStack</code> rather than the <code>Window</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="environment"><a class="header" href="#environment">Environment</a></h1>
+<p>The <code>Environment</code> is a built-in model used to specify system specific application data, such as the current system locale and current system theme preference, which can then be used by any view in the application.</p>
+<p>For example, we can bind to the locale and conditionally change the properties of a view depending on the selected language:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx| {
+        Binding::new(cx, Environment::locale, |cx, locale| {
+            match locale.get(cx).to_string().as_ref() {
+                "en-US" =&gt; {
+                    Element::new(cx).background_color(Color::from("#006847"));
+                }
+
+                "fr" =&gt; {
+                    Element::new(cx).background_color(Color::from("#004768"));
+                }
+
+                _ =&gt; {}
+            }
+        });
+    })
+    .run()
+}</code></pre>
+<p>// Image here</p>
+<p>The above example has an <code>Element</code> which will change color depending on the locale between <code>en-US</code> (US English) and <code>fr</code> (french).</p>
+<p>By default the environment will use values specified by the system, such as the system specified language, but we can override these values with an environment event.</p>
+<p>For example, we can toggle between two locales with a pair of checkboxes:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx| {
+        cx.emit(EnvironmentEvent::SetLocale("en-US".parse().unwrap()));
+
+        HStack::new(cx, |cx| {
+            Checkbox::new(cx, Environment::locale.map(|locale| {
+                    locale.to_string() == "en-US"
+                }))
+                .on_toggle(|cx| {
+                    cx.emit(EnvironmentEvent::SetLocale("en-US".parse().unwrap()))
+                });
+            Label::new(cx, "English");
+
+            Checkbox::new(cx, Environment::locale.map(|locale| {
+                    locale.to_string() == "fr"
+                }))
+                .on_toggle(|cx| {
+                    cx.emit(EnvironmentEvent::SetLocale("fr".parse().unwrap()))
+                });
+                .left(Pixels(10.0));
+            Label::new(cx, "French");
+        })
+        .space(Pixels(10.0))
+        .child_top(Stretch(1.0))
+        .child_bottom(Stretch(1.0))
+        .col_between(Pixels(5.0))
+        .height(Auto);
+
+        Binding::new(cx, Environment::locale, |cx, locale| {
+            match locale.get(cx).to_string().as_ref() {
+                "en-US" =&gt; {
+                    Element::new(cx).background_color(Color::from("#006847"));
+                }
+
+                "fr" =&gt; {
+                    Element::new(cx).background_color(Color::from("#004768"));
+                }
+
+                _ =&gt; {}
+            }
+        });
+    })
+    .run()
+}</code></pre>
+<p>// Image here</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="data-binding"><a class="header" href="#data-binding">Data Binding</a></h1>
 <p>Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update automatically in response. Therefore, it is data binding which provides the mechanism for reactivity in Vizia.</p>
 <p>In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to <em>select</em> some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.</p>
@@ -1060,10 +1314,10 @@ pub struct AppData {
 
 impl Model for AppData {}
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         Label::new(cx, "Hello Vizia").background_color(AppData::color);
-    }).run();
+    }).run()
 }</code></pre>
 <h2 id="view-binding"><a class="header" href="#view-binding">View Binding</a></h2>
 <p>Some views accept a lens as an input. When provided a lens, the view sets up a binding to the data. For example, the <code>Label</code> view accepts a lens to any type which implements <code>ToString</code>:</p>
@@ -1074,10 +1328,12 @@ pub struct Person {
 
 impl Model for Person {}
 
-Application::new(|cx|{
-    Label::new(cx, Person::name);
-})
-.run()</code></pre>
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
+    Application::new(|cx|{
+        Label::new(cx, Person::name);
+    })
+    .run()    
+}</code></pre>
 <p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-data-trait"><a class="header" href="#the-data-trait">The Data Trait</a></h1>
 <p>When views bind to model data the <a href="binding/binding.html">binding system</a> must determine whether the data has changed. To do this it stores a copy of the data for each binding. To be able to compare the previous data to the new version, the data type must implement the <code>Data</code> trait.</p>
@@ -1100,7 +1356,7 @@ pub struct AppData {
 
 impl Model for AppData {}
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -1110,7 +1366,7 @@ fn main() {
         Label::new(cx, AppData::name.map(|name| name.chars().nth(0).unwrap()));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <blockquote>
 <p>Note that in this example we're assuming that the string is not empty.</p>
@@ -1139,7 +1395,7 @@ impl Model for AppData {
     }
 }
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -1156,7 +1412,7 @@ fn main() {
         });
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="binding-nested-data"><a class="header" href="#binding-nested-data">Binding Nested Data</a></h1>
 <p>Let's say we have the following application data structure:</p>
@@ -1171,7 +1427,7 @@ pub struct NestedData {
 }
 </code></pre>
 <p>Provided that both the parent and nested structures derive the <code>Lens</code> trait, we can use the <code>then()</code> lens modifier to produce a lens which targets the nested data:</p>
-<pre><code class="language-rs">fn main() {
+<pre><code class="language-rs">fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -1183,11 +1439,11 @@ pub struct NestedData {
         Label::new(cx, AppData::nested.then(NestedData::name));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 </code></pre>
 <p>If the nested data structure does not derive <code>Lens</code>, then the <code>map_ref()</code> modifier can be used:</p>
-<pre><code class="language-rs">fn main() {
+<pre><code class="language-rs">fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
         AppData {
@@ -1199,9 +1455,94 @@ pub struct NestedData {
         Label::new(cx, AppData::nested.map_ref(|nested| &amp;nested.name));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="events"><a class="header" href="#events">Events</a></h1>
+<p>Events are used to communicate actions to update model or view data.</p>
+<p>Events propagate through the tree from origin to target, typically from the view which emits the event, up through the ancestors of the view, to the main window and through any models on the way.</p>
+<h2 id="declaring-events-1"><a class="header" href="#declaring-events-1">Declaring Events</a></h2>
+<p>An event contains a message which can be any type, but is typically an enum:</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+pub struct AppData {
+    name: String,
+}
+
+pub enum PersonEvent {
+    UpdateName(String),
+}</code></pre>
+<h2 id="emitting-events-1"><a class="header" href="#emitting-events-1">Emitting Events</a></h2>
+<p>Events are usually emitted in response to some action on a view. For example, a button takes an action and a view to display. When the button is pressed the action is triggered, emitting an event up the tree.</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+pub enum AppEvent {
+    UpdateName(String),
+}
+
+#[derive(Lens)]
+pub struct AppData {
+    pub name: String,
+}
+
+impl Model for Person {}
+
+fn main() {
+    Application::new(|cx| {
+        AppData { 
+            name: String::from("John Doe"),
+        }.build(cx);
+
+        Label::new(cx, Person::name);
+        
+        Button::new(
+            cx,
+            |cx| cx.emit(AppEvent::UpdateName(String::from("Rob Doe"))),
+            |cx| Label::new(cx, "Update"),
+        );
+    })
+    .inner_size((400, 100))
+    .run();
+}</code></pre>
+<h2 id="handling-events-1"><a class="header" href="#handling-events-1">Handling Events</a></h2>
+<p>Events are handled by views and models with the <code>event()</code> method of the <code>View</code> or <code>Model</code> traits.</p>
+<pre><code class="language-rust">use vizia::prelude::*;
+
+pub enum AppEvent {
+    UpdateName(String),
+}
+
+#[derive(Lens)]
+pub struct AppData {
+    pub name: String,
+}
+
+impl Model for Person {
+    fn event(cx: &amp;mut Context, event: &amp;mut Event) {
+        event.map(|app_event, meta| match app_event {
+            AppEvent::UpdateName(new_name) =&gt; {
+                self.name = new_name.clone();
+            }
+        });
+    }
+}</code></pre>
+<p>Calling <code>map()</code> on an event attempts to cast the event message to the specified type and calls the provided closure if it succeeds.</p>
+<blockquote>
+<p>Note that in the above  example the rust compiler is able to infer the message type from the match statement.</p>
+</blockquote>
+<p>The closure provides the message type and an <code>EventMeta</code>, which can be used to query the origin and target views of the event, or to consume the event to prevent it propagating further, for example:</p>
+<pre><code class="language-rust">event.map(|person_event, meta| match person_event {
+    AppEvent::UpdateName(new_name) =&gt; {
+        self.name = new_name.clone();
+
+        // Consume the event to stop it propagating
+        meta.consume();
+    }
+});</code></pre>
+<h2 id="event-propagation"><a class="header" href="#event-propagation">Event Propagation</a></h2>
+<p>Events propagate through the view tree according to their specified <code>Propagation</code>. Using <code>cx.emit()</code> will produce an event which propagates <strong>up</strong> the tree from ancestor to ancestor.</p>
+<p>To send an event directly to another view, there is <code>cx.emit_to(message, target)</code>, which takes a message as well as a target id.</p>
+<!-- Events propagate through the view tree, and how an event propagates is specific to the event type. However, usually a platform event will propagate down the tree to the target view or model, and a user event will propagate up the tree to the target view or model. -->
 <div style="break-before: page; page-break-before: always;"></div><h1 id="stylesheets"><a class="header" href="#stylesheets">Stylesheets</a></h1>
 <p>Styling refers to modifying the visual properties of a view, such as its background, border, font, etc.</p>
 <p>Previously it was shown how modifiers can be used to style views inline. However, it is also possible for multiple views to share the same styling through the use of Cascading Style Sheets (CSS).</p>
@@ -1513,9 +1854,7 @@ background-position: 1cm 2cm;
 background-position: 10ch 8em;
 
 /* Multiple images */
-background-position:
-  0 0,
-  center;
+background-position: 0 0, center;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="border-properties"><a class="header" href="#border-properties">Border Properties</a></h1>
 <h2 id="border-shorthand"><a class="header" href="#border-shorthand">Border (shorthand)</a></h2>
@@ -1533,25 +1872,25 @@ border: solid red;
 border: 5px dashed green;
 </code></pre>
 <h2 id="border-width"><a class="header" href="#border-width">Border Width</a></h2>
-<p>The <code>border-width</code> property sets the width of a view's border.</p>
+<p>The <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.border_width"><code>border-width</code></a> property sets the width of a view's border.</p>
 <pre><code class="language-css">border-width: 5px;
 border-width: 20%;
 </code></pre>
 <h2 id="border-style"><a class="header" href="#border-style">Border Style</a></h2>
-<p>The <code>border-style</code> property sets the style of a view's border.</p>
+<p>The <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.border_style"><code>border-style</code></a> property sets the style of a view's border.</p>
 <pre><code class="language-css">border-style: none;
 border-style: solid;
 border-style: dashed;
 border-style: dotted;
 </code></pre>
 <h2 id="border-color"><a class="header" href="#border-color">Border Color</a></h2>
-<p>The <code>border-color</code> property sets the color of a view's border.</p>
+<p>The <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.border_color"><code>border-color</code></a> property sets the color of a view's border.</p>
 <pre><code class="language-css">border-color: red;
 border-color: #566;
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="corner-properties"><a class="header" href="#corner-properties">Corner Properties</a></h1>
 <h2 id="corner-radius"><a class="header" href="#corner-radius">Corner Radius</a></h2>
-<p>The <code>corner-radius</code> property rounds the corners of a view's outer border edge. You can set a single radius to make circular corners.</p>
+<p>The <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_radius"><code>corner-radius</code></a> property rounds the corners of a view's outer border edge. You can set a single radius to make circular corners.</p>
 <pre><code class="language-css">/* Radius is set for all 4 sides */
 corner-radius: 10px;
 
@@ -1564,7 +1903,7 @@ corner-radius: 2px 4px 2px;
 /* top-left | top-right | bottom-right | bottom-left */
 corner-radius: 1px 0 3px 4px;
 </code></pre>
-<p>Individual corner radii can be set using the <code>corner-top-left-radius</code>, <code>corner-top-right-radius</code>, <code>corner-bottom-left-radius</code>, and <code>corner-bottom-right-radius</code> properties.</p>
+<p>Individual corner radii can be set using the <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_top_left_radius"><code>corner-top-left-radius</code></a>, <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_top_right_radius"><code>corner-top-right-radius</code></a>, <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_bottom_left_radius"><code>corner-bottom-left-radius</code></a>, and <a href="https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_bottom_right_radius"><code>corner-bottom-right-radius</code></a> properties.</p>
 <p>A circular shape can be achieved by setting the corner radius to 50%:</p>
 <pre><code class="language-css">corner-radius: 50%;
 </code></pre>

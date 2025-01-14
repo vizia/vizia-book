@@ -160,13 +160,13 @@
 <p>For example, the <code>title()</code> and <code>inner_size()</code> window modifiers can be used to set the title and size of the window respectively.</p>
 <pre><code class="language-rust">use vizia::prelude::*;
 
-fn main() {
+fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
 
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }</code></pre>
 <p align="center">
 <img src="img/window_modifiers.png" alt="An empty vizia application window with a custom title and inner size"/>
