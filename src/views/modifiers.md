@@ -4,14 +4,16 @@ Modifiers are used to customize the appearance and behaviour of views in a decla
 
 ## Customize a view with a modifier 
 
-Modifiers are functions which are called on a `Handle`, which is returned by the constructor of all views. Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the `background_color()` modifier to set the background color of a label view:
+Modifiers are functions which are called on a [`Handle`](https://docs.vizia.dev/vizia/view/struct.Handle.html), which is returned by the constructor of all views. Applying modifiers to a view changes the properties of a view without rebuilding it. For example, we can use the `background_color()` modifier to set the background color of a label view:
 
 ```rust
 Label::new(cx, "Hello World")
     .background_color(Color::rgb(255, 0, 0));
 ```
 
-Multiple modifiers can be chained together to acheieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.
+![A label with a background color modifier](./img/modifier.png)
+
+Multiple modifiers can be chained together to acheieve more complex view configuration.
 
 ```rust
 Label::new(cx, "Hello World")
@@ -21,7 +23,7 @@ Label::new(cx, "Hello World")
     .background_color(Color::rgb(200, 200, 200));
 ```
 
-// TODO: Image here
+![A label with a multiple modifiers applied](./img/modifiers.png)
 
 ## View specific modifiers
 Some views have modifiers which are specific to that view type. For example, the `Slider` view has a modifier for setting the slider `range`:
@@ -49,7 +51,6 @@ Slider::new(cx, AppData::value)
 Many modifiers also accept a lens as well as a value. When a lens is supplied to a modifier, a binding is set up which will update the modified property when the bound to model data changes. For example:
 
 ```rust
-
 #[derive(Lens)]
 pub struct AppData {
     color: Color,

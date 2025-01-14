@@ -31,10 +31,10 @@ pub struct AppData {
 
 impl Model for AppData {}
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         Label::new(cx, "Hello Vizia").background_color(AppData::color);
-    }).run();
+    }).run()
 }
 ```
 
@@ -50,9 +50,11 @@ pub struct Person {
 
 impl Model for Person {}
 
-Application::new(|cx|{
-    Label::new(cx, Person::name);
-})
-.run()
+fn main() -> Result<(), ApplicationError> {
+    Application::new(|cx|{
+        Label::new(cx, Person::name);
+    })
+    .run()    
+}
 ```
 When the `name` field changes, the text of the label updates to show the new value.

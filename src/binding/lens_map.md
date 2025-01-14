@@ -14,7 +14,7 @@ pub struct AppData {
 
 impl Model for AppData {}
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         AppData {
@@ -24,7 +24,7 @@ fn main() {
         Label::new(cx, AppData::name.map(|name| name.chars().nth(0).unwrap()));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```
 

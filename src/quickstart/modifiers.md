@@ -15,7 +15,7 @@ Label::new(cx, "Hello Vizia")
 
 Note how this overrides the default background color of the label, which is provided by a CSS stylesheet.
 
-Multiple modifiers can be chained together to achieve more complex view configuration. Because modifiers are just changing the properties of a view, the order of modifiers is not important.
+Multiple modifiers can be chained together to achieve more complex view configuration.
 
 ```rust
 Label::new(cx, "Hello Vizia")

@@ -5,17 +5,16 @@ The first step to building a GUI with vizia is to create an application. Creatin
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         // Content goes here
     })
-    .run();    
+    .run()   
 }
 ```
 
 Calling `run()` on the `Application` causes the program to enter the event loop and for the main window to display.
 
-<img src="../../img/application.png" alt="An empty vizia application window" width="800"/>
-
+![An empty vizia application main window](./img/application.png)
 
 

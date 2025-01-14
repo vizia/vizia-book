@@ -20,7 +20,7 @@ border: 5px dashed green;
 
 ## Border Width
 
-The `border-width` property sets the width of a view's border.
+The [`border-width`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.border_width) property sets the width of a view's border.
 
 ```css
 border-width: 5px;
@@ -29,7 +29,7 @@ border-width: 20%;
 
 ## Border Style
 
-The `border-style` property sets the style of a view's border.
+The [`border-style`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.border_style) property sets the style of a view's border.
 
 ```css
 border-style: none;
@@ -40,7 +40,7 @@ border-style: dotted;
 
 ## Border Color
 
-The `border-color` property sets the color of a view's border.
+The [`border-color`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.border_color) property sets the color of a view's border.
 
 ```css
 border-color: red;

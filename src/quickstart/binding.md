@@ -29,7 +29,7 @@ With the generated `AppData::count` lens, we can bind the `count` data to the `L
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         AppData { count: 0 }.build(cx);
@@ -46,7 +46,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```
 

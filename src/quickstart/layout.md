@@ -9,7 +9,7 @@ By default the `HStack` view will stretch to fill its parent, in this case the w
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -21,14 +21,14 @@ fn main() {
         .gap(Pixels(20.0));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```
 
 <img src="img/layout.png" alt="A vizia app showing two buttons and a label"/>
 
 ## Understanding the layout system
-The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can achieve results similar to flexbox on the web but with fewer concepts to learn. With morphorm there is only space and size. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found [here](../basic/layout/layout.md).
+The layout system used by vizia is called [morphorm](https://github.com/vizia/morphorm) and can achieve results similar to flexbox on the web but with fewer concepts to learn. Vizia determines the position and size of views based on a number of layout properties which can be configured. A detailed guide of the layout system can be found [here](../layout/layout.md).
 
 <!-- ### Layout Type
 The children of a view will be arranged into a stack. The `layout-type` property determines how children of a view will be arranged. There are two variants:

@@ -8,7 +8,7 @@ First we'll add some class names to our views, using the `class` style modifier,
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -23,7 +23,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 ```
 
@@ -65,7 +65,7 @@ Finally, we'll add the CSS file to the vizia application using the `.add_stylesh
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         // Add the stylesheet to the app
@@ -84,7 +84,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 ```
 

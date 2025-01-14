@@ -24,7 +24,7 @@ impl Model for AppData {
     }
 }
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         AppData {
@@ -41,6 +41,6 @@ fn main() {
         });
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```

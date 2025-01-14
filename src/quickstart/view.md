@@ -11,13 +11,13 @@ We can declare a `Label` view with the following code:
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         Label::new(cx, "Hello Vizia");
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 ```
 

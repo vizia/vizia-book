@@ -1,11 +1,11 @@
 # Multiple Windows
 
-While an application provides a default main window, additional windows can be created with the `Window` view:
+While an application provides a default main window, additional windows can be created with the [`Window`](https://docs.vizia.dev/vizia_winit/window/struct.Window.html) view:
 
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         // Main window content
 
@@ -13,7 +13,7 @@ fn main() {
             // Secondary window content
         });
     })
-    .run();
+    .run()
 }
 
 ```
@@ -35,4 +35,4 @@ Binding::new(cx, AppData::show_window, |cx, show_subwindow| {
 });
 ```
 
-Here we've used `on_close` window modifier to reset the app state when the window is closed by the user.
+Here we've used the [`on_close`](https://docs.vizia.dev/vizia_winit/window_modifiers/trait.WindowModifiers.html#tymethod.on_close) window modifier to reset the app state when the window is closed by the user.

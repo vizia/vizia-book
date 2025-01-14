@@ -7,7 +7,7 @@ For example, the `HStack` container view will arrange its contents into a horizo
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         HStack::new(cx, |cx|{
@@ -18,7 +18,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 ```
 

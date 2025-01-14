@@ -101,7 +101,7 @@ impl<'a> CounterModifiers for Handle<'a, Counter> {
     }
 }
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         cx.add_stylesheet(include_style!("src/style.css")).expect("Failed to load stylesheet");
@@ -130,7 +130,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 ```
 

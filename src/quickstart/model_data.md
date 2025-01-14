@@ -23,7 +23,7 @@ To use a model, an instance of the data must be built into the application with 
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         AppData { count: 0 }.build(cx); // Build the data into the app
 
@@ -40,7 +40,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 200))
-    .run();
+    .run()
 }
 
 ```

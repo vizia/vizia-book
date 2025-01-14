@@ -7,7 +7,7 @@ For example, we can bind to the locale and conditionally change the properties o
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx| {
         Binding::new(cx, Environment::locale, |cx, locale| {
             match locale.get(cx).to_string().as_ref() {
@@ -23,7 +23,7 @@ fn main() {
             }
         });
     })
-    .run();
+    .run()
 }
 ```
 
@@ -38,7 +38,7 @@ For example, we can toggle between two locales with a pair of checkboxes:
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx| {
         cx.emit(EnvironmentEvent::SetLocale("en-US".parse().unwrap()));
 
@@ -80,7 +80,7 @@ fn main() {
             }
         });
     })
-    .run();
+    .run()
 }
 ```
 

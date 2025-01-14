@@ -17,7 +17,7 @@ pub struct NestedData {
 Provided that both the parent and nested structures derive the `Lens` trait, we can use the `then()` lens modifier to produce a lens which targets the nested data:
 
 ```rs
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         AppData {
@@ -29,14 +29,14 @@ fn main() {
         Label::new(cx, AppData::nested.then(NestedData::name));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```
 
 If the nested data structure does not derive `Lens`, then the `map_ref()` modifier can be used:
 
 ```rs
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         AppData {
@@ -48,7 +48,7 @@ fn main() {
         Label::new(cx, AppData::nested.map_ref(|nested| &nested.name));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```
 

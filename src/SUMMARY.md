@@ -22,35 +22,38 @@
 - [Making the application accessible](quickstart/accessibility.md)
 - [The final code](quickstart/final_code.md)
 
-<!-- # Application and Windows
-- [Application](basic/application/application.md)
-- [Windows](basic/application/window.md)
-- [Window Modifiers](basic/application/window_modifiers.md) -->
+# Application and Windows
+- [Application](application/application.md)
+- [Multiple windows](application/multiple_windows.md)
+- [Window modifiers](application/window_modifiers.md)
 
 <!-- # Managing Resources
-- [Fonts](basic/resources/fonts.md)
-- [Icons](basic/resources/icons.md)
-- [Images](basic/resources/images.md)
-- [Translations](basic/resources/translations.md)
-- [Stylesheets](basic/resources/stylesheets.md) -->
+- [Fonts](resources/fonts.md)
+- [Icons](resources/icons.md)
+- [Images](resources/images.md)
+- [Translations](resources/translations.md)
+- [Stylesheets](resources/stylesheets.md) -->
 
-<!-- # Application Data
-- [Models](basic/models/models.md)
-- [Environment](basic/models/environment.md) -->
 
-<!-- # Adding Views
-- [Views](basic/views/views.md)
-- [Modifiers](basic/views/modifiers.md) -->
+
+# Views and Modifiers
+- [Views](views/views.md)
+- [Modifiers](views/modifiers.md)
+- [Custom modifiers](views/custom_modifiers.md)
+
+# Models
+- [Models](models/models.md)
+- [Environment](models/environment.md)
 
 # Lenses and Binding
 - [Binding](binding/binding.md)
-- [The Data trait](binding/data.md)
+- [The `Data` trait](binding/data.md)
 - [Mapping lenses](binding/lens_map.md)
 - [Conditional views](binding/conditional_views.md)
 - [Binding nested data](binding/nested_data.md)
 
-<!-- # Events
-- [Events](events/events.md) -->
+# Events
+- [Events](events/events.md)
 
 # Styling
 - [Stylesheets](styling/styling.md)
@@ -86,14 +89,14 @@
 - [Custom Drawing]() -->
 
 <!-- # Localization
-- [Localization](basic/localization/localization.md)
-- [Setting the locale](basic/localization/locale.md)
-- [Translating text](basic/localization/translation.md)
-- [Localizing views](basic/localization/localizing_views.md) -->
+- [Localization](localization/localization.md)
+- [Setting the locale](localization/locale.md)
+- [Translating text](localization/translation.md)
+- [Localizing views](localization/localizing_views.md) -->
 
 <!-- # Accessibility -->
 
 
 <!-- # Bundling
-- [Decreasing Binary Size](basic/bundling/binary_size.md)
-- [Removing the shell on Windows](basic/bundling/windows_shell.md) -->
+- [Decreasing Binary Size](bundling/binary_size.md)
+- [Removing the shell on Windows](bundling/windows_shell.md) -->

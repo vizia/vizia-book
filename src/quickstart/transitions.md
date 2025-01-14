@@ -24,7 +24,7 @@ const STYLE: &str = r#"
     }
 "#;
 
-fn main () {
+fn main () -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         cx.add_stylesheet(STYLE);
@@ -33,7 +33,7 @@ fn main () {
             .class("my_view")
             .size(Pixels(200.0));
     })
-    .run();
+    .run()
 }
 
 ```

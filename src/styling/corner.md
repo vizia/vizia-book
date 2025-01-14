@@ -2,7 +2,7 @@
 
 ## Corner Radius
 
-The `corner-radius` property rounds the corners of a view's outer border edge. You can set a single radius to make circular corners.
+The [`corner-radius`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_radius) property rounds the corners of a view's outer border edge. You can set a single radius to make circular corners.
 
 ```css
 /* Radius is set for all 4 sides */
@@ -18,7 +18,7 @@ corner-radius: 2px 4px 2px;
 corner-radius: 1px 0 3px 4px;
 ```
 
-Individual corner radii can be set using the `corner-top-left-radius`, `corner-top-right-radius`, `corner-bottom-left-radius`, and `corner-bottom-right-radius` properties.
+Individual corner radii can be set using the [`corner-top-left-radius`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_top_left_radius), [`corner-top-right-radius`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_top_right_radius), [`corner-bottom-left-radius`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_bottom_left_radius), and [`corner-bottom-right-radius`](https://docs.vizia.dev/vizia/modifiers/trait.StyleModifiers.html#method.corner_bottom_right_radius) properties.
 
 A circular shape can be achieved by setting the corner radius to 50%:
 

@@ -7,11 +7,11 @@ Add the following code to the `main.rs` file, replacing the hello world code tha
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         // Content goes here
     })
-    .run();    
+    .run()    
 }
 ```
 The `run()` method on the `Application` causes the program to enter the event loop and for the main window to display.

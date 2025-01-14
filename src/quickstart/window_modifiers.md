@@ -8,13 +8,13 @@ For example, the `title()` and `inner_size()` window modifiers can be used to se
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 ```
 

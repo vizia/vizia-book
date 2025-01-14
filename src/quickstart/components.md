@@ -189,7 +189,7 @@ To recap, now when the user presses on one of the buttons, the button will emit 
 Finally, we can use our custom view in the application:
 
 ```rust
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
 
         cx.add_stylesheet(include_style!("src/style.css"))
@@ -203,7 +203,7 @@ fn main() {
     })
     .title("Counter")
     .inner_size((400, 150))
-    .run();
+    .run()
 }
 
 ```

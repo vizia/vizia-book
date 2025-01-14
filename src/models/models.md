@@ -22,7 +22,7 @@ A model definition can be built into the view tree with the `build()` method:
 ```rust
 use vizia::prelude::*;
 
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         Person {
             name: String::from("John Doe"),
@@ -33,7 +33,8 @@ fn main() {
             Label::new(cx, "Hello");
             Label::new(cx, "World");
         });
-    });
+    })
+    .run();
 }
 
 ```

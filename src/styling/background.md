@@ -93,7 +93,5 @@ background-position: 1cm 2cm;
 background-position: 10ch 8em;
 
 /* Multiple images */
-background-position:
-  0 0,
-  center;
+background-position: 0 0, center;
 ```

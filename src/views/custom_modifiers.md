@@ -13,7 +13,7 @@ Next, we can implement the custom modifiers for all views like so:
 ```rust
 impl<'a, V: View> CustomModifiers for Handle<'a, V> {
     fn title(self) -> Self {
-        self.font_size(24.0).font_weight(FontWeight::Bold)
+        self.font_size(24.0).font_weight(FontWeightKeyword::Bold)
     }
 }
 ```
@@ -33,3 +33,5 @@ As long as `CustomModifiers` is imported we can then use the custom `title()` mo
 ```rust
 Label::new("Some Kind of Title").title();
 ```
+
+![A label with a custom modifier](./img/custom_modifiers.png)
