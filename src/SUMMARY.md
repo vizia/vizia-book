@@ -43,40 +43,40 @@
 - [Modifiers](basic/views/modifiers.md) -->
 
 # Lenses and Binding
-- [Binding](basic/binding/binding.md)
-- [The Data trait](basic/binding/data.md)
-- [Mapping lenses](basic/binding/lens_map.md)
-- [Conditional views](basic/binding/conditional_views.md)
-- [Binding nested data](basic/binding/nested_data.md)
+- [Binding](binding/binding.md)
+- [The Data trait](binding/data.md)
+- [Mapping lenses](binding/lens_map.md)
+- [Conditional views](binding/conditional_views.md)
+- [Binding nested data](binding/nested_data.md)
 
 <!-- # Events
-- [Events](basic/events/events.md) -->
+- [Events](events/events.md) -->
 
-<!-- # Styling
-- [Stylesheets](basic/styling/styling.md)
-- [Selectors](basic/styling/selectors.md)
-- [Properties](basic/styling/style_properties.md)
-- [Transitions](basic/styling/transitions.md)
-- [Layer](basic/styling/layer.md)
-- [Background](basic/styling/background.md)
-- [Border](basic/styling/border.md)
-- [Corners](basic/styling/corner.md)
-- [Effects](basic/styling/effects.md)
-- [Outline](basic/styling/outline.md)
-- [Text](basic/styling/text.md)
-- [Transform](basic/styling/transform.md)
-- [Other](basic/styling/other.md) -->
+# Styling
+- [Stylesheets](styling/styling.md)
+- [Selectors](styling/selectors.md)
+- [Properties](styling/style_properties.md)
+- [Transitions](styling/transitions.md)
+- [Layer](styling/layer.md)
+- [Background](styling/background.md)
+- [Border](styling/border.md)
+- [Corners](styling/corner.md)
+- [Effects](styling/effects.md)
+- [Outline](styling/outline.md)
+- [Text](styling/text.md)
+- [Transform](styling/transform.md)
+- [Other](styling/other.md)
 
 # Layout
-- [Layout](basic/layout/layout.md)
-- [Size](basic/layout/size.md)
-- [Layout Type](basic/layout/layout_type.md)
-- [Alignment](basic/layout/alignment.md)
-- [Padding](basic/layout/padding.md)
-- [Gap](basic/layout/gap.md)
-- [Position Type](basic/layout/position_type.md)
-- [Spacing](basic/layout/spacing.md)
-- [Constraints](basic/layout/constraints.md)
+- [Layout](layout/layout.md)
+- [Size](layout/size.md)
+- [Layout Type](layout/layout_type.md)
+- [Alignment](layout/alignment.md)
+- [Padding](layout/padding.md)
+- [Gap](layout/gap.md)
+- [Position Type](layout/position_type.md)
+- [Spacing](layout/spacing.md)
+- [Constraints](layout/constraints.md)
 
 
 
