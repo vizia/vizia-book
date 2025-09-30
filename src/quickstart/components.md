@@ -197,7 +197,7 @@ fn main() -> Result<(), ApplicationError> {
 
         AppData { count: 0 }.build(cx);
 
-        Counter::new(cx, AppData::lens)
+        Counter::new(cx, AppData::count)
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
@@ -208,7 +208,7 @@ fn main() -> Result<(), ApplicationError> {
 
 ```
 
-We pass it the `AppData::lens`, but the custom view can accept any lens to an `i32` value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit `AppEvent` events to mutate the model data. 
+We pass it the `AppData::count`, but the custom view can accept any lens to an `i32` value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit `AppEvent` events to mutate the model data. 
 
 When we run our app now it will seem like nothing has changed. However, now that our counter is a component, we could easily add multiple counters all bound to the same data (or different data):
 
