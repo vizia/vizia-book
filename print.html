@@ -781,19 +781,13 @@ instance that was created earlier:</p>
     Increment,
 }</code></pre>
 <p>We can then use this internal event with the buttons:</p>
-<pre><code class="language-rust">Button::new(
-    cx, 
-    |ex| ex.emit(CounterEvent::Decrement), 
-    |cx| Label::new(cx, "Decrement")
-)
-.class("dec");
+<pre><code class="language-rust">Button::new(cx, |cx| Label::new(cx, "Decrement"))
+    .on_press(|ex| ex.emit(CounterEvent::Decrement))
+    .class("dec");
 
-Button::new(
-    cx, 
-    |ex| ex.emit(CounterEvent::Increment), 
-    |cx| Label::new(cx, "Increment")
-)
-.class("inc");</code></pre>
+Button::new(cx, |cx| Label::new(cx, "Increment"))
+    .on_press(|ex| ex.emit(CounterEvent::Increment))
+    .class("inc");</code></pre>
 <p>Finally, we respond to these events in the <code>event()</code> method of the <code>View</code> trait for the <code>Counter</code>, calling the appropriate callback:</p>
 <pre><code class="language-rust">impl View for Counter {
     fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
@@ -1382,7 +1376,7 @@ fn main() -&gt; Result&lt;(), ApplicationError&gt; {
     Application::new(|cx|{
         Label::new(cx, Person::name);
     })
-    .run()    
+    .run()
 }</code></pre>
 <p>When the <code>name</code> field changes, the text of the label updates to show the new value.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-data-trait"><a class="header" href="#the-data-trait">The Data Trait</a></h1>
@@ -2340,10 +2334,10 @@ pointer-events: none;
     .padding(Pixels(20.0));</code></pre>
 <p>Or in CSS:</p>
 <pre><code class="language-css">.hello_label {
-    padding_left: 5px;
-    padding_top: 10px;
-    padding_right: 15px;
-    padding_bottom: 20px;
+    padding-left: 5px;
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-bottom: 20px;
 }
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="gap"><a class="header" href="#gap">Gap</a></h1>

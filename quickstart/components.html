@@ -306,19 +306,13 @@ instance that was created earlier:</p>
     Increment,
 }</code></pre>
 <p>We can then use this internal event with the buttons:</p>
-<pre><code class="language-rust">Button::new(
-    cx, 
-    |ex| ex.emit(CounterEvent::Decrement), 
-    |cx| Label::new(cx, "Decrement")
-)
-.class("dec");
+<pre><code class="language-rust">Button::new(cx, |cx| Label::new(cx, "Decrement"))
+    .on_press(|ex| ex.emit(CounterEvent::Decrement))
+    .class("dec");
 
-Button::new(
-    cx, 
-    |ex| ex.emit(CounterEvent::Increment), 
-    |cx| Label::new(cx, "Increment")
-)
-.class("inc");</code></pre>
+Button::new(cx, |cx| Label::new(cx, "Increment"))
+    .on_press(|ex| ex.emit(CounterEvent::Increment))
+    .class("inc");</code></pre>
 <p>Finally, we respond to these events in the <code>event()</code> method of the <code>View</code> trait for the <code>Counter</code>, calling the appropriate callback:</p>
 <pre><code class="language-rust">impl View for Counter {
     fn event(&amp;mut self, cx: &amp;mut EventContext, event: &amp;mut Event) {
