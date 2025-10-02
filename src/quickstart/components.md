@@ -108,6 +108,37 @@ pub struct Counter {
 
 These boxed function pointers provide the callbacks that will be called when the increment and decrement buttons are pressed. 
 
+Before moving on, we need to assign initial field values to the Counter 
+instance that was created earlier:
+
+```rust
+impl Counter {
+    pub fn new<L>(cx: &mut Context, lens: L) -> Handle<Self> 
+    where
+        L: Lens<Target = i32>,
+    {
+        Self {
+            on_decrement: None,
+            on_increment: None,
+        }.build(cx, |cx|{
+            HStack::new(cx, |cx|{
+                Button::new(cx, |cx| Label::new(cx, "Decrement"))
+                    .on_press(|ex| ex.emit(AppEvent::Decrement))
+                    .class("dec");
+
+                Button::new(cx, |cx| Label::new(cx, "Increment"))
+                    .on_press(|ex| ex.emit(AppEvent::Increment))
+                    .class("inc");
+                
+                Label::new(cx, lens)
+                    .class("count");
+            })
+            .class("row");
+        })
+    }
+}
+```
+
 ### Custom modifiers
 
 Next we'll need to add some custom modifiers so the user can configure these callbacks. To do this we can define a trait and implement it on `Handle<'_, Counter>`:
@@ -197,7 +228,7 @@ fn main() -> Result<(), ApplicationError> {
 
         AppData { count: 0 }.build(cx);
 
-        Counter::new(cx, AppData::lens)
+        Counter::new(cx, AppData::count)
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
@@ -208,7 +239,7 @@ fn main() -> Result<(), ApplicationError> {
 
 ```
 
-We pass it the `AppData::lens`, but the custom view can accept any lens to an `i32` value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit `AppEvent` events to mutate the model data. 
+We pass it the `AppData::count`, but the custom view can accept any lens to an `i32` value. We also provide it with callbacks that should trigger when the increment and decrement buttons are pressed. In this case the callbacks will emit `AppEvent` events to mutate the model data. 
 
 When we run our app now it will seem like nothing has changed. However, now that our counter is a component, we could easily add multiple counters all bound to the same data (or different data):
 
