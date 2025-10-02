@@ -26,6 +26,8 @@
 - [Application](application/application.md)
 - [Multiple windows](application/multiple_windows.md)
 - [Window modifiers](application/window_modifiers.md)
+<!-- - [Querying window properties](application/window_properties.md) -->
+
 
 <!-- # Managing Resources
 - [Fonts](resources/fonts.md)

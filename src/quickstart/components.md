@@ -177,19 +177,13 @@ pub enum CounterEvent {
 
 We can then use this internal event with the buttons:
 ```rust
-Button::new(
-    cx, 
-    |ex| ex.emit(CounterEvent::Decrement), 
-    |cx| Label::new(cx, "Decrement")
-)
-.class("dec");
+Button::new(cx, |cx| Label::new(cx, "Decrement"))
+    .on_press(|ex| ex.emit(CounterEvent::Decrement))
+    .class("dec");
 
-Button::new(
-    cx, 
-    |ex| ex.emit(CounterEvent::Increment), 
-    |cx| Label::new(cx, "Increment")
-)
-.class("inc");
+Button::new(cx, |cx| Label::new(cx, "Increment"))
+    .on_press(|ex| ex.emit(CounterEvent::Increment))
+    .class("inc");
 ```
 
 Finally, we respond to these events in the `event()` method of the `View` trait for the `Counter`, calling the appropriate callback:

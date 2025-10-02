@@ -29,9 +29,9 @@ Or in CSS:
 
 ```css
 .hello_label {
-    padding_left: 5px;
-    padding_top: 10px;
-    padding_right: 15px;
-    padding_bottom: 20px;
+    padding-left: 5px;
+    padding-top: 10px;
+    padding-right: 15px;
+    padding-bottom: 20px;
 }
 ```

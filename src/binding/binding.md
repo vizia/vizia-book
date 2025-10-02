@@ -54,7 +54,7 @@ fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
         Label::new(cx, Person::name);
     })
-    .run()    
+    .run()
 }
 ```
 When the `name` field changes, the text of the label updates to show the new value.
