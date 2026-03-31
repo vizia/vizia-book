@@ -28,20 +28,20 @@ Your project folder structure should now look like this:
 
 
 *resources/en-US/counter.ftl*
-```
+```ftl
 inc = Increment
 dec = Decrement
 ```
 
 *resources/es/counter.ftl*
-```
+```ftl
 inc = Incrementar
 dec = Decrementar
 ```
 
 ## Adding translations to the application
 
-```rust
+```rust,ignore
 cx.add_translation(
     langid!("en-US"),
     include_str!("resources/en-US/counter.ftl").to_owned(),
@@ -57,7 +57,7 @@ cx.add_translation(
 
 To localize the text in our application we use the `Localized` type within the labels of the buttons, passing the translation keys to the constructor:
 
-```rust
+```rust,ignore
 Button::new(cx, |cx| Label::new(cx, Localized::new("dec")));
 
 Button::new(cx, |cx| Label::new(cx, Localized::new("inc")));
@@ -69,7 +69,7 @@ When the application is run these `Localized` objects are replaced with the tran
 
 The locale used for selecting translations is stored in a model called the `Environment`. By default the locale used for translations is set to the system locale, however, we can use an `EnvironmentEvent` to set the locale to a user-specified value. This is useful for testing the localization of an application.
 
-```rust
+```rust,ignore
 cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 ```
 

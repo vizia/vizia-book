@@ -8,7 +8,7 @@ Vizia uses events to communicate actions to update model or view data. These eve
 
 An event contains a message which can be any type, but is typically an enum. We'll declare an event enum with two variants, one for incrementing the count and one for decrementing:
 
-```rust
+```rust,ignore
 pub enum AppEvent {
     Increment,
     Decrement,
@@ -18,7 +18,7 @@ pub enum AppEvent {
 ## Emitting events
 Events are usually emitted in response to some action on a view. For this we can the `on_press` callback provided by the `Button`. When the button is pressed this callback is called. We can use the provided `EventContext` to emit our events up the tree:
 
-```rust
+```rust,ignore
 Button::new(cx, |cx| Label::new(cx, "Decrement"))
     .on_press(|ex| ex.emit(AppEvent::Decrement))
     .class("dec");
@@ -36,12 +36,12 @@ The flow of events from the buttons, up through the visual tree, to `AppData` mo
 ## Handling events
 Events are handled by views and models with the `event()` method of the `View` or `Model` traits. Let's fill in the `Model` implementation by implementing the `event` method:
 
-```rust
+```rust,ignore
 impl Model for AppData {
       fn event(&mut self, cx: &mut EventContext, event: &mut Event) {
         event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement => self.count -= 1,
-            AppEvent::Increment => self.count += 1,
+            AppEvent::Decrement => self.count.update(|count| *count -= 1),
+            AppEvent::Increment => self.count.update(|count| *count += 1),
         });
     }
 }

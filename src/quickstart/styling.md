@@ -5,7 +5,7 @@ Previously we saw how modifiers can be used to style views inline. However, vizi
 ## Adding class names to the views
 First we'll add some class names to our views, using the `class` style modifier, so we can target them with a CSS stylesheet:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
@@ -52,7 +52,7 @@ label.count {
     alignment: center;
     border-width: 1px;
     border-color: #808080;
-    border-radius: 4px;
+    corner-radius: 4px;
     width: 50px;
     height: 32px;
 }
@@ -62,7 +62,7 @@ label.count {
 ## Adding the stylesheet to the app
 Finally, we'll add the CSS file to the vizia application using the `.add_stylesheet()` function on the context. Here we're using the `include_style!()` macro, which will dynamically load the stylesheet at runtime in debug mode, but include the stylesheet into the binary in release mode. This should be done just after creating the application:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

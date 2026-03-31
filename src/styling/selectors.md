@@ -21,7 +21,7 @@ The first part before the opening brace is called a [selector](#selectors), whic
 | Selector         | Description                                                       |
 |------------------|-------------------------------------------------------------------|
 | type      | Selects all views that have the given element name, e.g. `button` will select all `Button` views.                |
-| class     | Sselects all views that have the given class name prefixed with a period, e.g. `.class-name` will match any view that has `class("class-name")`. A class name can be added to a view with the `class` style modifier. The `toggle_class` modifier can be used to conditionally add/remove a class from a view, typically with the use of a lens to a boolean.        |
+| class     | Selects all views that have the given class name prefixed with a period, e.g. `.class-name` will match any view that has `class("class-name")`. A class name can be added to a view with the `class` style modifier. The `toggle_class` modifier can be used to conditionally add/remove a class from a view, typically with the use of a signal bound to a boolean.        |
 | ID        | Selects views with the specified ID name, prefixed with a hash, e.g. `#id-name` will match the view that has `id("id-name")`.  An ID name can be added to a view with the `id` style modifier and must be a unique name.       |
 | universal | The universal selector, denoted with an asterisk, selects all views.        |
 

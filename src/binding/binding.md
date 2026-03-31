@@ -2,59 +2,73 @@
 
 Data binding is the concept of linking model data to views, so that when the model data is changed, the views observing this data update automatically in response. Therefore, it is data binding which provides the mechanism for reactivity in Vizia.
 
-In Vizia, data binding is achieved through the use of lenses. A lens is an object which allows you to *select* some part of a model and inspect its value. These lens objects are then used to form a binding between views and these parts of the model, updating when only these specific parts have changed.
+In Vizia, data binding is achieved through signals. A signal is a piece of reactive state. Signals can be stored directly in models and passed to views and modifiers to create bindings.
 
-## Lenses
+## Signals
 
-The `Lens` derive macro can be used to generate a lens for each field of a struct. These lenses can then be used to transform a reference to the struct into a reference to each of its fields. The generated lenses are given the same name as the field and placed in a module with the same name as the struct. For example, given the following definition of some model data:
+For example, given the following model data:
 
-```rust
-#[derive(Lens)]
+```rust,ignore
 pub struct AppData {
-    color: Color,
+    color: Signal<Color>,
 }
 
 impl Model for AppData {}
 ```
 
-A lens to the `color` field of the `AppData` struct is generated as `AppData::color`. 
+When `color` changes, any view or modifier bound to it updates automatically.
 
 ## Property Binding
 
-We can then use this lens with the `background_color` modifier of a view to set up a binding, so that when the data changes the background color is updated. Passing lenses to modifiers is known as *property binding*.
+We can use this signal with the `background_color` modifier of a view to set up a binding, so that when the data changes the background color is updated. Passing signals to modifiers is known as property binding.
 
-```rust
-#[derive(Lens)]
+```rust,ignore
 pub struct AppData {
-    color: Color,
+    color: Signal<Color>,
 }
 
 impl Model for AppData {}
 
 fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
-        Label::new(cx, "Hello Vizia").background_color(AppData::color);
+
+        let color = Signal::new(Color::red());
+
+        AppData { color }.build(cx);
+
+        Label::new(cx, "Hello Vizia").background_color(color);
     }).run()
 }
 ```
 
 ## View Binding 
 
-Some views accept a lens as an input. When provided a lens, the view sets up a binding to the data. For example, the `Label` view accepts a lens to any type which implements `ToString`:
+Some views accept a signal as an input. When provided a signal, the view sets up a binding to the data. For example, `Label` accepts a signal to any type which implements `ToString`:
 
-```rust
-#[derive(Lens)]
+```rust,ignore
 pub struct Person {
-    pub name: String,
+    pub name: Signal<String>,
 }
 
 impl Model for Person {}
 
 fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
-        Label::new(cx, Person::name);
+        let name = Signal::new(String::from("Jeff"));
+
+        Person { name }.build(cx);
+
+        Label::new(cx, name);
     })
     .run()
 }
 ```
+
 When the `name` field changes, the text of the label updates to show the new value.
+
+## See also
+
+- [Signals](./signals.md)
+- [Reading Signals](./reading_signals.md)
+- [Writing Signals](./writing_signals.md)
+- [Conditional views](./conditional_views.md)

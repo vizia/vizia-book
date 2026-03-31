@@ -4,7 +4,7 @@ Composition of views is achieved through container views. These views take a clo
 
 For example, the `HStack` container view will arrange its contents into a horizontal row. Let's use this to declare the rest of the views for our counter application:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

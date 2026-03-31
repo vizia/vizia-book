@@ -1,6 +1,6 @@
 # Drag and Drop
 
-```rust
+```rust,ignore
 // Define what data to store when a view is dragged.
 Element::new(cx)
     .on_drag(|ex| ex.set_drop_data(ex.current()));

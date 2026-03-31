@@ -1,108 +1,92 @@
 # Events
 
-Events are used to communicate actions to update model or view data. 
+Events communicate actions through the tree. A common pattern is:
 
-Events propagate through the tree from origin to target, typically from the view which emits the event, up through the ancestors of the view, to the main window and through any models on the way.
+1. A view emits an event in response to user input.
+2. A model handles the event.
+3. The model updates signals.
+4. Bound views react automatically.
 
+## Declaring event messages
 
-## Declaring Events
+An event message can be any type, but enums are typically the clearest choice.
 
-An event contains a message which can be any type, but is typically an enum:
-
-```rust
-use vizia::prelude::*;
-
-pub struct AppData {
-    name: String,
-}
-
-pub enum PersonEvent {
+```rust,ignore
+pub enum AppEvent {
     UpdateName(String),
 }
 ```
 
-## Emitting Events
-Events are usually emitted in response to some action on a view. For example, a button takes an action and a view to display. When the button is pressed the action is triggered, emitting an event up the tree.
-```rust
+## Emitting events from views
+
+Use `cx.emit(...)` to send an event upward from the current entity.
+
+```rust,ignore
 use vizia::prelude::*;
+
+pub struct AppData {
+    name: Signal<String>,
+}
+
+impl Model for AppData {}
 
 pub enum AppEvent {
     UpdateName(String),
 }
 
-#[derive(Lens)]
-pub struct AppData {
-    pub name: String,
-}
-
-impl Model for Person {}
-
-fn main() {
+fn main() -> Result<(), ApplicationError> {
     Application::new(|cx| {
-        AppData { 
-            name: String::from("John Doe"),
-        }.build(cx);
+        let name = Signal::new(String::from("John Doe"));
 
-        Label::new(cx, Person::name);
-        
-        Button::new(
-            cx,
-            |cx| cx.emit(AppEvent::UpdateName(String::from("Rob Doe"))),
-            |cx| Label::new(cx, "Update"),
-        );
+        AppData { name }.build(cx);
+
+        Label::new(cx, name);
+
+        Button::new(cx, |cx| Label::new(cx, "Rename"))
+            .on_press(|cx| cx.emit(AppEvent::UpdateName(String::from("Rob Doe"))));
     })
     .inner_size((400, 100))
-    .run();
+    .run()
 }
 ```
 
-## Handling Events
-Events are handled by views and models with the `event()` method of the `View` or `Model` traits.
+## Handling events in models
 
-```rust
+Models (and views) handle events in `event(&mut self, cx, event)`.
+
+```rust,ignore
 use vizia::prelude::*;
+
+pub struct AppData {
+    name: Signal<String>,
+}
 
 pub enum AppEvent {
     UpdateName(String),
 }
 
-#[derive(Lens)]
-pub struct AppData {
-    pub name: String,
-}
-
-impl Model for Person {
-    fn event(cx: &mut Context, event: &mut Event) {
-        event.map(|app_event, meta| match app_event {
+impl Model for AppData {
+    fn event(&mut self, _cx: &mut EventContext, event: &mut Event) {
+        event.map(|app_event, _meta| match app_event {
             AppEvent::UpdateName(new_name) => {
-                self.name = new_name.clone();
+                self.name.set(new_name.clone());
             }
         });
     }
 }
 ```
-Calling `map()` on an event attempts to cast the event message to the specified type and calls the provided closure if it succeeds.
 
-> Note that in the above  example the rust compiler is able to infer the message type from the match statement. 
+`event.map(...)` attempts to downcast the event message to the requested type and runs the closure only when it matches.
 
-The closure provides the message type and an `EventMeta`, which can be used to query the origin and target views of the event, or to consume the event to prevent it propagating further, for example:
+## Stopping propagation
 
-```rust
-event.map(|person_event, meta| match person_event {
+Call `meta.consume()` to stop an event from continuing further along its propagation path.
+
+```rust,ignore
+event.map(|app_event, meta| match app_event {
     AppEvent::UpdateName(new_name) => {
-        self.name = new_name.clone();
-
-        // Consume the event to stop it propagating
+        self.name.set(new_name.clone());
         meta.consume();
     }
 });
 ```
-
-## Event Propagation
-Events propagate through the view tree according to their specified `Propagation`. Using `cx.emit()` will produce an event which propagates **up** the tree from ancestor to ancestor.
-
-To send an event directly to another view, there is `cx.emit_to(message, target)`, which takes a message as well as a target id.
-
-
-<!-- Events propagate through the view tree, and how an event propagates is specific to the event type. However, usually a platform event will propagate down the tree to the target view or model, and a user event will propagate up the tree to the target view or model. -->
-

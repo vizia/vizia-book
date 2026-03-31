@@ -4,13 +4,13 @@ The `Environment` is a built-in model used to specify system specific applicatio
 
 For example, we can bind to the locale and conditionally change the properties of a view depending on the selected language:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
     Application::new(|cx| {
-        Binding::new(cx, Environment::locale, |cx, locale| {
-            match locale.get(cx).to_string().as_ref() {
+        Binding::new(cx, Environment::locale, |cx| {
+            match Environment::locale.get(cx).to_string().as_ref() {
                 "en-US" => {
                     Element::new(cx).background_color(Color::from("#006847"));
                 }
@@ -35,7 +35,7 @@ By default the environment will use values specified by the system, such as the 
 
 For example, we can toggle between two locales with a pair of checkboxes:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
@@ -57,17 +57,17 @@ fn main() -> Result<(), ApplicationError> {
                 .on_toggle(|cx| {
                     cx.emit(EnvironmentEvent::SetLocale("fr".parse().unwrap()))
                 });
+            Label::new(cx, "French")
                 .left(Pixels(10.0));
-            Label::new(cx, "French");
         })
         .space(Pixels(10.0))
-        .child_top(Stretch(1.0))
-        .child_bottom(Stretch(1.0))
-        .col_between(Pixels(5.0))
+        .top(Stretch(1.0))
+        .bottom(Stretch(1.0))
+        .gap(Pixels(5.0))
         .height(Auto);
 
-        Binding::new(cx, Environment::locale, |cx, locale| {
-            match locale.get(cx).to_string().as_ref() {
+        Binding::new(cx, Environment::locale, |cx| {
+            match Environment::locale.get(cx).to_string().as_ref() {
                 "en-US" => {
                     Element::new(cx).background_color(Color::from("#006847"));
                 }

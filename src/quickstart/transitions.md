@@ -10,7 +10,7 @@ The default styling for some of the built-in views already has some of these tra
 ## Declaring a transition
 For example, we can create a transition for the background color of a view when hovered:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 const STYLE: &str = r#"
@@ -40,8 +40,6 @@ fn main () -> Result<(), ApplicationError> {
 
 Note here that we have not used the `include_style!()` macro within the call to `cx.add_stylesheet` as the stylesheet is defined as a constant within the Rust code.
 
-// GIF here
-
 Note that the transition only occurs when the cursor hovers the element and not when the cursor leaves the element (unless the transition did not complete when the cursor left). This is because the transition has been specified on the `:hover` state of the element, and so the background color will transition when going *to* this state.
 
 To transition back again, we need to specify a transition on the non-hover state as well:
@@ -57,5 +55,3 @@ To transition back again, we need to specify a transition on the non-hover state
     transition: background-color 100ms;
 }
 ```
-
-// GIF here

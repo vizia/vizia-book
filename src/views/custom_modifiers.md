@@ -1,37 +1,72 @@
-# Custom View Modifiers
+# Custom Modifiers
 
-To create a set of custom view modifiers, first declare a trait with the desired modifier functions. The modifier functions must take `self` by value and return `Self`.
+Custom modifiers extend the builder API for any view type. They are defined as extension traits on `Handle<'_, V>`.
 
-```rust
-pub trait CustomModifiers:  {
-    fn title(self) -> Self;
+## Defining a generic modifier
+
+To add a modifier that works on any view, define a trait with a blanket implementation on `Handle`:
+
+```rust,ignore
+use vizia::prelude::*;
+
+pub trait CardModifiers: Sized {
+    fn card_style(self) -> Self;
 }
-```
 
-Next, we can implement the custom modifiers for all views like so:
-
-```rust
-impl<'a, V: View> CustomModifiers for Handle<'a, V> {
-    fn title(self) -> Self {
-        self.font_size(24.0).font_weight(FontWeightKeyword::Bold)
+impl<'a, V: View> CardModifiers for Handle<'a, V> {
+    fn card_style(self) -> Self {
+        self.background_color(Color::white())
+            .border_width(Pixels(1.0))
+            .border_color(Color::from("#e0e0e0"))
+            .corner_radius(Pixels(8.0))
+            .padding(Pixels(12.0))
     }
 }
 ```
 
-Sometimes it may be more appropriate to implement the custom modifiers for specific views. For example, we can implement the custom modifiers just the `Label` view like so:
+This modifier is now available on any `Handle`:
 
-```rust
-impl<'a> CustomModifiers for Handle<'a, Label> {
-    fn title(self) -> Self {
-        self.font_size(24.0).font_weight(FontWeightKeyword::Bold)
+```rust,ignore
+VStack::new(cx, |cx| {
+    Label::new(cx, "Hello");
+}).card_style();
+```
+
+## Defining a view-specific modifier
+
+Restrict a modifier to a single view type by implementing the trait only for `Handle<'_, MyView>`:
+
+```rust,ignore
+pub trait SliderLabeled {
+    fn labeled(self, text: impl Into<String>) -> Self;
+}
+
+impl<'a> SliderLabeled for Handle<'a, Slider> {
+    fn labeled(self, text: impl Into<String>) -> Self {
+        self.tooltip(|cx| {
+            Label::new(cx, text.into());
+        })
     }
 }
 ```
 
-As long as `CustomModifiers` is imported we can then use the custom `title()` modifier like any other modifier on a label:
+## Reactive modifier parameters
 
-```rust
-Label::new("Some Kind of Title").title();
+Use `impl Res<T>` for parameters that can accept either a static value or a signal:
+
+```rust,ignore
+pub trait HighlightModifier: Sized {
+    fn highlighted(self, value: impl Res<bool>) -> Self;
+}
+
+impl<'a, V: View> HighlightModifier for Handle<'a, V> {
+    fn highlighted(self, value: impl Res<bool>) -> Self {
+        self.toggle_class("highlighted", value)
+    }
+}
 ```
 
-![A label with a custom modifier](./img/custom_modifiers.png)
+## See also
+
+- [Custom View Modifiers](../custom_views/custom_view_modifiers.md) — modifiers scoped to custom view types.
+- [Modifiers](./modifiers.md) — using built-in modifiers.

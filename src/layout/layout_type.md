@@ -8,7 +8,7 @@ The `layout-type` determines the direction which a parent will stack its childre
 
 The `layout-type` of a view can be specified using the respective layout modifier:
 
-```rust
+```rust,ignore
 VStack::new(cx, |cx|{
     Label::new(cx, "Hello");
     Label::new(cx, "World");

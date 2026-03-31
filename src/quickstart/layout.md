@@ -6,7 +6,7 @@ So far we have a horizontal row of buttons and a label, but they're positioned i
 
 By default the `HStack` view will stretch to fill its parent, in this case the window. We can center the contents of the `HStack` using the `alignment()` modifier and setting it to `Alignment::Center`. Then we can add horizontal space between the children using the `gap()` modifier:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
@@ -55,12 +55,12 @@ Spacing is specified with `Units`, which has four variants:
 - `Stretch(factor)` - Sets the spacing to a proportion of the free space of the parent within the same axis.
 - `Auto` - Sets the spacing to inherit the child spacing of the parent.
 
-### Child Space
-The `child space` property of a view can be used to apply space around its children by overriding the individual `Auto` spacing of the children and is also specified with `Units`. Child space can also be applied to individual sides of a view:
-- `child_left` - The space that should be applied between the left side of the view and its children with individual `Auto` `left` spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.
-- `child_right` - The space that should be applied between the right side of the view and its children with individual `Auto` `right` spacing. Applies to all children in a vertical stack and to the first child in a horizontal stack.
-- `child_top` - The space that should be applied between the top side of the view and its children with individual `Auto` `top` spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.
-- `child_bottom` - The space that should be applied between the bottom side of the view and its children with individual `Auto` `bottom` spacing. Applies to all children in a horizontal stack and to the first child in a vertical stack.
+### Padding and Gap
+The parent spacing properties are represented by `padding` and `gap`:
+- `padding` - The space between the edges of a view and its children.
+- `padding-left`, `padding-right`, `padding-top`, `padding-bottom` - Per-side padding values.
+- `gap` - The space between adjacent children.
+- `horizontal-gap`, `vertical-gap` - Per-axis gap values.
 
 ### Size
 The size of a view is determined by its `width` and `height` properties, which are also specified with `Units`:

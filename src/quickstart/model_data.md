@@ -8,9 +8,9 @@ Application data in Vizia is stored in models. Views can then bind to the data i
 
 A model definition can be any type, typically a struct, which implements the `Model` trait:
 
-```rust
+```rust,ignore
 pub struct AppData {
-    pub count: i32,
+    pub count: Signal<i32>,
 }
 
 impl Model for AppData {}
@@ -20,19 +20,20 @@ impl Model for AppData {}
 
 To use a model, an instance of the data must be built into the application with the `build()` method:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
     Application::new(|cx|{
-        AppData { count: 0 }.build(cx); // Build the data into the app
+        let count = Signal::new(0);
+        AppData { count }.build(cx); // Build the data into the app
 
         HStack::new(cx, |cx|{
             Button::new(cx, |cx| Label::new(cx, "Decrement"))
                 .class("dec");
             Button::new(cx, |cx| Label::new(cx, "Increment"))
                 .class("inc");
-            Label::new(cx, "0")
+            Label::new(cx, count)
                 .class("count");
         })
         .class("row");

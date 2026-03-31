@@ -1,53 +1,55 @@
 # Custom Views
 
-A custom view can be used to create re-usable components which can contain model data and react to events.
+A custom view is a reusable component built from a Rust type that implements `View`.
 
-For this section of the book, let's create a somewhat complex custom view, a rgb color picker.
+The standard pattern has three parts:
 
-To create the color picker view, first we'll declare a struct with the desired view name:
+1. Define a struct for view state.
+2. Add a `new(cx, ...) -> Handle<Self>` constructor.
+3. Implement `View` for the struct.
 
-```rust
-pub struct ColorPicker {
+## Minimal custom view
 
+```rust,ignore
+use vizia::prelude::*;
+
+pub struct ColorSwatch {
+    color: Color,
 }
-```
 
-This struct can contain any data which is required by an instance of the view. For now we will leave this empty and fill it in as we go.
+impl ColorSwatch {
+    pub fn new(cx: &mut Context, color: Color) -> Handle<Self> {
+        Self { color }.build(cx, |_cx| {})
+    }
+}
 
-Next we'll implement the `View` trait on our `ColorPicker` type:
-```rust
-impl View for ColorPicker {}
-```
-Again we will leave this empty for now.
-
-Next we'll write a `new` method so we can construct a `ColorPicker` view:
-
-```rust
-impl ColorPicker {
-    pub fn new(cx: &mut Context) -> Handle<Self> {
-        Self {
-
-        }.build(cx, |cx|{
-
-        })
+impl View for ColorSwatch {
+    fn element(&self) -> Option<&'static str> {
+        Some("color_swatch")
     }
 }
 ```
 
-Let's unpack what we just wrote. The `new` method takes a mutable reference to the `Context` and returns a `Handle`. The `Handle` type has a generic which we've specified as `Self` (this part will be explained in a later section).
+The `build` closure is where you compose child views (if any). The returned `Handle<Self>` lets callers apply modifiers.
 
-Within the `new` method we construct a new instance (with `Self{}`) and then call the `build` method on it, which comes from the `View` trait. The `build` method takes the mutable reference to the context, as well as a closure which provides that same context reference. For now we have left this closure empty.
+## Using a custom view
 
-This is all we need to be able to use our custom `ColorPicker` view in an application. We can assign style and layout properties to the view but it lacks any functionality and custom graphics that makes it an actual color picker.
-
-```rust
-use vizia::prelude::*;
-
-fn main() {
-    Application::new(|cx|{
-        ColorPicker::new(cx);
+```rust,ignore
+fn main() -> Result<(), ApplicationError> {
+    Application::new(|cx| {
+        ColorSwatch::new(cx, Color::red())
+            .size(Pixels(40.0))
+            .background_color(Color::red());
     })
-    .run();    
+    .run()
 }
 ```
+
+## What to put in the struct
+
+- Put immutable configuration values in the struct.
+- Use signals for reactive state.
+- Keep large state in models when shared across multiple views.
+
+Next: compose custom views from sub-views.
 

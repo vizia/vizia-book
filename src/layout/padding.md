@@ -8,7 +8,7 @@ The `padding` property, Shorthand for `padding-left`, `padding-top`, `padding-ri
 
 The `padding-left`, `padding-top`, `padding-right`, and `padding-bottom` of a view can be specified using the respective layout modifiers:
 
-```rust
+```rust,ignore
 Label::new(cx, "Hello World")
     .background_color(Color::gray())
     .padding_left(Pixels(5.0))
@@ -19,7 +19,7 @@ Label::new(cx, "Hello World")
 
 The `padding` modifier can also be used to set all four sides simultaneously:
 
-```rust
+```rust,ignore
 Label::new(cx, "Hello World")
     .background_color(Color::gray())
     .padding(Pixels(20.0));

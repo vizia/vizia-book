@@ -9,9 +9,11 @@ The following sections details the functioning of the layout system:
 - [Alignment](./alignment.md)
 - [Padding](./padding.md)
 - [Gap](./gap.md)
+- [Wrap](./wrap.md)
 - [Position Type](./position_type.md)
 - [Spacing](./spacing.md)
 - [Constraints](./constraints.md)
+- [Grid](./grid.md)
 
 ## Units
 
@@ -28,7 +30,7 @@ Not all variants may have an effect on a particular property. For example, the p
 
 The **pixels** variant allows space and size to be specified with a fixed number of logical pixels. The physical space or size is determined by the window scale factor:
 
-```
+```text
 physical_pixels = logical_pixels * scale_factor
 ```
 
@@ -36,7 +38,7 @@ physical_pixels = logical_pixels * scale_factor
 
 The **percentage** variant allows space and size to be specified as a fraction of the parent size: 
 
-```
+```text
 computed_value = percentage_value * parent_size / 100.0
 ```
 
@@ -60,31 +62,40 @@ This section provides a list of the currently supported style properties in vizi
 |------------------------------|----------------------|-------------------|-----------|------------|
 | `layout-type`                | `LayoutType`         | `column`          | No        | No         |
 | `position-type`              | `PositionType`       | `relative`        | No        | No         |
-| `gap`                        | shorthand            |                   |           |            |
-| `horizontal-gap`             | `Units`              | `auto`            | No        | Yes        |
-| `vertical-gap`               | `Units`              | `auto`            | No        | Yes        |
-| `min-gap`                    | shorthand            |                   |           |            |
-| `min-horizontal-gap`         | `Units`              | `auto`            | No        | Yes        |
-| `min-vertical-gap`           | `Units`              | `auto`            | No        | Yes        |
-| `max-gap`                    | shorthand            |                   |           |            |
-| `max-horizontal-gap`         | `Units`              | `0px`             | No        | Yes        |
-| `max-vertical-gap`           | `Units`              | `solid`           | No        | Yes        |
-| `padding`                    | shorthand            |                   |           |            |
-| `padding-left`               | `Units`              | `auto`            | No        | Yes        |
-| `padding-right`              | `Units`              | `auto`            | No        | Yes        |
-| `padding-top`                | `Units`              | `auto`            | No        | Yes        |
-| `padding-bottom`             | `Units`              | `auto`            | No        | Yes        |
-| `size`                       | shorthand            |                   |           |            |
-| `width`                      | `Units`              | `1s`              | No        | Yes        |
-| `height`                     | `Units`              | `1s`              | No        | Yes        |
-| `min-size`                   | shorthand            |                   |           |            |
-| `min-width`                  | `Units`              | `auto`            | No        | Yes        |
-| `min-height`                 | `Units`              | `auto`            | No        | Yes        |
-| `max-size`                   | shorthand            |                   |           |            |
-| `max-width`                  | `Units`              | `auto`            | No        | Yes        |
-| `max-height`                 | `Units`              | `auto`            | No        | Yes        |
-| `space`                      | shorthand            |                   |           |            |
+| `alignment`                  | `Alignment`          | `stretch`         | No        | No         |
+| `direction`                  | `Direction`          | `left-to-right`   | No        | No         |
+| `wrap`                       | `LayoutWrap`         | `no-wrap`         | No        | No         |
+| `grid-columns`               | `Vec<Units>`         | `-`               | No        | No         |
+| `grid-rows`                  | `Vec<Units>`         | `-`               | No        | No         |
+| `column-start`               | `usize`              | `1`               | No        | No         |
+| `column-span`                | `usize`              | `1`               | No        | No         |
+| `row-start`                  | `usize`              | `1`               | No        | No         |
+| `row-span`                   | `usize`              | `1`               | No        | No         |
+| `space`                      | shorthand            | `-`               | No        | Yes        |
 | `left`                       | `Units`              | `auto`            | No        | Yes        |
 | `right`                      | `Units`              | `auto`            | No        | Yes        |
 | `top`                        | `Units`              | `auto`            | No        | Yes        |
 | `bottom`                     | `Units`              | `auto`            | No        | Yes        |
+| `size`                       | shorthand            | `-`               | No        | Yes        |
+| `width`                      | `Units`              | `auto`            | No        | Yes        |
+| `height`                     | `Units`              | `auto`            | No        | Yes        |
+| `min-size`                   | shorthand            | `-`               | No        | Yes        |
+| `min-width`                  | `Units`              | `auto`            | No        | Yes        |
+| `min-height`                 | `Units`              | `auto`            | No        | Yes        |
+| `max-size`                   | shorthand            | `-`               | No        | Yes        |
+| `max-width`                  | `Units`              | `auto`            | No        | Yes        |
+| `max-height`                 | `Units`              | `auto`            | No        | Yes        |
+| `padding`                    | shorthand            | `-`               | No        | Yes        |
+| `padding-left`               | `Units`              | `0px`             | No        | Yes        |
+| `padding-right`              | `Units`              | `0px`             | No        | Yes        |
+| `padding-top`                | `Units`              | `0px`             | No        | Yes        |
+| `padding-bottom`             | `Units`              | `0px`             | No        | Yes        |
+| `gap`                        | shorthand            | `-`               | No        | Yes        |
+| `horizontal-gap`             | `Units`              | `0px`             | No        | Yes        |
+| `vertical-gap`               | `Units`              | `0px`             | No        | Yes        |
+| `min-gap`                    | shorthand            | `-`               | No        | Yes        |
+| `min-horizontal-gap`         | `Units`              | `auto`            | No        | Yes        |
+| `min-vertical-gap`           | `Units`              | `auto`            | No        | Yes        |
+| `max-gap`                    | shorthand            | `-`               | No        | Yes        |
+| `max-horizontal-gap`         | `Units`              | `auto`            | No        | Yes        |
+| `max-vertical-gap`           | `Units`              | `auto`            | No        | Yes        |
