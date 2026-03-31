@@ -20,7 +20,7 @@ A negative pixels value for gap can be used and results in the children of the v
 
 The `gap` of a view can be specified using the respective layout modifier:
 
-```rust
+```rust,ignore
 VStack::new(cx, |cx|{
     Label::new(cx, "Hello");
     Label::new(cx, "World");
@@ -38,7 +38,7 @@ Or in CSS:
 
 The `horizontal-gap` and `vertical-gap` can also be set independently:
 
-```rust
+```rust,ignore
 VStack::new(cx, |cx|{
     Label::new(cx, "Hello");
     Label::new(cx, "World");

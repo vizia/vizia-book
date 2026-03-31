@@ -10,7 +10,7 @@ Vizia can use CSS to apply style rules to multiple views simultaneously. A CSS s
 
 To add a stylesheet which is already a string in rust code, use the `add_stylesheet()` method on `Context`. For example:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 const STYLE: &str = r#"
@@ -41,7 +41,7 @@ element {
 }
 ```
 
-```rust
+```rust,ignore
 /* main.rs */
 use vizia::prelude::*;
 

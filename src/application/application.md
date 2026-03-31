@@ -2,7 +2,7 @@
 
 The first step to building a GUI with vizia is to create an application. Creating a new application creates a main window and a [`context`](https://docs.vizia.dev/vizia/context/struct.Context.html). Views declared within the closure passed to `Application::new()` are added to the context and rendered into the main window.
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

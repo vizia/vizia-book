@@ -2,7 +2,7 @@
 
 While an application provides a default main window, additional windows can be created with the [`Window`](https://docs.vizia.dev/vizia_winit/window/struct.Window.html) view:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
@@ -22,9 +22,9 @@ Windows, like other views, are built into the view tree. Therefore, they can acc
 
 A [binding view](../binding/conditional_views.md) can be used to a conditionally create windows:
 
-```rust
-Binding::new(cx, AppData::show_window, |cx, show_subwindow| {
-    if show_subwindow.get(cx) {
+```rust,ignore
+Binding::new(cx, show_window, |cx| {
+    if show_window.get() {
         Window::new(cx, |cx| {
             
         })

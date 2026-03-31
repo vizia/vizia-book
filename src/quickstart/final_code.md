@@ -1,13 +1,12 @@
 # The Final Code
 
 ## Rust
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
-// Define the application data
-#[derive(Lens)]
+// Define the application data model
 pub struct AppData {
-    count: i32,
+    count: Signal<i32>,
 }
 
 // Define events for mutating the application data
@@ -20,8 +19,8 @@ pub enum AppEvent {
 impl Model for AppData {
     fn event(&mut self, cx: &mut EventContext, event: &mut Event) {
         event.map(|app_event, meta| match app_event {
-            AppEvent::Decrement => self.count -= 1,
-            AppEvent::Increment => self.count += 1,
+            AppEvent::Decrement => self.count.update(|count| *count -= 1),
+            AppEvent::Increment => self.count.update(|count| *count += 1),
         });
     }
 }
@@ -33,9 +32,7 @@ pub struct Counter {
 }
 
 impl Counter {
-    pub fn new<L>(cx: &mut Context, lens: L) -> Handle<Self>
-    where
-        L: Lens<Target = i32>
+    pub fn new(cx: &mut Context, count: impl Res<i32>) -> Handle<Self>
     {
         Self {
             on_decrement: None,
@@ -50,7 +47,7 @@ impl Counter {
                     .on_press(|ex| ex.emit(CounterEvent::Increment))
                     .class("inc");
                 
-                Label::new(cx, lens)
+                Label::new(cx, count)
                     .class("count")
                     .live(Live::Assertive);
             })
@@ -120,11 +117,13 @@ fn main() -> Result<(), ApplicationError> {
         // If system locale is already Spanish, replace "es" with "en-US".
         // cx.emit(EnvironmentEvent::SetLocale(langid!("es")));
 
+        let count = Signal::new(0);
+
         // Build model data into the application
-        AppData { count: 0 }.build(cx);
+        AppData { count }.build(cx);
 
         // Add the custom counter view and bind to the model data
-        Counter::new(cx, AppData::count)
+        Counter::new(cx, count)
             .on_increment(|cx| cx.emit(AppEvent::Increment))
             .on_decrement(|cx| cx.emit(AppEvent::Decrement));
     })
@@ -137,8 +136,8 @@ fn main() -> Result<(), ApplicationError> {
 ## CSS
 ```css
 .row {
-    child-space: 1s;
-    col-between: 20px;
+    alignment: center;
+    gap: 20px;
 }
 
 button {
@@ -157,7 +156,7 @@ label.count {
     child-space: 1s;
     border-width: 1px;
     border-color: #808080;
-    border-radius: 4px;
+    corner-radius: 4px;
     width: 50px;
     height: 32px;
 }

@@ -8,7 +8,7 @@ The position type property determines whether a view should be positioned in-lin
 
 The `position-type` of a view can be specified using the respective layout modifier:
 
-```rust
+```rust,ignore
 VStack::new(cx, |cx|{
     Label::new(cx, "Hello");
     Label::new(cx, "World");

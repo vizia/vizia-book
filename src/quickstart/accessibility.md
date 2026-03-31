@@ -10,8 +10,8 @@ A live region is a view which has changing content but is not itself interactive
 
 A view can be marked as a live region with the `live()` modifier:
 
-```rust
-Label::new(cx, AppData::count)
+```rust,ignore
+Label::new(cx, count)
     .class("count")
     .live(Live::Assertive);
 ```

@@ -1,0 +1,28 @@
+<svg width="520" height="120" viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Track -->
+  <rect x="60" y="58" width="400" height="4" rx="2" fill="#C7CFDD"></rect>
+
+  <!-- Range -->
+  <rect x="60" y="58" width="220" height="4" rx="2" fill="#4A6FD3"></rect>
+
+  <!-- Thumb -->
+  <circle cx="280" cy="60" r="8" fill="#4A6FD3"></circle>
+  <circle cx="280" cy="60" r="7" fill="white"></circle>
+
+  <!-- Label: .track -->
+  <line x1="420" y1="62" x2="420" y2="90" stroke="#8FA2C9"></line>
+  <circle cx="420" cy="62" r="4" fill="#8FA2C9"></circle>
+  <text x="395" y="108" font-size="14" fill="#4A6FD3">.track (4px)</text>
+
+  <!-- Label: .range -->
+  <line x1="150" y1="62" x2="150" y2="90" stroke="#8FA2C9"></line>
+  <circle cx="150" cy="62" r="4" fill="#8FA2C9"></circle>
+  <text x="125" y="108" font-size="14" fill="#4A6FD3">.range (4px)</text>
+
+  <!-- Label: .thumb -->
+  <line x1="280" y1="68" x2="280" y2="100" stroke="#8FA2C9"></line>
+  <circle cx="280" cy="68" r="4" fill="#8FA2C9"></circle>
+  <text x="240" y="115" font-size="14" fill="#4A6FD3">.thumb (16×16px)</text>
+
+</svg>

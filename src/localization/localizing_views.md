@@ -1,12 +1,12 @@
 # Localizing Views
 
-Things like colors and symbols can have different meanings across cultures and languages, and so for some locales the contents of a view, or even the view itself, must be replaced. This can be achieved with a binding to the `locale` data in the `Environment` model.
+Things like colors and symbols can have different meanings across cultures and languages, and so for some locales the contents of a view, or even the view itself, must be replaced. This can be achieved with a binding to the `locale` signal in the `Environment` model.
 
 For example, to replace a view based on the locale:
 
-```rust
-Binding::new(cx, Environment::locale, |cx, locale| {
-    match locale.get(cx).to_string().as_ref() {
+```rust,ignore
+Binding::new(cx, Environment::locale, |cx| {
+    match Environment::locale.get(cx).to_string().as_ref() {
         "en-US" => {
             Element::new(cx).background_color(Color::from("#006847"));
         }
@@ -22,8 +22,8 @@ Binding::new(cx, Environment::locale, |cx, locale| {
 
 Or we can change a style property based on the locale:
 
-```rust
-Element::new(cx).background_color(Environment::locale.map(|lang|{
+```rust,ignore
+Element::new(cx).background_color(cx.environment().locale.map(|lang|{
     if lang.to_string() == "en-US"{
         Color::red()
     } else {
@@ -34,7 +34,7 @@ Element::new(cx).background_color(Environment::locale.map(|lang|{
 
 Or toggle a style class:
 
-```rust
+```rust,ignore
 Element::new(cx)
-    .toggle_class("eng", Environment::locale.map(|lang| lang.to_string() == "en-US"));
+    .toggle_class("eng", cx.environment().locale.map(|lang| lang.to_string() == "en-US"));
 ```

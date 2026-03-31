@@ -4,7 +4,7 @@ Transitions are animations for style rule properties which apply when a view mat
 
 For example, we can create a transition for the background color of a view when hovered:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 const STYLE: &str = r#"

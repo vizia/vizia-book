@@ -20,7 +20,7 @@ Alignment also applies to text within a view, unless overridden by the `text-ali
 
 The `alignment` of a view can be specified using the respective layout modifier:
 
-```rust
+```rust,ignore
 VStack::new(cx, |cx|{
     Label::new(cx, "Hello");
     Label::new(cx, "World");

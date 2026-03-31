@@ -8,7 +8,7 @@ We'll learn more about models and events in the following sections.
 
 For example, we can declare a `Label` view to display a text string:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {
@@ -30,7 +30,7 @@ Composition of views is achieved through container views, which typically take a
 
 For example, the `VStack` container view will arrange its contents into a vertical column:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

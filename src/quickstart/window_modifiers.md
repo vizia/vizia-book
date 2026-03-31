@@ -5,7 +5,7 @@ When creating an `Application` the properties of the window can be changed using
 
 For example, the `title()` and `inner_size()` window modifiers can be used to set the title and size of the window respectively.
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

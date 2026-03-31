@@ -23,7 +23,7 @@ The width and height of a view can also be specified with a stretch factor, whic
 
 For example, given the following code:
 
-```rust
+```rust,ignore
 HStack::new(cx, |cx|{
     Label::new(cx, "Hello")
         .background_color(Color::gray())
@@ -46,7 +46,7 @@ The width and height of a view can be specified as `auto`, which results in the 
 
 For example, given the following code:
 
-```rust
+```rust,ignore
 HStack::new(cx, |cx|{
     Label::new(cx, "Hello");
     Label::new(cx, "World");
@@ -62,7 +62,7 @@ If we had specified the hstack width to be `Auto`, then the computed width would
 
 The `width` and `height` of a view can be specified using the respective layout modifiers which use the `Units` type:
 
-```rust
+```rust,ignore
 Label::new(cx, "Hello World")
     .background_color(Color::gray())
     .width(Pixels(200.0))
@@ -71,7 +71,7 @@ Label::new(cx, "Hello World")
 
 The width and height can also be set simultaneously with the `size` layout modifier:
 
-```rust
+```rust,ignore
 Label::new(cx, "Hello World")
     .background_color(Color::gray())
     .size(Pixels(50.0));

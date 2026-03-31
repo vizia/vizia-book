@@ -10,7 +10,7 @@ A combination of pixels and stretch spacing can be used to align a view within i
 
 The `left`, `top`, `right`, and `bottom` of a view can be specified using the respective layout modifiers:
 
-```rust
+```rust,ignore
 Label::new(cx, "Hello World")
     .background_color(Color::gray())
     .position_type(PositionType::Absolute)
@@ -22,7 +22,7 @@ Label::new(cx, "Hello World")
 
 The `space` modifier can also be used to set all four sides simultaneously:
 
-```rust
+```rust,ignore
 Label::new(cx, "Hello World")
     .background_color(Color::gray())
     .position_type(PositionType::Absolute)

@@ -4,7 +4,7 @@ The first step to building a GUI with vizia is to create an application. Creatin
 
 Add the following code to the `main.rs` file, replacing the hello world code that was generated for us:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

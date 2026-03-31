@@ -8,7 +8,7 @@ We'll learn more about models and events in the following sections.
 
 We can declare a `Label` view with the following code:
 
-```rust
+```rust,ignore
 use vizia::prelude::*;
 
 fn main() -> Result<(), ApplicationError> {

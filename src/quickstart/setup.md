@@ -25,7 +25,7 @@ Open the `Cargo.toml` file and add the following to the dependencies:
 [package]
 name = "hello_vizia"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 vizia = {git = "https://github.com/vizia/vizia"}
