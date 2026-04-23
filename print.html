@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-cea51ab7.js";
+            window.path_to_searchindex_js = "searchindex-501d1511.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-2674269d.js"></script>
@@ -3127,21 +3127,43 @@ cx.emit(EnvironmentEvent::SetThemeMode(ThemeMode::LightMode));</code></pre>
 <tbody>
 <tr><td><code>--background</code></td><td>Root background color.</td></tr>
 <tr><td><code>--foreground</code></td><td>Default text color.</td></tr>
+<tr><td><code>--card</code></td><td>Card surface background color.</td></tr>
+<tr><td><code>--card-foreground</code></td><td>Text color on card surfaces.</td></tr>
+<tr><td><code>--popover</code></td><td>Popover/menu surface background color.</td></tr>
+<tr><td><code>--popover-foreground</code></td><td>Text color on popover surfaces.</td></tr>
 <tr><td><code>--primary</code></td><td>Primary action/button color.</td></tr>
+<tr><td><code>--primary-hover</code></td><td>Hover state color for primary actions.</td></tr>
+<tr><td><code>--primary-active</code></td><td>Active/pressed state color for primary actions.</td></tr>
 <tr><td><code>--primary-foreground</code></td><td>Text color on primary surfaces.</td></tr>
 <tr><td><code>--secondary</code></td><td>Secondary accent color.</td></tr>
+<tr><td><code>--secondary-hover</code></td><td>Hover state color for secondary actions.</td></tr>
+<tr><td><code>--secondary-active</code></td><td>Active/pressed state color for secondary actions.</td></tr>
 <tr><td><code>--secondary-foreground</code></td><td>Text on secondary surfaces.</td></tr>
 <tr><td><code>--muted</code></td><td>Muted background.</td></tr>
 <tr><td><code>--muted-foreground</code></td><td>Muted text.</td></tr>
 <tr><td><code>--accent</code></td><td>Highlight accent color.</td></tr>
 <tr><td><code>--accent-foreground</code></td><td>Text on accent surfaces.</td></tr>
 <tr><td><code>--border</code></td><td>Border color.</td></tr>
+<tr><td><code>--input</code></td><td>Input surface/border tone.</td></tr>
 <tr><td><code>--ring</code></td><td>Focus ring color.</td></tr>
 <tr><td><code>--destructive</code></td><td>Danger/destructive action color.</td></tr>
-<tr><td><code>--destructive-foreground</code></td><td>Text on destructive surfaces.</td></tr>
+<tr><td><code>--chart-1</code></td><td>Chart series color 1.</td></tr>
+<tr><td><code>--chart-2</code></td><td>Chart series color 2.</td></tr>
+<tr><td><code>--chart-3</code></td><td>Chart series color 3.</td></tr>
+<tr><td><code>--chart-4</code></td><td>Chart series color 4.</td></tr>
+<tr><td><code>--chart-5</code></td><td>Chart series color 5.</td></tr>
+<tr><td><code>--sidebar</code></td><td>Sidebar background color.</td></tr>
+<tr><td><code>--sidebar-foreground</code></td><td>Sidebar default text color.</td></tr>
+<tr><td><code>--sidebar-primary</code></td><td>Sidebar primary accent color.</td></tr>
+<tr><td><code>--sidebar-primary-foreground</code></td><td>Text color on sidebar primary surfaces.</td></tr>
+<tr><td><code>--sidebar-accent</code></td><td>Sidebar hover/selection accent color.</td></tr>
+<tr><td><code>--sidebar-accent-foreground</code></td><td>Text color on sidebar accent surfaces.</td></tr>
+<tr><td><code>--sidebar-border</code></td><td>Sidebar border color.</td></tr>
+<tr><td><code>--sidebar-ring</code></td><td>Sidebar focus ring color.</td></tr>
 </tbody>
 </table>
 </div>
+<p>These tokens are defined for both light (<code>:root</code>) and dark (<code>.dark</code>) modes in the default theme.</p>
 <h2 id="overriding-token-values"><a class="header" href="#overriding-token-values">Overriding token values</a></h2>
 <p>Supply a stylesheet that redefines tokens:</p>
 <pre><code class="language-css">:root {
@@ -3161,10 +3183,11 @@ cx.emit(EnvironmentEvent::SetThemeMode(ThemeMode::LightMode));</code></pre>
 <h2 id="ignoring-the-default-theme"><a class="header" href="#ignoring-the-default-theme">Ignoring the default theme</a></h2>
 <p>To build a fully custom theme from scratch, set <code>ignore_default_theme</code> before building the app:</p>
 <pre><code class="language-rust ignore">Application::new(|cx| {
-    cx.ignore_default_theme = true;
     cx.add_stylesheet(include_style!("my_theme.css")).unwrap();
     // ...
-}).run()</code></pre>
+})
+.ignore_default_theme()
+.run()</code></pre>
 <h2 id="see-also-10"><a class="header" href="#see-also-10">See also</a></h2>
 <ul>
 <li><a href="#stylesheets">Stylesheets</a></li>
