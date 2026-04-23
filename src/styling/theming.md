@@ -21,18 +21,41 @@ The default theme exposes these tokens:
 |---|---|
 | `--background` | Root background color. |
 | `--foreground` | Default text color. |
+| `--card` | Card surface background color. |
+| `--card-foreground` | Text color on card surfaces. |
+| `--popover` | Popover/menu surface background color. |
+| `--popover-foreground` | Text color on popover surfaces. |
 | `--primary` | Primary action/button color. |
+| `--primary-hover` | Hover state color for primary actions. |
+| `--primary-active` | Active/pressed state color for primary actions. |
 | `--primary-foreground` | Text color on primary surfaces. |
 | `--secondary` | Secondary accent color. |
+| `--secondary-hover` | Hover state color for secondary actions. |
+| `--secondary-active` | Active/pressed state color for secondary actions. |
 | `--secondary-foreground` | Text on secondary surfaces. |
 | `--muted` | Muted background. |
 | `--muted-foreground` | Muted text. |
 | `--accent` | Highlight accent color. |
 | `--accent-foreground` | Text on accent surfaces. |
 | `--border` | Border color. |
+| `--input` | Input surface/border tone. |
 | `--ring` | Focus ring color. |
 | `--destructive` | Danger/destructive action color. |
-| `--destructive-foreground` | Text on destructive surfaces. |
+| `--chart-1` | Chart series color 1. |
+| `--chart-2` | Chart series color 2. |
+| `--chart-3` | Chart series color 3. |
+| `--chart-4` | Chart series color 4. |
+| `--chart-5` | Chart series color 5. |
+| `--sidebar` | Sidebar background color. |
+| `--sidebar-foreground` | Sidebar default text color. |
+| `--sidebar-primary` | Sidebar primary accent color. |
+| `--sidebar-primary-foreground` | Text color on sidebar primary surfaces. |
+| `--sidebar-accent` | Sidebar hover/selection accent color. |
+| `--sidebar-accent-foreground` | Text color on sidebar accent surfaces. |
+| `--sidebar-border` | Sidebar border color. |
+| `--sidebar-ring` | Sidebar focus ring color. |
+
+These tokens are defined for both light (`:root`) and dark (`.dark`) modes in the default theme.
 
 ## Overriding token values
 
@@ -64,10 +87,11 @@ To build a fully custom theme from scratch, set `ignore_default_theme` before bu
 
 ```rust,ignore
 Application::new(|cx| {
-    cx.ignore_default_theme = true;
     cx.add_stylesheet(include_style!("my_theme.css")).unwrap();
     // ...
-}).run()
+})
+.ignore_default_theme()
+.run()
 ```
 
 ## See also
